@@ -1,8 +1,7 @@
-
 const dotenv = require("dotenv");
 dotenv.config();
 
-const {app} = require("./app");
+const { app } = require("./app");
 
 const logger = require("./lib/logger");
 

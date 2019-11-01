@@ -1,7 +1,6 @@
-require("dotenv").config({path: ".env.test"});
+require("dotenv").config({ path: ".env.test" });
 process.env.NODE_ENV = "test";
 
-async function setUp() {
-}
+async function setUp() {}
 
 module.exports = setUp;
