@@ -14,7 +14,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
-    "test": "jest --runInBand --forceExit"
+    "test": "jest --runInBand --forceExit",
+    "format": "npx prettier --write \"./**/*.js\""
   },
   "husky": {
     "hooks": {
