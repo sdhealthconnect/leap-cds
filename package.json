@@ -1,0 +1,29 @@
+{
+  "name": "leap-cds",
+  "version": "0.0.1",
+  "description": "LEAP Consent Decision Service",
+  "keywords": [
+    "FHIR",
+    "Consent"
+  ],
+  "contributors": [
+    "Mohammad Jafari <jafarim@gmail.com> (https://github.com/mojitoholic/)"
+  ],
+  "main": "index.js",
+  "repository": "git@github.com:mojitoholic/leap-cds.git",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest --runInBand --forceExit"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "winston": "^3.2.1"
+  }
+}
