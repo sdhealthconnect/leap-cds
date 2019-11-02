@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 
 const { ping } = require("./controllers/ping");
+const { error } = require("./controllers/error");
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.use(bodyParser.json({ type: "application/json" }));
 
 //routes
 app.get("/ping", ping);
+
+app.use(error);
 
 module.exports = {
   app
