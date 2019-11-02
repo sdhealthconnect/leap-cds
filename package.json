@@ -20,7 +20,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "precise-commits"
+      "pre-commit": "npx precise-commits"
     }
   },
   "devDependencies": {
