@@ -1,6 +1,14 @@
 # LEAP-CDS
 LEAP Consent Decision Service
 
+# CDS Hook Interface
+The Consent Decision Service provides an interface based on the specifications for [Clinical Decision Support (CDS) Hooks](https://cds-hooks.org/). Following these specifications, a client can query about the patient consent in various contexts including clinical workflows using a rich and flexible interface.
+
+The CDS hook is namaed `patient-consent-consult` and, following the CDS Hooks specifications, it resides at the following endpoint:
+```
+/cds-services/patient-consent-consult
+```
+
 # Set Up 
 
 ## Local Set Up for Development
