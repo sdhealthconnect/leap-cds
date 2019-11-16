@@ -37,4 +37,23 @@ it("should return 400 on wrong hook name", async () => {
   expect(res.status).toEqual(400);
   expect(res.body).toMatchObject({ error: "bad_request" });
   expect(res.body.errorMessage).toMatch("patient-consent-consult");
-});  
+});
+
+it("should return 200 and a card array on success", async () => {
+  expect.assertions(2);
+
+  const res = await request(app)
+    .post(HOOK_ENDPOINT)
+    .set("Accept", "application/json")
+    .send({
+      hook: "patient-consent-consult",
+      hookInstance: "12342",
+      context: {}
+    });
+  expect(res.status).toEqual(200);
+  expect(res.body).toMatchObject({
+    cards: expect.arrayContaining([
+      expect.objectContaining({ summary: expect.any(String) })
+    ])
+  });
+});

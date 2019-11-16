@@ -1,8 +1,11 @@
 const { hookRequestValidator } = require("../lib/validators");
+const { NO_CONSENT_CARD } = require("../lib/cards");
 
 function hook(req, res) {
   validateRequest(req);
-  res.send({});
+  res.send({
+    cards: [NO_CONSENT_CARD]
+  });
 }
 
 function validateRequest(req) {
