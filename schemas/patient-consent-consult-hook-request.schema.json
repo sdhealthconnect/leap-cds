@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/sdhealthconnect/leap-cds/schemas/patient-consent-consult-hook-request.schema.json",
+  "title": "Patient Consent Consult Hook Request",
+  "description": "Patient Consent Consult Hook Request",
+  "type": "object",
+  "properties": {
+    "hook": {
+      "description": "hook that triggered this CDS Service call",
+      "type": "string"
+    },
+    "hookInstance": {
+      "description": "UUID for this hook call",
+      "type": "string"
+    },
+    "context": {
+      "description": "Context of the hook",
+      "type": "object"
+    }
+  },
+  "required": ["hook", "hookInstance", "context"]
+}
