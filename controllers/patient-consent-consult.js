@@ -11,9 +11,16 @@ function validateRequest(req) {
     throw {
       httpCode: 400,
       error: "bad_request",
-      errorMessage: `Invalid request: ${hookRequestValidator.errors}`
+      errorMessage: `Invalid request: ${prettifySchemaValidationErrors(
+        hookRequestValidator.errors
+      )}`
     };
   }
+}
+
+function prettifySchemaValidationErrors(givenErrors) {
+  const errors = givenErrors || {};
+  return errors.map(error => `${error.dataPath} ${error.message}`).join("; ");
 }
 
 module.exports = {
