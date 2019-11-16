@@ -8,12 +8,13 @@ function hook(req, res) {
 function validateRequest(req) {
   const body = req.body;
   if (!hookRequestValidator(body)) {
+    const errorMessages = prettifySchemaValidationErrors(
+      hookRequestValidator.errors
+    );
     throw {
       httpCode: 400,
       error: "bad_request",
-      errorMessage: `Invalid request: ${prettifySchemaValidationErrors(
-        hookRequestValidator.errors
-      )}`
+      errorMessage: `Invalid request: ${errorMessages}`
     };
   }
 }
