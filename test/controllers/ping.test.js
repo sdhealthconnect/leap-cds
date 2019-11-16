@@ -20,4 +20,3 @@ it("should respond to ping when requested error", async () => {
   expect(res.status).toEqual(500);
   expect(res.body).toMatchObject({ error: "internal_error" });
 });
-  
