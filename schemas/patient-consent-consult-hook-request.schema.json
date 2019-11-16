@@ -7,7 +7,8 @@
   "properties": {
     "hook": {
       "description": "hook that triggered this CDS Service call",
-      "type": "string"
+      "type": "string",
+      "pattern": "patient-consent-consult"
     },
     "hookInstance": {
       "description": "UUID for this hook call",
