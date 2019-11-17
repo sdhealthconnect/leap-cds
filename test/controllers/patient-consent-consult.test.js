@@ -47,8 +47,14 @@ it("should return 200 and a card array on success", async () => {
     .set("Accept", "application/json")
     .send({
       hook: "patient-consent-consult",
-      hookInstance: "12342",
-      context: {}
+      hookInstance: "1234",
+      context: {
+        patientId: {
+          system: "http://hl7.org/fhir/sid/us-medicare",
+          value: "0000-000-0000"
+        },
+        scope: "adr"
+      }
     });
   expect(res.status).toEqual(200);
   expect(res.body).toMatchObject({
