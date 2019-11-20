@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/sdhealthconnect/leap-cds/schemas/patient-consent-consult-hook-request.schema.json",
+  "title": "Patient Consent Consult Hook Request",
+  "description": "Patient Consent Consult Hook Request",
+  "type": "object",
+  "properties": {
+    "hook": {
+      "type": "string",
+      "pattern": "patient-consent-consult"
+    },
+    "hookInstance": {
+      "description": "UUID for this hook call",
+      "type": "string"
+    },
+    "context": {
+      "description": "Context where the consent decision is needed",
+      "type": "object",
+      "properties": {
+        "actor": {
+          "description": "identity of the actor",
+          "type": "string"
+        },
+        "purposeOfUse": {
+          "description": "purpose of use",
+          "type": "string",
+          "enum": [
+            "HMARKT",
+            "HOPERAT",
+            "HPAYMT",
+            "HRESCH",
+            "PATRQT",
+            "TREAT",
+            "PUBHLTH"
+          ]
+        },
+        "scope": {
+          "description": "consent scope",
+          "type": "string",
+          "enum": ["adr", "research", "patient-privacy", "treatment"]
+        },
+        "patientId": {
+          "description": "identity of the patient whose consent is being considered",
+          "type": "object",
+          "properties": {
+            "system": {
+              "description": "system URI for the patient identifier (see https://www.hl7.org/fhir/identifier-registry.html)",
+              "type": "string"
+            },
+            "value": {
+              "description": "value of the patient identifier",
+              "type": "string"
+            }
+          },
+          "required": ["value"]
+        }
+      },
+      "required": ["patientId", "scope"]
+    }
+  },
+  "required": ["hook", "hookInstance", "context"]
+}
