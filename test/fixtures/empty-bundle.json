@@ -1,0 +1,15 @@
+{
+  "resourceType": "Bundle",
+  "id": "a7ec0781-01cf-46e1-9a58-a6e76fdca0d3",
+  "meta": {
+    "lastUpdated": "2019-11-24T00:33:24.906+00:00"
+  },
+  "type": "searchset",
+  "total": 0,
+  "link": [
+    {
+      "relation": "self",
+      "url": "http://hapi.fhir.org/baseR4/Consent?patient=Patient%2F380423465456"
+    }
+  ]
+}
