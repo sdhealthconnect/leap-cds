@@ -2,7 +2,9 @@ steps:
   - name: "gcr.io/cloud-builders/yarn"
     args: ["install"]
   - name: "gcr.io/cloud-builders/yarn"
-    args: ["start", "create-env"]
+    args: ["create-env"]
+  - name: "gcr.io/cloud-builders/yarn"
+    args: ["start"]
     env:
       - "ORG_NAME=${_ORG_NAME}"
       - "ORG_URL=${_ORG_URL}"
