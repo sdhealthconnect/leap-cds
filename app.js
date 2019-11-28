@@ -8,6 +8,9 @@ const { hook } = require("./controllers/patient-consent-consult");
 
 const app = express();
 
+//trust proxy
+app.set("trust proxy", true);
+
 //middlewares
 process.env.NODE_ENV === "production" || app.use(morgan("dev"));
 app.use(bodyParser.json({ type: "application/json" }));
