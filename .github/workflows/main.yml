@@ -1,0 +1,19 @@
+name: CI
+on: [pull_request]
+jobs:
+  build:
+    env:
+      NODE_ENV: test
+      ORG_NAME: Sample
+      ORG_URL: https://sample-cdms.org
+      CONSENT_FHIR_SERVERS: https://fhir-cdms1/base,https://fhir-cdms2/base
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install # will run `yarn install` command
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: test # will run `yarn test` command
