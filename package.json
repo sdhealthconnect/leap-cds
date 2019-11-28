@@ -16,7 +16,8 @@
     "start-mon": "npx nodemon server.js",
     "start": "node server.js",
     "test": "jest --runInBand --forceExit",
-    "format": "npx prettier --write \"./**/*.js\""
+    "format": "npx prettier --write \"./**/*.js\"",
+    "create-env": "printenv > .env"
   },
   "husky": {
     "hooks": {
