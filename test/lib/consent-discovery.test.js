@@ -31,24 +31,35 @@ it("make sure there is at least one FHIR Consent Server", async () => {
 });
 
 it("should return an array of consents from all servers", async () => {
-  expect.assertions(1);
+  expect.assertions(2);
 
   MOCK_FHIR_SERVERS[0]
     .get("/Patient?identifier=ssn|111111111&_summary=true")
+    .times(2)
     .reply(200, PATIENT_RESULTS_BUNDLE);
-
-  MOCK_FHIR_SERVERS[0]
-    .get("/Consent?patient=Patient/52")
-    .reply(200, CONSENT_RESULTS_BUNDLE);
 
   _.slice(MOCK_FHIR_SERVERS, 1).forEach(mockServer => {
     mockServer
       .get("/Patient?identifier=ssn|111111111&_summary=true")
+      .times(2)
       .reply(200, EMPTY_BUNDLE);
   });
 
-  const consents = await fetchConsents({ system: "ssn", value: "111111111" });
+  MOCK_FHIR_SERVERS[0]
+    .get("/Consent?patient=Patient/52&scope=")
+    .reply(200, CONSENT_RESULTS_BUNDLE);
 
+  let consents = await fetchConsents({ system: "ssn", value: "111111111" });
+  expect(consents).toHaveLength(1);
+
+  MOCK_FHIR_SERVERS[0]
+    .get("/Consent?patient=Patient/52&scope=patient-privacy")
+    .reply(200, CONSENT_RESULTS_BUNDLE);
+
+  consents = await fetchConsents(
+    { system: "ssn", value: "111111111" },
+    "patient-privacy"
+  );
   expect(consents).toHaveLength(1);
 });
 
