@@ -1,0 +1,12 @@
+steps:
+  - name: "gcr.io/cloud-builders/yarn"
+    args: ["install"]
+  - name: "gcr.io/cloud-builders/yarn"
+    args: ["start", "create-env"]
+    env:
+      - "ORG_NAME=${_ORG_NAME}"
+      - "ORG_URL=${_ORG_URL}"
+      - "CONSENT_FHIR_SERVERS=${_CONSENT_FHIR_SERVERS}"
+  - name: "gcr.io/cloud-builders/gcloud"
+    args: ["app", "deploy"]
+timeout: "1600s"
