@@ -1,0 +1,10 @@
+runtime: nodejs12
+instance_class: B2
+basic_scaling:
+  max_instances: 1
+  idle_timeout: 30m
+handlers:
+  - url: /.*
+    secure: always
+    redirect_http_response_code: 301
+    script: auto
