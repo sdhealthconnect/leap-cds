@@ -1,9 +1,11 @@
 const _ = require("lodash");
 const { fetchConsents } = require("../../lib/consent-discovery");
 
+const CONSENT = require("../fixtures/consents/consent-boris.json");
+
 const {
-  setupMockPatients,
-  setupMockConsents,
+  setupMockPatient,
+  setupMockConsent,
   MOCK_FHIR_SERVERS
 } = require("../common/setup-mock-consent-servers");
 
@@ -14,14 +16,14 @@ it("make sure there is at least one FHIR Consent Server", async () => {
 it("should return an array of consents from all servers", async () => {
   expect.assertions(2);
 
-  setupMockPatients({ system: "ssn", value: "111111111" });
-  setupMockConsents("");
+  setupMockPatient({ system: "ssn", value: "111111111" });
+  setupMockConsent("", CONSENT);
 
   let consents = await fetchConsents({ system: "ssn", value: "111111111" });
   expect(consents).toHaveLength(1);
 
-  setupMockPatients({ system: "ssn", value: "111111111" });
-  setupMockConsents("patient-privacy");
+  setupMockPatient({ system: "ssn", value: "111111111" });
+  setupMockConsent("patient-privacy", CONSENT);
 
   consents = await fetchConsents(
     { system: "ssn", value: "111111111" },

@@ -6,13 +6,8 @@ const CONSENT_FHIR_SERVERS = (process.env.CONSENT_FHIR_SERVERS || "")
   .map(res => res.trim());
 
 const EMPTY_BUNDLE = require("../fixtures/empty-bundle.json");
-const CONSENT = require("../fixtures/consents/consent-boris.json");
 const PATIENT = require("../fixtures/patients/patient-boris.json");
-const CONSENT_RESULTS_BUNDLE = _.set(
-  _.set(_.clone(EMPTY_BUNDLE), "entry[0].resource", CONSENT),
-  "total",
-  1
-);
+
 const PATIENT_RESULTS_BUNDLE = _.set(
   _.set(_.clone(EMPTY_BUNDLE), "entry[0].resource", PATIENT),
   "total",
@@ -25,7 +20,7 @@ const MOCK_FHIR_SERVERS = CONSENT_FHIR_SERVERS.map(fhirBase =>
     .replyContentLength()
 );
 
-function setupMockPatients(patientId) {
+function setupMockPatient(patientId) {
   const system = patientId.system;
   const value = patientId.value;
 
@@ -40,14 +35,22 @@ function setupMockPatients(patientId) {
   });
 }
 
-function setupMockConsents(scope) {
+function setupMockConsent(scope, consent) {
+  const CONSENT_RESULTS_BUNDLE = consent
+    ? _.set(
+        _.set(_.clone(EMPTY_BUNDLE), "entry[0].resource", consent),
+        "total",
+        1
+      )
+    : EMPTY_BUNDLE;
+
   MOCK_FHIR_SERVERS[0]
     .get(`/Consent?patient=Patient/52&scope=${scope}`)
     .reply(200, CONSENT_RESULTS_BUNDLE);
 }
 
 module.exports = {
-  setupMockPatients,
-  setupMockConsents,
+  setupMockPatient,
+  setupMockConsent,
   MOCK_FHIR_SERVERS
 };
