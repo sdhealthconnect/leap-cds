@@ -1,11 +1,24 @@
 const { hookRequestValidator } = require("../lib/validators");
-const { NO_CONSENT_CARD } = require("../lib/cards");
+const { asCard } = require("../lib/consent-decisions");
+const { processDecision } = require("../lib/consent-processor");
+const { fetchConsents } = require("../lib/consent-discovery");
 
-function hook(req, res) {
-  validateRequest(req);
-  res.send({
-    cards: [NO_CONSENT_CARD]
-  });
+async function hook(req, res, next) {
+  try {
+    validateRequest(req);
+
+    const patientId = req.body.context.patientId;
+    const scope = req.body.context.scope;
+
+    const consents = await fetchConsents(patientId, scope);
+    const decision = processDecision(consents, req.body.context);
+
+    res.send({
+      cards: [asCard(decision.decision)]
+    });
+  } catch (e) {
+    next(e);
+  }
 }
 
 function validateRequest(req) {
