@@ -10,11 +10,14 @@ async function hook(req, res, next) {
     const patientId = req.body.context.patientId;
     const scope = req.body.context.scope;
 
-    const consents = await fetchConsents(patientId, scope);
-    const decision = processDecision(consents, req.body.context);
+    const consentsBundle = await fetchConsents(patientId, scope);
+    const decisionEntry = await processDecision(
+      consentsBundle,
+      req.body.context
+    );
 
     res.send({
-      cards: [asCard(decision.decision)]
+      cards: [asCard(decisionEntry.decision)]
     });
   } catch (e) {
     next(e);
