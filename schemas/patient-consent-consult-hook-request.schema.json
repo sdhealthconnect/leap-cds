@@ -19,7 +19,17 @@
       "properties": {
         "actor": {
           "description": "identity of the actor",
-          "type": "string"
+          "type": "object",
+          "properties": {
+            "system": {
+              "description": "system URI for the actor identifier",
+              "type": "string"
+            },
+            "value": {
+              "description": "value of the actor identifier",
+              "type": "string"
+            }
+          }
         },
         "purposeOfUse": {
           "description": "purpose of use",

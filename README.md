@@ -16,12 +16,15 @@ A `POST` request to this endpoint must have a body similar to the following exam
   "hookInstance": "...",
   "context": {
     "patientId": {
-          "system": "http://hl7.org/fhir/sid/us-medicare",
-          "value": "0000-000-0000"
+        "system": "http://hl7.org/fhir/sid/us-medicare",
+        "value": "0000-000-0000"
     },
     "scope" : "adr",
     "purposeOfUse": "TREAT",
-    "actor": "bob@sample.org"
+    "actor": {
+        "system": "sample-system",
+        "value": "sample-id"
+    }
   }
 }
 ```
@@ -33,7 +36,7 @@ The `context` attribute must be present and record the context of the query. The
 | :---                       |     :---                        | 
 | `scope` _(required)_       | The broad context for the query in order to narrow down the applicable consent type. The values are based on FHIR [consent scope](https://www.hl7.org/fhir/valueset-consent-scope.html).                  | 
 | `patientId` _(required)_   | Identity of the patient specified by a [`system`](https://www.hl7.org/fhir/identifier-registry.html) and `value` pair. This identifier is used to look up the patient's consent.                    | 
-| `actor`                    | Identity of the actor involved in the context of the query (e.g. clinician or recipient).       |
+| `actor`                    | Identity of the actor involved in the context of the query (e.g., recipient organization or the clinician engaged in the workflow).       |
 | `purposeOfUse`             | purpose of use                  | 
 
 The response is similar to the following:
