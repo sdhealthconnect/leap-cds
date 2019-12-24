@@ -35,10 +35,18 @@ function setupMockPatient(patientId) {
   });
 }
 
+function setupMockOrganization(url, organizationResource) {
+  MOCK_FHIR_SERVERS[0].get(url).reply(200, organizationResource);
+}
+
 function setupMockConsent(scope, consent) {
   const CONSENT_RESULTS_BUNDLE = consent
     ? _.set(
-        _.set(_.clone(EMPTY_BUNDLE), "entry[0].resource", consent),
+        _.set(
+          _.set(_.clone(EMPTY_BUNDLE), "entry[0].resource", consent),
+          "entry[0].fullUrl",
+          `${CONSENT_FHIR_SERVERS[0]}/Consent/1`
+        ),
         "total",
         1
       )
@@ -52,5 +60,7 @@ function setupMockConsent(scope, consent) {
 module.exports = {
   setupMockPatient,
   setupMockConsent,
-  MOCK_FHIR_SERVERS
+  setupMockOrganization,
+  MOCK_FHIR_SERVERS,
+  CONSENT_FHIR_SERVERS
 };

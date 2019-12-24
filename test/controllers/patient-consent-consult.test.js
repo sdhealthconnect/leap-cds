@@ -3,7 +3,8 @@ const request = require("supertest");
 const { app } = require("../../app");
 const {
   setupMockPatient,
-  setupMockConsent
+  setupMockConsent,
+  setupMockOrganization
 } = require("../common/setup-mock-consent-servers");
 
 const CONSENT_OPTIN = require("../fixtures/consents/consent-boris.json");
@@ -59,7 +60,11 @@ const REQUEST = {
       system: "http://hl7.org/fhir/sid/us-medicare",
       value: "0000-000-0000"
     },
-    scope: "patient-privacy"
+    scope: "patient-privacy",
+    actor: {
+      system: "test-system",
+      value: "test-value"
+    }
   }
 };
 
@@ -68,11 +73,17 @@ const MOCK_PATIENT_ID = {
   value: "0000-000-0000"
 };
 
+const ORGANIZATION = require("../fixtures/organizations/org-good-health.json");
+
 it("should return 200 and an array including a consent permit card with an OPTIN consent", async () => {
   expect.assertions(2);
 
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent("patient-privacy", CONSENT_OPTIN);
+  setupMockOrganization(
+    `/${_.get(CONSENT_OPTIN, "provision.actor[0].reference.reference")}`,
+    ORGANIZATION
+  );
 
   const res = await request(app)
     .post(HOOK_ENDPOINT)
@@ -86,11 +97,43 @@ it("should return 200 and an array including a consent permit card with an OPTIN
   });
 });
 
+it("should return 200 and an array including a consent deny card with an OPTIN consent and provision with a matching prohibited recipient", async () => {
+  expect.assertions(2);
+
+  setupMockPatient(MOCK_PATIENT_ID);
+  setupMockConsent("patient-privacy", CONSENT_OPTIN);
+  setupMockOrganization(
+    `/${_.get(CONSENT_OPTIN, "provision.actor[0].reference.reference")}`,
+    ORGANIZATION
+  );
+
+  const REQUEST_WITH_PROHIBITED_ACTOR = _.set(
+    _.cloneDeep(REQUEST),
+    "context.actor",
+    ORGANIZATION.identifier[0]
+  );
+
+  const res = await request(app)
+    .post(HOOK_ENDPOINT)
+    .set("Accept", "application/json")
+    .send(REQUEST_WITH_PROHIBITED_ACTOR);
+  expect(res.status).toEqual(200);
+  expect(res.body).toMatchObject({
+    cards: expect.arrayContaining([
+      expect.objectContaining({ summary: "CONSENT_DENY" })
+    ])
+  });
+});
+
 it("should return 200 and an array including a consent deny card with an OPTOUT consent", async () => {
   expect.assertions(2);
 
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent("patient-privacy", CONSENT_OPTOUT);
+  setupMockOrganization(
+    `/${_.get(CONSENT_OPTIN, "provision.actor[0].reference.reference")}`,
+    ORGANIZATION
+  );
 
   const res = await request(app)
     .post(HOOK_ENDPOINT)
