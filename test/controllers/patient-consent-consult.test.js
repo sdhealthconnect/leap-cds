@@ -61,10 +61,12 @@ const REQUEST = {
       value: "0000-000-0000"
     },
     scope: "patient-privacy",
-    actor: {
-      system: "test-system",
-      value: "test-value"
-    }
+    actor: [
+      {
+        system: "test-system",
+        value: "test-value"
+      }
+    ]
   }
 };
 
@@ -110,7 +112,7 @@ it("should return 200 and an array including a consent deny card with an OPTIN c
   const REQUEST_WITH_PROHIBITED_ACTOR = _.set(
     _.cloneDeep(REQUEST),
     "context.actor",
-    ORGANIZATION.identifier[0]
+    [ORGANIZATION.identifier[0]]
   );
 
   const res = await request(app)
