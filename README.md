@@ -21,10 +21,12 @@ A `POST` request to this endpoint must have a body similar to the following exam
     },
     "scope" : "adr",
     "purposeOfUse": "TREAT",
-    "actor": {
+    "actor": [
+      {
         "system": "sample-system",
         "value": "sample-id"
-    }
+      }
+    ]
   }
 }
 ```
@@ -36,7 +38,7 @@ The `context` attribute must be present and record the context of the query. The
 | :---                       |     :---                        | 
 | `scope` _(required)_       | The broad context for the query in order to narrow down the applicable consent type. The values are based on FHIR [consent scope](https://www.hl7.org/fhir/valueset-consent-scope.html).                  | 
 | `patientId` _(required)_   | Identity of the patient specified by a [`system`](https://www.hl7.org/fhir/identifier-registry.html) and `value` pair. This identifier is used to look up the patient's consent.                    | 
-| `actor`                    | Identity of the actor involved in the context of the query (e.g., recipient organization or the clinician engaged in the workflow).       |
+| `actor`                    | An array containing different identifiers of the actor involved in the context of the query (e.g., recipient organization or the clinician engaged in the workflow). Consents could match based on any of these identifiers. This will allow matching even if different FHIR servers know the actor by different identifiers.     |
 | `purposeOfUse`             | purpose of use                  | 
 
 The response is similar to the following:

@@ -44,10 +44,12 @@ const QUERY = {
     },
     scope: "patient-privacy",
     purposeOfUse: "TREAT",
-    actor: {
-      system: "test-system",
-      value: "test-value"
-    }
+    actor: [
+      {
+        system: "test-system",
+        value: "test-value"
+      }
+    ]
   }
 };
 
@@ -91,7 +93,38 @@ it("active optin consent with blacklisted recipient actor", async () => {
       },
       scope: "patient-privacy",
       purposeOfUse: "TREAT",
-      actor: ORGANIZATION.identifier[0]
+      actor: [ORGANIZATION.identifier[0]]
+    }
+  );
+  expect(decision).toMatchObject({
+    decision: "CONSENT_DENY"
+  });
+});
+
+it("active optin consent with blacklisted recipient actor based on one of the multiple identifiers", async () => {
+  setupMockOrganization(
+    `/${_.get(BASE_CONSENT, "provision.actor[0].reference.reference")}`,
+    ORGANIZATION
+  );
+
+  const decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: ACTIVE_PRIVACY_CONSENT
+      }
+    ],
+    {
+      patientId: {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
+      },
+      scope: "patient-privacy",
+      purposeOfUse: "TREAT",
+      actor: [
+        ORGANIZATION.identifier[0],
+        { system: "some-other-system", value: "some-other-value" }
+      ]
     }
   );
   expect(decision).toMatchObject({
