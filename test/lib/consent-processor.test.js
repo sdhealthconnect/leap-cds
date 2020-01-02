@@ -12,11 +12,26 @@ const { processDecision } = require("../../lib/consent-processor");
 const ORGANIZATION = require("../fixtures/organizations/org-good-health.json");
 const BASE_CONSENT = require("../fixtures/consents/consent-boris.json");
 const ACTIVE_PRIVACY_CONSENT = BASE_CONSENT;
+
 const INACTIVE_PRIVACY_CONSENT = _.set(
   _.cloneDeep(BASE_CONSENT),
   "status",
   "inactive"
 );
+
+const EXPIRED_PRIVACY_CONSENT = _.set(
+  _.cloneDeep(BASE_CONSENT),
+  "provision.period.end",
+  new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString()
+);
+
+const NOT_YET_VALID_PRIVACY_CONSENT = _.set(
+  _.cloneDeep(BASE_CONSENT),
+  "provision.period.start",
+  new Date(Date.now() + 1000 * 60 * 60 * 48).toISOString()
+);
+
+
 const ACTIVE_RESEARCH_CONSENT = _.set(
   _.cloneDeep(BASE_CONSENT),
   "scope.coding[0].code",
@@ -33,6 +48,7 @@ const OLDER_ACTIVE_PRIVACY_OPTOUT_CONSENT = _.set(
   "dateTime",
   "2010-11-01"
 );
+
 
 const QUERY = {
   hook: "patient-consent-consult",
@@ -54,6 +70,8 @@ const QUERY = {
 };
 
 it("active optin consent", async () => {
+  expect.assertions(1);
+
   setupMockOrganization(
     `/${_.get(BASE_CONSENT, "provision.actor[0].reference.reference")}`,
     ORGANIZATION
@@ -73,7 +91,44 @@ it("active optin consent", async () => {
   });
 });
 
+it("active but expired or not yet valid optin consent", async () => {
+  expect.assertions(2);
+
+  setupMockOrganization(
+    `/${_.get(BASE_CONSENT, "provision.actor[0].reference.reference")}`,
+    ORGANIZATION
+  );
+
+  let decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: EXPIRED_PRIVACY_CONSENT
+      }
+    ],
+    QUERY.context
+  );
+  expect(decision).toMatchObject({
+    decision: "NO_CONSENT"
+  });
+
+  decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: NOT_YET_VALID_PRIVACY_CONSENT
+      }
+    ],
+    QUERY.context
+  );
+  expect(decision).toMatchObject({
+    decision: "NO_CONSENT"
+  });
+});
+
 it("active optin consent with blacklisted recipient actor", async () => {
+  expect.assertions(1);
+
   setupMockOrganization(
     `/${_.get(BASE_CONSENT, "provision.actor[0].reference.reference")}`,
     ORGANIZATION
@@ -102,6 +157,8 @@ it("active optin consent with blacklisted recipient actor", async () => {
 });
 
 it("active optin consent with blacklisted recipient actor based on one of the multiple identifiers", async () => {
+  expect.assertions(1);
+
   setupMockOrganization(
     `/${_.get(BASE_CONSENT, "provision.actor[0].reference.reference")}`,
     ORGANIZATION
@@ -133,6 +190,8 @@ it("active optin consent with blacklisted recipient actor based on one of the mu
 });
 
 it("active optin consent with blacklisted purpose of use", async () => {
+  expect.assertions(1);
+
   const CONSENT_WITH_POU_PROVISION = _.cloneDeep(BASE_CONSENT);
   _.unset(CONSENT_WITH_POU_PROVISION, "provision.actor");
   _.set(CONSENT_WITH_POU_PROVISION, "provision.purpose", [
@@ -165,6 +224,8 @@ it("active optin consent with blacklisted purpose of use", async () => {
 });
 
 it("no active optin consent", async () => {
+  expect.assertions(1);
+
   setupMockOrganization(
     `/${_.get(BASE_CONSENT, "provision.actor[0].reference.reference")}`,
     ORGANIZATION
@@ -185,6 +246,8 @@ it("no active optin consent", async () => {
 });
 
 it("active optin consent with different scope", async () => {
+  expect.assertions(1);
+
   setupMockOrganization(
     `/${_.get(BASE_CONSENT, "provision.actor[0].reference.reference")}`,
     ORGANIZATION
@@ -205,6 +268,8 @@ it("active optin consent with different scope", async () => {
 });
 
 it("more recent consent takes precedence", async () => {
+  expect.assertions(1);
+
   setupMockOrganization(
     `/${_.get(BASE_CONSENT, "provision.actor[0].reference.reference")}`,
     ORGANIZATION
