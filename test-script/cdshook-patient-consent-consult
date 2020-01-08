@@ -1,23 +1,23 @@
 #!/bin/bash
-  
+TARGET_HOST="localhost"  
 #Test script for the CDS Hook: patient-cds-consent
 
 printf %s\\n
 printf "Testing patient-consent-consult using scope code: adr"
 printf %s\\n
-curl  -X POST -H "Content-Type: application/json" -d '{"hook": "patient-consent-consult","hookInstance": "...","context": { "patientId": { "system": "http://hl7.org/fhir/sid/us-medicare","value": "0000-000-0000" },"scope" : "adr","purposeOfUse": "TREAT","actor": "bob@sample.org"}}' http://localhost:3000/cds-services/patient-consent-consult
+curl  -X POST -H "Content-Type: application/json" -d '{"hook": "patient-consent-consult","hookInstance": "...","context": { "patientId": { "system": "http://hl7.org/fhir/sid/us-medicare","value": "0000-000-0000" },"scope" : "adr","purposeOfUse": "TREAT","actor": "bob@sample.org"}}' http://$TARGET_HOST:3000/cds-services/patient-consent-consult
 
 printf %s\\n
 printf "Testing patient-consent-consult using scope code: research"
 printf %s\\n
-curl  -X POST -H "Content-Type: application/json" -d '{"hook": "patient-consent-consult","hookInstance": "...","context": { "patientId": { "system": "http://hl7.org/fhir/sid/us-medicare","value": "0000-000-0000" },"scope" : "research","purposeOfUse": "TREAT","actor": "bob@sample.org"}}' http://localhost:3000/cds-services/patient-consent-consult
+curl  -X POST -H "Content-Type: application/json" -d '{"hook": "patient-consent-consult","hookInstance": "...","context": { "patientId": { "system": "http://hl7.org/fhir/sid/us-medicare","value": "0000-000-0000" },"scope" : "research","purposeOfUse": "TREAT","actor": "bob@sample.org"}}' http://$TARGET_HOST:3000/cds-services/patient-consent-consult
 
 printf %s\\n
 printf "Testing patient-consent-consult using scope code: patient privacy"
 printf %s\\n
-curl  -X POST -H "Content-Type: application/json" -d '{"hook": "patient-consent-consult","hookInstance": "...","context": { "patientId": { "system": "http://hl7.org/fhir/sid/us-medicare","value": "0000-000-0000" },"scope" : "patient privacy","purposeOfUse": "TREAT","actor": "bob@sample.org"}}' http://localhost:3000/cds-services/patient-consent-consult
+curl  -X POST -H "Content-Type: application/json" -d '{"hook": "patient-consent-consult","hookInstance": "...","context": { "patientId": { "system": "http://hl7.org/fhir/sid/us-medicare","value": "0000-000-0000" },"scope" : "patient privacy","purposeOfUse": "TREAT","actor": "bob@sample.org"}}' http://$TARGET_HOST:3000/cds-services/patient-consent-consult
 
 printf %s\\n
 printf "Testing patient-consent-consult using scope code: treatment"
 printf %s\\n
-curl  -X POST -H "Content-Type: application/json" -d '{"hook": "patient-consent-consult","hookInstance": "...","context": { "patientId": { "system": "http://hl7.org/fhir/sid/us-medicare","value": "0000-000-0000" },"scope" : "treatment","purposeOfUse": "TREAT","actor": "bob@sample.org"}}' http://localhost:3000/cds-services/patient-consent-consult
+curl  -X POST -H "Content-Type: application/json" -d '{"hook": "patient-consent-consult","hookInstance": "...","context": { "patientId": { "system": "http://hl7.org/fhir/sid/us-medicare","value": "0000-000-0000" },"scope" : "treatment","purposeOfUse": "TREAT","actor": "bob@sample.org"}}' http://$TARGET_HOST:3000/cds-services/patient-consent-consult
