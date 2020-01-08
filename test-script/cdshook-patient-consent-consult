@@ -1,5 +1,8 @@
 #!/bin/bash
-TARGET_HOST="localhost"  
+
+# For localhost: http://localhost:3000
+# For live cloud version: https://sdhc-leap.appspot.com
+TARGET_HOST="https://sdhc-leap.appspot.com"  
 #Test script for the CDS Hook: patient-cds-consent
 
 printf %s\\n
