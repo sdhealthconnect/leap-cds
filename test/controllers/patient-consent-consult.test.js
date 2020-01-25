@@ -92,9 +92,13 @@ it("should return 200 and an array including a consent permit card with an OPTIN
     .set("Accept", "application/json")
     .send(REQUEST);
   expect(res.status).toEqual(200);
+  console.log(JSON.stringify(res.body));
   expect(res.body).toMatchObject({
     cards: expect.arrayContaining([
-      expect.objectContaining({ summary: "CONSENT_PERMIT" })
+      expect.objectContaining({
+        summary: "CONSENT_PERMIT",
+        extension: { Decision: "Permit", Obligations: [] }
+      })
     ])
   });
 });
@@ -122,7 +126,10 @@ it("should return 200 and an array including a consent deny card with an OPTIN c
   expect(res.status).toEqual(200);
   expect(res.body).toMatchObject({
     cards: expect.arrayContaining([
-      expect.objectContaining({ summary: "CONSENT_DENY" })
+      expect.objectContaining({
+        summary: "CONSENT_DENY",
+        extension: { Decision: "Deny" }
+      })
     ])
   });
 });
@@ -144,7 +151,10 @@ it("should return 200 and an array including a consent deny card with an OPTOUT 
   expect(res.status).toEqual(200);
   expect(res.body).toMatchObject({
     cards: expect.arrayContaining([
-      expect.objectContaining({ summary: "CONSENT_DENY" })
+      expect.objectContaining({
+        summary: "CONSENT_DENY",
+        extension: { Decision: "Deny" }
+      })
     ])
   });
 });
@@ -162,7 +172,10 @@ it("should return 200 and an array including a NO_CONSENT card when no consent e
   expect(res.status).toEqual(200);
   expect(res.body).toMatchObject({
     cards: expect.arrayContaining([
-      expect.objectContaining({ summary: "NO_CONSENT" })
+      expect.objectContaining({
+        summary: "NO_CONSENT",
+        extension: { Decision: "NotApplicable" }
+      })
     ])
   });
 });
