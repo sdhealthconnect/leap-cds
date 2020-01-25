@@ -53,6 +53,9 @@ The response is similar to the following:
       "source": {
         "label": "Sample Consent Decision Management Service",
         "url": "https://sample-cdms.org"
+      },
+      "extension": {
+        "Decision" : "NotApplicable"
       }
     }
   ]
@@ -67,6 +70,15 @@ The `summary` is set to one of the following according to the consent decision:
 | `NO_CONSENT`            | No applicable consent to the context was found (even though the patient may have consents partially matching the request `context`). The `indicator` attribute is set to `warning` in this case.|
 | `CONSENT_PERMIT`        | Patient consent permits the current request.  The `indicator` attribute is set to `info` in this case.. |
 | `CONSENT_DENY`          | Patient consent denies the current request. The `indicator` attribute is set to `critical` in this case.. |
+
+The `extension` attribute in the `card` object contains an XACML Response Object according to the [JSON Profile of XACML](https://docs.oasis-open.org/xacml/xacml-json-http/v1.1/os/xacml-json-http-v1.1-os.html#_Toc5116223) with the following attributes: 
+
+| Attribute                   | Description          | 
+| :---             |     :---             | 
+| `Decision`       | `Permit`, `Deny`, or `NotApplicable` (for the case where no applicable consent is found).        |
+|`Obligations`| An array of [`Obligation` objects](https://docs.oasis-open.org/xacml/xacml-json-http/v1.1/os/xacml-json-http-v1.1-os.html#_Toc5116231)  conveying additional requirements to be followed by the client.|
+
+
 
 # Set Up 
 
