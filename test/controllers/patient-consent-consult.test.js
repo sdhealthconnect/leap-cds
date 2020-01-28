@@ -83,7 +83,10 @@ it("should return 200 and an array including a consent permit card with an OPTIN
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent("patient-privacy", CONSENT_OPTIN);
   setupMockOrganization(
-    `/${_.get(CONSENT_OPTIN, "provision.actor[0].reference.reference")}`,
+    `/${_.get(
+      CONSENT_OPTIN,
+      "provision.provision.actor[0].reference.reference"
+    )}`,
     ORGANIZATION
   );
 
@@ -109,7 +112,10 @@ it("should return 200 and an array including a consent deny card with an OPTIN c
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent("patient-privacy", CONSENT_OPTIN);
   setupMockOrganization(
-    `/${_.get(CONSENT_OPTIN, "provision.actor[0].reference.reference")}`,
+    `/${_.get(
+      CONSENT_OPTIN,
+      "provision.provision.actor[0].reference.reference"
+    )}`,
     ORGANIZATION
   );
 
@@ -140,7 +146,10 @@ it("should return 200 and an array including a consent deny card with an OPTOUT 
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent("patient-privacy", CONSENT_OPTOUT);
   setupMockOrganization(
-    `/${_.get(CONSENT_OPTIN, "provision.actor[0].reference.reference")}`,
+    `/${_.get(
+      CONSENT_OPTIN,
+      "provision.provision.actor[0].reference.reference"
+    )}`,
     ORGANIZATION
   );
 
