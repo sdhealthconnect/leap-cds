@@ -31,7 +31,6 @@ const NOT_YET_VALID_PRIVACY_CONSENT = _.set(
   new Date(Date.now() + 1000 * 60 * 60 * 48).toISOString()
 );
 
-
 const ACTIVE_RESEARCH_CONSENT = _.set(
   _.cloneDeep(BASE_CONSENT),
   "scope.coding[0].code",
@@ -48,7 +47,6 @@ const OLDER_ACTIVE_PRIVACY_OPTOUT_CONSENT = _.set(
   "dateTime",
   "2010-11-01"
 );
-
 
 const QUERY = {
   hook: "patient-consent-consult",
@@ -90,7 +88,8 @@ it("active optin consent", async () => {
     QUERY.context
   );
   expect(decision).toMatchObject({
-    decision: "CONSENT_PERMIT"
+    decision: "CONSENT_PERMIT",
+    obligations: []
   });
 });
 
@@ -128,7 +127,8 @@ it("active but expired or not yet valid optin consent", async () => {
     QUERY.context
   );
   expect(decision).toMatchObject({
-    decision: "NO_CONSENT"
+    decision: "NO_CONSENT",
+    obligations: []
   });
 });
 
@@ -160,8 +160,10 @@ it("active optin consent with blacklisted recipient actor", async () => {
       actor: [ORGANIZATION.identifier[0]]
     }
   );
+
   expect(decision).toMatchObject({
-    decision: "CONSENT_DENY"
+    decision: "CONSENT_DENY",
+    obligations: []
   });
 });
 
@@ -197,7 +199,8 @@ it("active optin consent with blacklisted recipient actor based on one of the mu
     }
   );
   expect(decision).toMatchObject({
-    decision: "CONSENT_DENY"
+    decision: "CONSENT_DENY",
+    obligations: []
   });
 });
 
@@ -231,7 +234,8 @@ it("active optin consent with blacklisted purpose of use", async () => {
     }
   );
   expect(decision).toMatchObject({
-    decision: "CONSENT_DENY"
+    decision: "CONSENT_DENY",
+    obligations: []
   });
 });
 
@@ -256,7 +260,8 @@ it("no active optin consent", async () => {
     QUERY.context
   );
   expect(decision).toMatchObject({
-    decision: "NO_CONSENT"
+    decision: "NO_CONSENT",
+    obligations: []
   });
 });
 
@@ -281,7 +286,8 @@ it("active optin consent with different scope", async () => {
     QUERY.context
   );
   expect(decision).toMatchObject({
-    decision: "NO_CONSENT"
+    decision: "NO_CONSENT",
+    obligations: []
   });
 });
 
@@ -310,6 +316,7 @@ it("more recent consent takes precedence", async () => {
     QUERY.context
   );
   expect(decision).toMatchObject({
-    decision: "CONSENT_PERMIT"
+    decision: "CONSENT_PERMIT",
+    obligations: []
   });
 });
