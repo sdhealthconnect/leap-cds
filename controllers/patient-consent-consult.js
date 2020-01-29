@@ -15,9 +15,9 @@ async function hook(req, res, next) {
       consentsBundle,
       req.body.context
     );
-
+        
     res.send({
-      cards: [asCard(decisionEntry.decision)]
+      cards: [asCard(decisionEntry)]
     });
   } catch (e) {
     next(e);
