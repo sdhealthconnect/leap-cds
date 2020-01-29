@@ -95,7 +95,6 @@ it("should return 200 and an array including a consent permit card with an OPTIN
     .set("Accept", "application/json")
     .send(REQUEST);
   expect(res.status).toEqual(200);
-  console.log(JSON.stringify(res.body));
   expect(res.body).toMatchObject({
     cards: expect.arrayContaining([
       expect.objectContaining({
