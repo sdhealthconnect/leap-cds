@@ -146,7 +146,7 @@ it("should return 200 and an array including a consent deny card with an OPTOUT 
   setupMockConsent("patient-privacy", CONSENT_OPTOUT);
   setupMockOrganization(
     `/${_.get(
-      CONSENT_OPTIN,
+      CONSENT_OPTOUT,
       "provision.provision.actor[0].reference.reference"
     )}`,
     ORGANIZATION
@@ -162,6 +162,75 @@ it("should return 200 and an array including a consent deny card with an OPTOUT 
       expect.objectContaining({
         summary: "CONSENT_DENY",
         extension: { Decision: "Deny" }
+      })
+    ])
+  });
+});
+
+
+it("should return 200 and an array including a consent permit card with obligations when a consent with security label provisions applies", async () => {
+  expect.assertions(2);
+
+  const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = _.set(
+    _.cloneDeep(CONSENT_OPTIN),
+    "provision.provision.securityLabel",
+    [
+      {
+        system: "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+        code: "R"
+      }
+    ]
+  );
+
+  setupMockPatient(MOCK_PATIENT_ID);
+  setupMockConsent(
+    "patient-privacy",
+    ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION
+  );
+  setupMockOrganization(
+    `/${_.get(
+      ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION,
+      "provision.provision.actor[0].reference.reference"
+    )}`,
+    ORGANIZATION
+  );
+
+  const REQUEST_WITH_PROHIBITED_ACTOR = _.set(
+    _.cloneDeep(REQUEST),
+    "context.actor",
+    [ORGANIZATION.identifier[0]]
+  );
+
+  const res = await request(app)
+    .post(HOOK_ENDPOINT)
+    .set("Accept", "application/json")
+    .send(REQUEST_WITH_PROHIBITED_ACTOR);
+
+  expect(res.status).toEqual(200);
+  expect(res.body).toMatchObject({
+    cards: expect.arrayContaining([
+      expect.objectContaining({
+        summary: "CONSENT_PERMIT",
+        extension: {
+          Decision: "Permit",
+          Obligations: [
+            {
+              Id: "sec-labels:except",
+              AttributeAssignment: [
+                {
+                  AttributeId: "labels",
+                  Value: [
+                    {
+                      system:
+                        "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+                      code: "R"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       })
     ])
   });
