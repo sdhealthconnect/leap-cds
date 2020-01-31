@@ -47,15 +47,31 @@ The response is similar to the following:
 {
   "cards": [
     {
-      "summary": "NO_CONSENT",
-      "detail": "No applicable consent was found.",
-      "indicator": "warning",
+      "summary": "CONSENT_PERMIT",
+      "detail": "There is a patient consent permitting this action.",
+      "indicator": "info",
       "source": {
-        "label": "Sample Consent Decision Management Service",
+        "label": "Sample",
         "url": "https://sample-cdms.org"
       },
       "extension": {
-        "Decision" : "NotApplicable"
+        "Decision": "Permit",
+        "Obligations": [
+          {
+            "Id": "sec-labels:except",
+            "AttributeAssignment": [
+              {
+                "AttributeId": "labels",
+                "Value": [
+                  {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+                    "code": "R"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     }
   ]
@@ -78,7 +94,12 @@ The `extension` attribute in the `card` object contains an XACML Response Object
 | `Decision`       | `Permit`, `Deny`, or `NotApplicable` (for the case where no applicable consent is found).        |
 |`Obligations`| An array of [`Obligation` objects](https://docs.oasis-open.org/xacml/xacml-json-http/v1.1/os/xacml-json-http-v1.1-os.html#_Toc5116231)  conveying additional requirements to be followed by the client.|
 
+Based on the XACML specifications, each `Obligation` objects has an `Id` which identifies the obligation and, as well as an `AttributeAssignment` array which specifies a number of parameters for the obligation, in the form of `AttributeId` and `Value` pairs. Currently, the following obligations are supported and used on `Permit` decisions:
 
+| Obligation ID                   | Description          | 
+| :---             |     :---             | 
+| `sec-labels:except`       | Access is permitted except for any resource marked with the security labeles specifies by the `labels` parameter.      |
+|`sec-labels:only`| Access is only permitted for the resources marked with the security labeles specified by the `labels` parameter. In other words, access resources marked with other security labels of the same type (e.g., confidentiality) is not authorized.|
 
 # Set Up 
 
