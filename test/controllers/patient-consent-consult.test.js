@@ -215,7 +215,10 @@ it("should return 200 and an array including a consent permit card with obligati
           Decision: "Permit",
           Obligations: [
             {
-              Id: "sec-labels:except",
+              Id: {
+                system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                code: "REDACT"
+              },
               AttributeAssignment: [
                 {
                   AttributeId: "labels",

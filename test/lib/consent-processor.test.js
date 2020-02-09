@@ -284,7 +284,10 @@ it("active optin consent with security label provision", async () => {
     decision: "CONSENT_PERMIT",
     obligations: [
       {
-        id: "sec-labels:except",
+        id: {
+          system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          code: "REDACT"
+        },
         parameters: {
           labels: [
             {
