@@ -55,24 +55,27 @@ The response is similar to the following:
         "url": "https://sample-cdms.org"
       },
       "extension": {
-        "Decision": "Permit",
-        "Obligations": [
-          {
-            "Id": "sec-labels:except",
-            "AttributeAssignment": [
-              {
-                "AttributeId": "labels",
-                "Value": [
-                  {
-                    "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
-                    "code": "R"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
+          "Decision": "Permit",
+          "Obligations": [
+            {
+              "Id": {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                "code": "REDACT"
+              },
+              "AttributeAssignment": [
+                {
+                  "AttributeId": "labels",
+                  "Value": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+                      "code": "R"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
     }
   ]
 }
@@ -94,12 +97,12 @@ The `extension` attribute in the `card` object contains an XACML Response Object
 | `Decision`       | `Permit`, `Deny`, or `NotApplicable` (for the case where no applicable consent is found).        |
 |`Obligations`| An array of [`Obligation` objects](https://docs.oasis-open.org/xacml/xacml-json-http/v1.1/os/xacml-json-http-v1.1-os.html#_Toc5116231)  conveying additional requirements to be followed by the client.|
 
-Based on the XACML specifications, each `Obligation` objects has an `Id` which identifies the obligation and, as well as an `AttributeAssignment` array which specifies a number of parameters for the obligation, in the form of `AttributeId` and `Value` pairs. Currently, the following obligations are supported and used on `Permit` decisions:
+Based on the XACML specifications, each `Obligation` objects has an `Id` which identifies the obligation and an `AttributeAssignment` array which specifies a number of parameters for the obligation, in the form of `AttributeId` and `Value` pairs. Currently, only the `REDACT` obligation from the [obligation policy valueset](https://www.hl7.org/fhir/v3/ObligationPolicy/vs.html) is supported and is used on `Permit` decisions with either of the following parameters:
 
-| Obligation ID                   | Description          | 
-| :---             |     :---             | 
-| `sec-labels:except`       | Access is permitted except for any resource marked with the security labeles specifies by the `labels` parameter.      |
-|`sec-labels:only`| Access is only permitted for the resources marked with the security labeles specified by the `labels` parameter. In other words, access resources marked with other security labels of the same type (e.g., confidentiality) is not authorized.|
+| Obligation ID  | Description          | 
+| :---           |     :---             | 
+| `labels`       | Any resources marked with these security labels must be redacted. In other wrods, access is permitted except to any resource marked with the security labeles specifies by this parameter.|
+|`exceptAnyOfLabels`  | All resources other than the ones marked with one (or more) of these security labels must be redacted. In other words, access is only permitted to the resources marked by the security labels specified in this parameter, and access to resources marked with other security labels is not authorized. The array is interpreted disjunctively, meaning that access to a resource bearing _any_ (and not _all_) of the labels in this array is authorized.|
 
 # Set Up 
 
