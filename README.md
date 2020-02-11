@@ -15,10 +15,12 @@ A `POST` request to this endpoint must have a body similar to the following exam
   "hook": "patient-consent-consult",
   "hookInstance": "...",
   "context": {
-    "patientId": {
+    "patientId": [
+      {
         "system": "http://hl7.org/fhir/sid/us-medicare",
         "value": "0000-000-0000"
-    },
+      }
+    ],
     "scope" : "adr",
     "purposeOfUse": "TREAT",
     "actor": [
@@ -37,8 +39,8 @@ The `context` attribute must be present and record the context of the query. The
 | Attribute                   | Description                  | 
 | :---                       |     :---                        | 
 | `scope` _(required)_       | The broad context for the query in order to narrow down the applicable consent type. The values are based on FHIR [consent scope](https://www.hl7.org/fhir/valueset-consent-scope.html).                  | 
-| `patientId` _(required)_   | Identity of the patient specified by a [`system`](https://www.hl7.org/fhir/identifier-registry.html) and `value` pair. This identifier is used to look up the patient's consent.                    | 
 | `actor`                    | An array containing different identifiers of the actor involved in the context of the query (e.g., recipient organization or the clinician engaged in the workflow). Consents could match based on any of these identifiers. This will allow matching even if different FHIR servers know the actor by different identifiers.     |
+| `patientId` _(required)_   | An array containing all the different identifiers for the patient which can be used to find the patient in different FHIR servers. Each identifier is in the form of a [`system`](https://www.hl7.org/fhir/identifier-registry.html) and `value` pair. A patient who has an identifier matching any of the identifiers in this array is considered a matching patient and any consents associated with that patient will be processed for makig consent decisions.                     | 
 | `purposeOfUse`             | purpose of use                  | 
 
 The response is similar to the following:
