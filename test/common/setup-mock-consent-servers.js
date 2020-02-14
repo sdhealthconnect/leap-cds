@@ -20,26 +20,36 @@ const MOCK_FHIR_SERVERS = CONSENT_FHIR_SERVERS.map(fhirBase =>
     .replyContentLength()
 );
 
-function setupMockPatient(patientId) {
+function setupMockPatient(patientId, index) {
+  const fhirServerIndex = index || 0;
   const system = patientId.system;
   const value = patientId.value;
 
-  MOCK_FHIR_SERVERS[0]
+  MOCK_FHIR_SERVERS[fhirServerIndex]
     .get(`/Patient?identifier=${system}|${value}&_summary=true`)
     .reply(200, PATIENT_RESULTS_BUNDLE);
 
-  _.slice(MOCK_FHIR_SERVERS, 1).forEach(mockServer => {
-    mockServer
+  for (var i = 0; i < MOCK_FHIR_SERVERS.length; i++) {
+    if (i == index) continue;
+
+    MOCK_FHIR_SERVERS[i]
       .get(`/Patient?identifier=${system}|${value}&_summary=true`)
       .reply(200, EMPTY_BUNDLE);
-  });
+  }
 }
 
-function setupMockOrganization(url, organizationResource) {
-  MOCK_FHIR_SERVERS[0].get(url).reply(200, organizationResource);
+function setupMockOrganization(url, organizationResource, howManyRequests) {
+  const numberOfTimes = howManyRequests || 1;
+  MOCK_FHIR_SERVERS[0]
+    .get(url)
+    .times(numberOfTimes)
+    .reply(200, organizationResource);
 }
 
-function setupMockConsent(scope, consent) {
+function setupMockConsent(scope, consent, index, patientId) {
+  const fhirServerIndex = index || 0;
+  const fhirPatientId = patientId || "Patient/52";
+
   const CONSENT_RESULTS_BUNDLE = consent
     ? _.set(
         _.set(
@@ -52,9 +62,17 @@ function setupMockConsent(scope, consent) {
       )
     : EMPTY_BUNDLE;
 
-  MOCK_FHIR_SERVERS[0]
-    .get(`/Consent?patient=Patient/52&scope=${scope}`)
+  MOCK_FHIR_SERVERS[fhirServerIndex]
+    .get(`/Consent?patient=${fhirPatientId}&scope=${scope}`)
     .reply(200, CONSENT_RESULTS_BUNDLE);
+
+  for (var i = 0; i < MOCK_FHIR_SERVERS.length; i++) {
+    if (i == index) continue;
+
+    MOCK_FHIR_SERVERS[i]
+      .get(`/Consent?patient=${fhirPatientId}&scope=${scope}`)
+      .reply(200, EMPTY_BUNDLE);
+  }
 }
 
 module.exports = {
