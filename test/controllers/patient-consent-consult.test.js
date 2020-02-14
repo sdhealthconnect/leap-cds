@@ -1,4 +1,6 @@
 const _ = require("lodash");
+const nock = require("nock");
+
 const request = require("supertest");
 const { app } = require("../../app");
 const {
@@ -15,6 +17,10 @@ const CONSENT_OPTOUT = _.set(
 );
 
 const HOOK_ENDPOINT = "/cds-services/patient-consent-consult";
+
+afterEach(() => {
+  nock.cleanAll();
+});
 
 it("should return 400 on bad query", async () => {
   expect.assertions(4);

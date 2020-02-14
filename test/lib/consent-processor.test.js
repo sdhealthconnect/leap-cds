@@ -1,4 +1,5 @@
 const _ = require("lodash");
+const nock = require("nock");
 
 const {
   setupMockOrganization,
@@ -80,6 +81,10 @@ const QUERY = {
     ]
   }
 };
+
+afterEach(() => {
+  nock.cleanAll();
+});
 
 it("active optin consent", async () => {
   expect.assertions(1);
@@ -364,7 +369,8 @@ it("more recent consent takes precedence", async () => {
       BASE_CONSENT,
       "provision.provision.actor[0].reference.reference"
     )}`,
-    ORGANIZATION
+    ORGANIZATION,
+    2
   );
 
   const decision = await processDecision(
