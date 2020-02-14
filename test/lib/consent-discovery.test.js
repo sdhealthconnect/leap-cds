@@ -19,14 +19,14 @@ it("should return an array of consents from all servers", async () => {
   setupMockPatient({ system: "ssn", value: "111111111" });
   setupMockConsent("", CONSENT);
 
-  let consents = await fetchConsents({ system: "ssn", value: "111111111" });
+  let consents = await fetchConsents([{ system: "ssn", value: "111111111" }]);
   expect(consents).toHaveLength(1);
 
   setupMockPatient({ system: "ssn", value: "111111111" });
   setupMockConsent("patient-privacy", CONSENT);
 
   consents = await fetchConsents(
-    { system: "ssn", value: "111111111" },
+    [{ system: "ssn", value: "111111111" }],
     "patient-privacy"
   );
   expect(consents).toHaveLength(1);
@@ -35,7 +35,7 @@ it("should return an array of consents from all servers", async () => {
 it("should throw an exception if consent servers don't respond.", async () => {
   expect.assertions(1);
   try {
-    await fetchConsents({ system: "ssn", value: "111111111" });
+    await fetchConsents([{ system: "ssn", value: "111111111" }]);
   } catch (e) {
     expect(e).toMatchObject({
       error: "service_unavailable"

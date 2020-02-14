@@ -56,10 +56,12 @@ const REQUEST = {
   hook: "patient-consent-consult",
   hookInstance: "1234",
   context: {
-    patientId: {
-      system: "http://hl7.org/fhir/sid/us-medicare",
-      value: "0000-000-0000"
-    },
+    patientId: [
+      {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
+      }
+    ],
     scope: "patient-privacy",
     actor: [
       {
@@ -166,7 +168,6 @@ it("should return 200 and an array including a consent deny card with an OPTOUT 
     ])
   });
 });
-
 
 it("should return 200 and an array including a consent permit card with obligations when a consent with security label provisions applies", async () => {
   expect.assertions(2);

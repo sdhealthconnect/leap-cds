@@ -64,10 +64,12 @@ const QUERY = {
   hook: "patient-consent-consult",
   hookInstance: "1",
   context: {
-    patientId: {
-      system: "http://hl7.org/fhir/sid/us-medicare",
-      value: "0000-000-0000"
-    },
+    patientId: [
+      {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
+      }
+    ],
     scope: "patient-privacy",
     purposeOfUse: "TREAT",
     actor: [
