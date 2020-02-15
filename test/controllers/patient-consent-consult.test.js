@@ -1,4 +1,6 @@
 const _ = require("lodash");
+const nock = require("nock");
+
 const request = require("supertest");
 const { app } = require("../../app");
 const {
@@ -15,6 +17,10 @@ const CONSENT_OPTOUT = _.set(
 );
 
 const HOOK_ENDPOINT = "/cds-services/patient-consent-consult";
+
+afterEach(() => {
+  nock.cleanAll();
+});
 
 it("should return 400 on bad query", async () => {
   expect.assertions(4);
@@ -56,10 +62,12 @@ const REQUEST = {
   hook: "patient-consent-consult",
   hookInstance: "1234",
   context: {
-    patientId: {
-      system: "http://hl7.org/fhir/sid/us-medicare",
-      value: "0000-000-0000"
-    },
+    patientId: [
+      {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
+      }
+    ],
     scope: "patient-privacy",
     actor: [
       {
@@ -166,7 +174,6 @@ it("should return 200 and an array including a consent deny card with an OPTOUT 
     ])
   });
 });
-
 
 it("should return 200 and an array including a consent permit card with obligations when a consent with security label provisions applies", async () => {
   expect.assertions(2);

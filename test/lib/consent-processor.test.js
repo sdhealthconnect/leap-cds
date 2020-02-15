@@ -1,4 +1,5 @@
 const _ = require("lodash");
+const nock = require("nock");
 
 const {
   setupMockOrganization,
@@ -64,10 +65,12 @@ const QUERY = {
   hook: "patient-consent-consult",
   hookInstance: "1",
   context: {
-    patientId: {
-      system: "http://hl7.org/fhir/sid/us-medicare",
-      value: "0000-000-0000"
-    },
+    patientId: [
+      {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
+      }
+    ],
     scope: "patient-privacy",
     purposeOfUse: "TREAT",
     actor: [
@@ -78,6 +81,10 @@ const QUERY = {
     ]
   }
 };
+
+afterEach(() => {
+  nock.cleanAll();
+});
 
 it("active optin consent", async () => {
   expect.assertions(1);
@@ -362,7 +369,8 @@ it("more recent consent takes precedence", async () => {
       BASE_CONSENT,
       "provision.provision.actor[0].reference.reference"
     )}`,
-    ORGANIZATION
+    ORGANIZATION,
+    2
   );
 
   const decision = await processDecision(

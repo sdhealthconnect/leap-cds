@@ -55,18 +55,21 @@
         },
         "patientId": {
           "description": "identity of the patient whose consent is being considered",
-          "type": "object",
-          "properties": {
-            "system": {
-              "description": "system URI for the patient identifier (see https://www.hl7.org/fhir/identifier-registry.html)",
-              "type": "string"
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "system": {
+                "description": "system URI for the patient identifier (see https://www.hl7.org/fhir/identifier-registry.html)",
+                "type": "string"
+              },
+              "value": {
+                "description": "value of the patient identifier",
+                "type": "string"
+              }
             },
-            "value": {
-              "description": "value of the patient identifier",
-              "type": "string"
-            }
-          },
-          "required": ["value"]
+            "required": ["value"]
+          }
         }
       },
       "required": ["patientId", "scope"]

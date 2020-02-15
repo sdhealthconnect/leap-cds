@@ -7,10 +7,10 @@ async function hook(req, res, next) {
   try {
     validateRequest(req);
 
-    const patientId = req.body.context.patientId;
+    const patientIds = req.body.context.patientId;
     const scope = req.body.context.scope;
 
-    const consentsBundle = await fetchConsents(patientId, scope);
+    const consentsBundle = await fetchConsents(patientIds, scope);
     const decisionEntry = await processDecision(
       consentsBundle,
       req.body.context
