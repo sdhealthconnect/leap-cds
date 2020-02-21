@@ -11,20 +11,11 @@ const { PURPOSE_OF_USE_SYSTEM } = require("../../lib/consent-valuesets");
 const { processDecision } = require("../../lib/consent-processor");
 
 const ORGANIZATION = require("../fixtures/organizations/org-good-health.json");
-const BASE_CONSENT = require("../fixtures/consents/consent-boris.json");
+
+const BASE_CONSENT = require("../fixtures/consents/consent-boris-optin.json");
 const ACTIVE_PRIVACY_CONSENT = BASE_CONSENT;
-
-const INACTIVE_PRIVACY_CONSENT = _.set(
-  _.cloneDeep(BASE_CONSENT),
-  "status",
-  "inactive"
-);
-
-const EXPIRED_PRIVACY_CONSENT = _.set(
-  _.cloneDeep(BASE_CONSENT),
-  "provision.period.end",
-  new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString()
-);
+const INACTIVE_PRIVACY_CONSENT = require("../fixtures/consents/consent-boris-inactive.json");
+const EXPIRED_PRIVACY_CONSENT = require("../fixtures/consents/consent-boris-expired.json");
 
 const NOT_YET_VALID_PRIVACY_CONSENT = _.set(
   _.cloneDeep(BASE_CONSENT),
@@ -32,28 +23,9 @@ const NOT_YET_VALID_PRIVACY_CONSENT = _.set(
   new Date(Date.now() + 1000 * 60 * 60 * 48).toISOString()
 );
 
-const ACTIVE_RESEARCH_CONSENT = _.set(
-  _.cloneDeep(BASE_CONSENT),
-  "scope.coding[0].code",
-  "research"
-);
-
-const ACTIVE_PRIVACY_OPTOUT_CONSENT = _.set(
-  _.cloneDeep(BASE_CONSENT),
-  "policyRule.coding[0].code",
-  "OPTOUT"
-);
-
-const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = _.set(
-  _.cloneDeep(BASE_CONSENT),
-  "provision.provision.securityLabel",
-  [
-    {
-      system: "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
-      code: "R"
-    }
-  ]
-);
+const ACTIVE_RESEARCH_CONSENT = require("../fixtures/consents/consent-boris-research.json");
+const ACTIVE_PRIVACY_OPTOUT_CONSENT = require("../fixtures/consents/consent-boris-optout.json");
+const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-label.json");
 
 const OLDER_ACTIVE_PRIVACY_OPTOUT_CONSENT = _.set(
   _.cloneDeep(ACTIVE_PRIVACY_OPTOUT_CONSENT),
