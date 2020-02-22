@@ -9,12 +9,8 @@ const {
   setupMockOrganization
 } = require("../common/setup-mock-consent-servers");
 
-const CONSENT_OPTIN = require("../fixtures/consents/consent-boris.json");
-const CONSENT_OPTOUT = _.set(
-  _.cloneDeep(CONSENT_OPTIN),
-  "policyRule.coding[0].code",
-  "OPTOUT"
-);
+const CONSENT_OPTIN = require("../fixtures/consents/consent-boris-optin.json");
+const CONSENT_OPTOUT = require("../fixtures/consents/consent-boris-optout.json");
 
 const HOOK_ENDPOINT = "/cds-services/patient-consent-consult";
 
