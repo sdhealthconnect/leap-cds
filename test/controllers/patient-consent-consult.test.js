@@ -174,16 +174,7 @@ it("should return 200 and an array including a consent deny card with an OPTOUT 
 it("should return 200 and an array including a consent permit card with obligations when a consent with security label provisions applies", async () => {
   expect.assertions(2);
 
-  const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = _.set(
-    _.cloneDeep(CONSENT_OPTIN),
-    "provision.provision.securityLabel",
-    [
-      {
-        system: "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
-        code: "R"
-      }
-    ]
-  );
+  const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-label.json");
 
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent(
