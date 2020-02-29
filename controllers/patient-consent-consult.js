@@ -2,6 +2,7 @@ const { hookRequestValidator } = require("../lib/validators");
 const { asCard } = require("../lib/consent-decisions");
 const { processDecision } = require("../lib/consent-processor");
 const { fetchConsents } = require("../lib/consent-discovery");
+const logger = require("../lib/logger");
 
 async function hook(req, res, next) {
   try {
@@ -15,7 +16,13 @@ async function hook(req, res, next) {
       consentsBundle,
       req.body.context
     );
-        
+
+    logger.debug(
+      `Request: ${req.body.hookInstance}, Consents: ${consentsBundle.map(
+        consent => consent.fullUrl
+      )}, Decision: ${JSON.stringify(decisionEntry)}`
+    );
+
     res.send({
       cards: [asCard(decisionEntry)]
     });
