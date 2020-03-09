@@ -103,7 +103,10 @@ it("should return 200 and an array including a consent permit card with an OPTIN
     cards: expect.arrayContaining([
       expect.objectContaining({
         summary: "CONSENT_PERMIT",
-        extension: { Decision: "Permit", Obligations: [] }
+        extension: {
+          decision: "CONSENT_PERMIT",
+          obligations: []
+        }
       })
     ])
   });
@@ -137,7 +140,10 @@ it("should return 200 and an array including a consent deny card with an OPTIN c
     cards: expect.arrayContaining([
       expect.objectContaining({
         summary: "CONSENT_DENY",
-        extension: { Decision: "Deny" }
+        extension: {
+          decision: "CONSENT_DENY",
+          obligations: []
+        }
       })
     ])
   });
@@ -165,7 +171,10 @@ it("should return 200 and an array including a consent deny card with an OPTOUT 
     cards: expect.arrayContaining([
       expect.objectContaining({
         summary: "CONSENT_DENY",
-        extension: { Decision: "Deny" }
+        extension: {
+          decision: "CONSENT_DENY",
+          obligations: []
+        }
       })
     ])
   });
@@ -206,25 +215,22 @@ it("should return 200 and an array including a consent permit card with obligati
       expect.objectContaining({
         summary: "CONSENT_PERMIT",
         extension: {
-          Decision: "Permit",
-          Obligations: [
+          decision: "CONSENT_PERMIT",
+          obligations: [
             {
-              Id: {
+              id: {
                 system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
                 code: "REDACT"
               },
-              AttributeAssignment: [
-                {
-                  AttributeId: "labels",
-                  Value: [
-                    {
-                      system:
-                        "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
-                      code: "R"
-                    }
-                  ]
-                }
-              ]
+              parameters: {
+                labels: [
+                  {
+                    system:
+                      "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+                    code: "R"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -248,7 +254,10 @@ it("should return 200 and an array including a NO_CONSENT card when no consent e
     cards: expect.arrayContaining([
       expect.objectContaining({
         summary: "NO_CONSENT",
-        extension: { Decision: "NotApplicable" }
+        extension: {
+          decision: "NO_CONSENT",
+          obligations: []
+        }
       })
     ])
   });

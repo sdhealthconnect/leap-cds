@@ -1,5 +1,5 @@
 const { hookRequestValidator } = require("../lib/validators");
-const { asCard } = require("../lib/consent-decisions");
+const { asCard } = require("../lib/consent-decision-card");
 const { processDecision } = require("../lib/consent-processor");
 const { fetchConsents } = require("../lib/consent-discovery");
 const logger = require("../lib/logger");
