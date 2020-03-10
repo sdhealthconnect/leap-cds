@@ -1,6 +1,6 @@
 const _ = require("lodash");
 const { validateXacmlRequest } = require("../lib/validators");
-const { asCard } = require("../lib/consent-decision-card");
+const { asXacmlResponse } = require("../lib/consent-decision-xacml");
 const { processDecision } = require("../lib/consent-processor");
 const { fetchConsents } = require("../lib/consent-discovery");
 const logger = require("../lib/logger");
@@ -23,9 +23,7 @@ async function post(req, res, next) {
       )}, Decision: ${JSON.stringify(decisionEntry)}`
     );
 
-    res.send({
-      cards: [asCard(decisionEntry)]
-    });
+    res.send(asXacmlResponse(decisionEntry));
   } catch (e) {
     next(e);
   }
