@@ -1,12 +1,12 @@
-const { hookRequestValidator } = require("../lib/validators");
+const { validateHookRequest } = require("../lib/validators");
 const { asCard } = require("../lib/consent-decision-card");
 const { processDecision } = require("../lib/consent-processor");
 const { fetchConsents } = require("../lib/consent-discovery");
 const logger = require("../lib/logger");
 
-async function hook(req, res, next) {
+async function post(req, res, next) {
   try {
-    validateRequest(req);
+    validateHookRequest(req);
 
     const patientIds = req.body.context.patientId;
     const scope = req.body.context.scope;
@@ -31,25 +31,6 @@ async function hook(req, res, next) {
   }
 }
 
-function validateRequest(req) {
-  const body = req.body;
-  if (!hookRequestValidator(body)) {
-    const errorMessages = prettifySchemaValidationErrors(
-      hookRequestValidator.errors
-    );
-    throw {
-      httpCode: 400,
-      error: "bad_request",
-      errorMessage: `Invalid request: ${errorMessages}`
-    };
-  }
-}
-
-function prettifySchemaValidationErrors(givenErrors) {
-  const errors = givenErrors || {};
-  return errors.map(error => `${error.dataPath} ${error.message}`).join("; ");
-}
-
 module.exports = {
-  hook
+  post
 };

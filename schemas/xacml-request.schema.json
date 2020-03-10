@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/sdhealthconnect/leap-cds/schemas/xacml-request.schema.json",
+  "title": "Patient Consent Consult XACML Request",
+  "description": "Patient Consent Consult XACML Request",
+  "type": "object",
+  "properties": {
+    "Request": {
+      "type": "object",
+      "properties": {
+        "AccessSubject": {
+          "type": "array",
+          "contains": {
+            "type": "object",
+            "properties": {
+              "Attribute": {
+                "type": "array",
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "AttributeId": {
+                      "type": "string",
+                      "pattern": "actor"
+                    },
+                    "Value": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "system": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["system", "value"]
+                      }
+                    }
+                  },
+                  "required": ["AttributeId", "Value"]
+                }
+              }
+            },
+            "required": ["Attribute"]
+          }
+        },
+        "Action": {
+          "type": "array",
+          "contains": {
+            "type": "object",
+            "properties": {
+              "Attribute": {
+                "type": "array",
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "AttributeId": {
+                      "type": "string",
+                      "pattern": "scope"
+                    },
+                    "Value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["AttributeId", "Value"]
+                }
+              }
+            },
+            "required": ["Attribute"]
+          }
+        },
+        "Resource": {
+          "type": "array",
+          "contains": {
+            "type": "object",
+            "properties": {
+              "Attribute": {
+                "type": "array",
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "AttributeId": {
+                      "type": "string",
+                      "pattern": "patientId"
+                    },
+                    "Value": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "system": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["system", "value"]
+                      }
+                    }
+                  },
+                  "required": ["AttributeId", "Value"]
+                }
+              }
+            },
+            "required": ["Attribute"]
+          }
+        }
+      },
+      "required": ["AccessSubject", "Action", "Resource"]
+    }
+  },
+  "required": ["Request"]
+}
