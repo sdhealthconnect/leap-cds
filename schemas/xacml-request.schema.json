@@ -3,6 +3,20 @@
   "$id": "https://github.com/sdhealthconnect/leap-cds/schemas/xacml-request.schema.json",
   "title": "Patient Consent Consult XACML Request",
   "description": "Patient Consent Consult XACML Request",
+  "definitions": {
+    "system-value": {
+      "type": "object",
+      "properties": {
+        "system": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": ["system", "value"]
+    }
+  },
   "type": "object",
   "properties": {
     "Request": {
@@ -26,16 +40,7 @@
                       "type": "array",
                       "minItems": 1,
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "system": {
-                            "type": "string"
-                          },
-                          "value": {
-                            "type": "string"
-                          }
-                        },
-                        "required": ["system", "value"]
+                        "$ref": "#/definitions/system-value"
                       }
                     }
                   },
@@ -89,16 +94,7 @@
                       "type": "array",
                       "minItems": 1,
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "system": {
-                            "type": "string"
-                          },
-                          "value": {
-                            "type": "string"
-                          }
-                        },
-                        "required": ["system", "value"]
+                        "$ref": "#/definitions/system-value"
                       }
                     }
                   },
