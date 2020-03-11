@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/sdhealthconnect/leap-cds/schemas/patient-consent-consult-hook-response.schema.json",
+  "title": "Patient Consent Consult Hook Response",
+  "description": "Patient Consent Consult Hook Response",
+  "definitions": {
+    "system-code": {
+      "type": "object",
+      "properties": {
+        "system": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        }
+      },
+      "required": ["system", "code"]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "cards": {
+      "type": "array",
+      "contains": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "type": "string",
+            "enum": ["CONSENT_PERMIT", "CONSENT_DENY", "NO_CONSENT"]
+          },
+          "detail": {
+            "type": "string"
+          },
+          "indicator": {
+            "type": "string",
+            "enum": ["info", "warning", "critical"]
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": ["label", "url"]
+          },
+          "extension": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": ["CONSENT_PERMIT", "CONSENT_DENY", "NO_CONSENT"]
+              },
+              "obligations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/definitions/system-code"
+                    },
+                    "parameters": {
+                      "type": "object",
+                      "properties": {
+                        "labels": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/definitions/system-code"
+                          }
+                        },
+                        "exceptAnyOfLabels": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/definitions/system-code"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": ["id"]
+                }
+              }
+            },
+            "required": []
+          }
+        },
+        "required": ["summary", "detail", "indicator", "source", "extension"]
+      }
+    }
+  },
+  "required": ["cards"]
+}
