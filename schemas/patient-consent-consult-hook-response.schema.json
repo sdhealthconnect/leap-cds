@@ -15,6 +15,10 @@
         }
       },
       "required": ["system", "code"]
+    },
+    "consent-decision": {
+      "type": "string",
+      "enum": ["CONSENT_PERMIT", "CONSENT_DENY", "NO_CONSENT"]
     }
   },
   "type": "object",
@@ -25,8 +29,7 @@
         "type": "object",
         "properties": {
           "summary": {
-            "type": "string",
-            "enum": ["CONSENT_PERMIT", "CONSENT_DENY", "NO_CONSENT"]
+            "$ref": "#/definitions/consent-decision"
           },
           "detail": {
             "type": "string"
@@ -51,8 +54,7 @@
             "type": "object",
             "properties": {
               "decision": {
-                "type": "string",
-                "enum": ["CONSENT_PERMIT", "CONSENT_DENY", "NO_CONSENT"]
+                "$ref": "#/definitions/consent-decision"
               },
               "obligations": {
                 "type": "array",
@@ -84,7 +86,7 @@
                 }
               }
             },
-            "required": []
+            "required": ["decision"]
           }
         },
         "required": ["summary", "detail", "indicator", "source", "extension"]
