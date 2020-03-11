@@ -18,54 +18,7 @@ afterEach(() => {
   nock.cleanAll();
 });
 
-const REQUEST = {
-  Request: {
-    AccessSubject: [
-      {
-        Attribute: [
-          {
-            AttributeId: "actor",
-            Value: [
-              {
-                system: "test-system",
-                value: "test-value"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    Action: [
-      {
-        Attribute: [
-          {
-            AttributeId: "scope",
-            Value: "patient-privacy"
-          },
-          {
-            AttributeId: "purposeOfUse",
-            Value: "TREAT"
-          }
-        ]
-      }
-    ],
-    Resource: [
-      {
-        Attribute: [
-          {
-            AttributeId: "patientId",
-            Value: [
-              {
-                system: "http://hl7.org/fhir/sid/us-medicare",
-                value: "0000-000-0000"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-};
+const REQUEST = require("../fixtures/request-samples/xacml-request.json");
 
 const MOCK_PATIENT_ID = {
   system: "http://hl7.org/fhir/sid/us-medicare",

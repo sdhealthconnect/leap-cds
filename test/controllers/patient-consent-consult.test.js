@@ -1,6 +1,8 @@
 const _ = require("lodash");
 const nock = require("nock");
 
+const Ajv = require("ajv");
+
 const request = require("supertest");
 const { app } = require("../../app");
 const {
@@ -54,25 +56,7 @@ it("should return 400 on wrong hook name", async () => {
   expect(res.body.errorMessage).toMatch("patient-consent-consult");
 });
 
-const REQUEST = {
-  hook: "patient-consent-consult",
-  hookInstance: "1234",
-  context: {
-    patientId: [
-      {
-        system: "http://hl7.org/fhir/sid/us-medicare",
-        value: "0000-000-0000"
-      }
-    ],
-    scope: "patient-privacy",
-    actor: [
-      {
-        system: "test-system",
-        value: "test-value"
-      }
-    ]
-  }
-};
+const REQUEST = require("../fixtures/request-samples/patient-consent-consult-hook-request.json");
 
 const MOCK_PATIENT_ID = {
   system: "http://hl7.org/fhir/sid/us-medicare",
@@ -181,7 +165,7 @@ it("should return 200 and an array including a consent deny card with an OPTOUT 
 });
 
 it("should return 200 and an array including a consent permit card with obligations when a consent with security label provisions applies", async () => {
-  expect.assertions(2);
+  expect.assertions(3);
 
   const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-label.json");
 
@@ -237,6 +221,12 @@ it("should return 200 and an array including a consent permit card with obligati
       })
     ])
   });
+
+  const responseSchema = require("../../schemas/patient-consent-consult-hook-response.schema.json");
+  const ajv = new Ajv();
+  const responseValidator = ajv.compile(responseSchema);
+  const validationResults = responseValidator(res.body);
+  expect(validationResults).toEqual(true);
 });
 
 it("should return 200 and an array including a NO_CONSENT card when no consent exists", async () => {

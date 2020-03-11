@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/sdhealthconnect/leap-cds/schemas/xacml-response.schema.json",
+  "title": "Patient Consent Consult XACML Response",
+  "description": "Patient Consent Consult XACML Response",
+  "type": "object",
+  "properties": {
+    "Response": {
+      "type": "array",
+      "contains": {
+        "type": "object",
+        "properties": {
+          "Decision": {
+            "type": "string",
+            "enum": ["Permit", "Deny", "NotApplicable"]
+          },
+          "Obligations": {
+            "type": "array",
+            "contains": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "object",
+                  "properties": {
+                    "system": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["system", "code"]
+                },
+                "AttributeAssignment": {
+                  "type": "array",
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "AttributeId": {
+                        "type": "string"
+                      },
+                      "Value": {
+                        "type": "array"
+                      }
+                    }
+                  }
+                }
+              },
+              "required": ["Id"]
+            }
+          }
+        },
+        "required": ["Decision"]
+      }
+    }
+  },
+  "required": ["Response"]
+}

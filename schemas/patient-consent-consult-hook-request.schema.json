@@ -3,6 +3,20 @@
   "$id": "https://github.com/sdhealthconnect/leap-cds/schemas/patient-consent-consult-hook-request.schema.json",
   "title": "Patient Consent Consult Hook Request",
   "description": "Patient Consent Consult Hook Request",
+  "definitions": {
+    "system-value": {
+      "type": "object",
+      "properties": {
+        "system": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": ["system", "value"]
+    }
+  },
   "type": "object",
   "properties": {
     "hook": {
@@ -21,18 +35,7 @@
           "description": "identifiers of the actor",
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "system": {
-                "description": "system URI for the actor identifier",
-                "type": "string"
-              },
-              "value": {
-                "description": "value of the actor identifier",
-                "type": "string"
-              }
-            },
-            "required": ["system", "value"]
+            "$ref": "#/definitions/system-value"
           }
         },
         "purposeOfUse": {
@@ -57,18 +60,7 @@
           "description": "identity of the patient whose consent is being considered",
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "system": {
-                "description": "system URI for the patient identifier (see https://www.hl7.org/fhir/identifier-registry.html)",
-                "type": "string"
-              },
-              "value": {
-                "description": "value of the patient identifier",
-                "type": "string"
-              }
-            },
-            "required": ["value"]
+            "$ref": "#/definitions/system-value"
           }
         }
       },
