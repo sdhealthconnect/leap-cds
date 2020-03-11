@@ -56,25 +56,7 @@ it("should return 400 on wrong hook name", async () => {
   expect(res.body.errorMessage).toMatch("patient-consent-consult");
 });
 
-const REQUEST = {
-  hook: "patient-consent-consult",
-  hookInstance: "1234",
-  context: {
-    patientId: [
-      {
-        system: "http://hl7.org/fhir/sid/us-medicare",
-        value: "0000-000-0000"
-      }
-    ],
-    scope: "patient-privacy",
-    actor: [
-      {
-        system: "test-system",
-        value: "test-value"
-      }
-    ]
-  }
-};
+const REQUEST = require("../fixtures/request-samples/patient-consent-consult-hook-request.json");
 
 const MOCK_PATIENT_ID = {
   system: "http://hl7.org/fhir/sid/us-medicare",
