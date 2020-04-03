@@ -1,9 +1,8 @@
 ---
-layout: default
-title: General Architecture of the LEAP Consent Decision Service (CDS)
+layout: post
+title: General Architecture of LEAP Consent Decision Service (CDS)
+author: Mohammad Jafari
 categories: [blog]
 tags: [architecture, cds]
 ---
-
-## General Architecture of the LEAP Consent Decision Service (CDS)
 TBD.
