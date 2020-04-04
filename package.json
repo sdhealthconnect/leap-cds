@@ -41,6 +41,7 @@
     "morgan": "^1.10.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
+    "superagent": "^5.2.2",
     "winston": "^3.2.1"
   }
 }
