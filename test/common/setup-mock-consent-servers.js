@@ -26,14 +26,16 @@ function setupMockPatient(patientId, index) {
   const value = patientId.value;
 
   MOCK_FHIR_SERVERS[fhirServerIndex]
-    .get(`/Patient?identifier=${system}|${value}&_summary=true`)
+    .get("/Patient")
+    .query({ identifier: `${system}|${value}`, _summary: "true" })
     .reply(200, PATIENT_RESULTS_BUNDLE);
 
   for (var i = 0; i < MOCK_FHIR_SERVERS.length; i++) {
     if (i == index) continue;
 
     MOCK_FHIR_SERVERS[i]
-      .get(`/Patient?identifier=${system}|${value}&_summary=true`)
+      .get("/Patient")
+      .query({ identifier: `${system}|${value}`, _summary: "true" })
       .reply(200, EMPTY_BUNDLE);
   }
 }
