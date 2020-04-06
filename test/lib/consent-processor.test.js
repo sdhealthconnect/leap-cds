@@ -269,7 +269,7 @@ it("active optin consent with security label provision", async () => {
           code: "REDACT"
         },
         parameters: {
-          labels: [
+          codes: [
             {
               system:
                 "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
@@ -321,7 +321,7 @@ it("active optin consent with array of security label provisions", async () => {
           code: "REDACT"
         },
         parameters: {
-          labels: [
+          codes: [
             {
               system:
                 "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
@@ -336,7 +336,7 @@ it("active optin consent with array of security label provisions", async () => {
           code: "REDACT"
         },
         parameters: {
-          labels: [
+          codes: [
             {
               system:
                 "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",

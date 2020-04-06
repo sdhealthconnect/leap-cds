@@ -207,7 +207,7 @@ it("should return 200 and an array including a consent permit card with obligati
                 code: "REDACT"
               },
               parameters: {
-                labels: [
+                codes: [
                   {
                     system:
                       "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
