@@ -150,7 +150,7 @@ it("should return 200 and a consent permit response with obligations when a cons
             },
             AttributeAssignment: [
               {
-                AttributeId: "labels",
+                AttributeId: "codes",
                 Value: [
                   {
                     system:
