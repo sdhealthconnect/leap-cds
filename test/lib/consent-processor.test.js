@@ -322,35 +322,25 @@ it("active optin consent with array of security label provisions", async () => {
           code: "REDACT"
         },
         parameters: {
-          codes: [
+          codes: expect.arrayContaining([
             {
               system:
                 "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
               code: "R"
-            }
-          ]
-        }
-      },
-      {
-        id: {
-          system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-          code: "REDACT"
-        },
-        parameters: {
-          codes: [
+            },
             {
               system:
                 "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
               code: "V"
             }
-          ]
+          ])
         }
       }
     ])
   );
 });
 
-it.only("active optin consent with security label and content class provisions", async () => {
+it("active optin consent with security label and content class provisions", async () => {
   expect.assertions(2);
 
   setupMockOrganization(
