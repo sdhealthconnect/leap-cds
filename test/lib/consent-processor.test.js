@@ -269,7 +269,7 @@ it("active optin consent with security label provision", async () => {
           code: "REDACT"
         },
         parameters: {
-          labels: [
+          codes: [
             {
               system:
                 "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
@@ -321,26 +321,125 @@ it("active optin consent with array of security label provisions", async () => {
           code: "REDACT"
         },
         parameters: {
-          labels: [
+          codes: expect.arrayContaining([
             {
               system:
                 "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
               code: "R"
+            },
+            {
+              system:
+                "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+              code: "V"
             }
-          ]
+          ])
         }
+      }
+    ])
+  );
+});
+
+it("active optin consent with security label and content class provisions", async () => {
+  expect.assertions(2);
+  const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-content-class");
+
+  setupMockOrganization(
+    `/${_.get(
+      ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION,
+      "provision.provision[0].actor[0].reference.reference"
+    )}`,
+    ORGANIZATION,
+    2
+  );
+
+  const decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION
+      }
+    ],
+    {
+      patientId: {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
       },
+      scope: "patient-privacy",
+      purposeOfUse: "TREAT",
+      actor: [ORGANIZATION.identifier[0]]
+    }
+  );
+
+  expect(decision.decision).toEqual("CONSENT_PERMIT");
+  expect(decision.obligations).toEqual(
+    expect.arrayContaining([
       {
         id: {
           system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
           code: "REDACT"
         },
         parameters: {
-          labels: [
+          codes: [
             {
               system:
                 "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
-              code: "V"
+              code: "R"
+            },
+            {
+              system: "http://hl7.org/fhir/resource-types",
+              code: "MedicationStatement"
+            }
+          ]
+        }
+      }
+    ])
+  );
+});
+
+it("active optin consent with clinical code provisions", async () => {
+  expect.assertions(2);
+  const ACTIVE_PRIVACY_CONSENT_WITH_CLINICAL_CODE_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-clinical-code");
+
+  setupMockOrganization(
+    `/${_.get(
+      ACTIVE_PRIVACY_CONSENT_WITH_CLINICAL_CODE_PROVISION,
+      "provision.provision[0].actor[0].reference.reference"
+    )}`,
+    ORGANIZATION,
+    2
+  );
+
+  const decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: ACTIVE_PRIVACY_CONSENT_WITH_CLINICAL_CODE_PROVISION
+      }
+    ],
+    {
+      patientId: {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
+      },
+      scope: "patient-privacy",
+      purposeOfUse: "TREAT",
+      actor: [ORGANIZATION.identifier[0]]
+    }
+  );
+
+  expect(decision.decision).toEqual("CONSENT_PERMIT");
+  expect(decision.obligations).toEqual(
+    expect.arrayContaining([
+      {
+        id: {
+          system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          code: "REDACT"
+        },
+        parameters: {
+          codes: [
+            {
+              system: "http://loinc.org/",
+              code: "42828-4"
             }
           ]
         }
