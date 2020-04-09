@@ -25,6 +25,7 @@ const NOT_YET_VALID_PRIVACY_CONSENT = _.set(
 
 const ACTIVE_RESEARCH_CONSENT = require("../fixtures/consents/consent-boris-research.json");
 const ACTIVE_PRIVACY_OPTOUT_CONSENT = require("../fixtures/consents/consent-boris-optout.json");
+const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-content-class");
 const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-label.json");
 const ACTIVE_PRIVACY_CONSENT_WITH_PROVISION_ARRAY = require("../fixtures/consents/consent-boris-provision-array.json");
 
@@ -341,6 +342,62 @@ it("active optin consent with array of security label provisions", async () => {
               system:
                 "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
               code: "V"
+            }
+          ]
+        }
+      }
+    ])
+  );
+});
+
+it.only("active optin consent with security label and content class provisions", async () => {
+  expect.assertions(2);
+
+  setupMockOrganization(
+    `/${_.get(
+      ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION,
+      "provision.provision[0].actor[0].reference.reference"
+    )}`,
+    ORGANIZATION,
+    2
+  );
+
+  const decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION
+      }
+    ],
+    {
+      patientId: {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
+      },
+      scope: "patient-privacy",
+      purposeOfUse: "TREAT",
+      actor: [ORGANIZATION.identifier[0]]
+    }
+  );
+
+  expect(decision.decision).toEqual("CONSENT_PERMIT");
+  expect(decision.obligations).toEqual(
+    expect.arrayContaining([
+      {
+        id: {
+          system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          code: "REDACT"
+        },
+        parameters: {
+          codes: [
+            {
+              system:
+                "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+              code: "R"
+            },
+            {
+              system: "http://hl7.org/fhir/resource-types",
+              code: "MedicationStatement"
             }
           ]
         }
