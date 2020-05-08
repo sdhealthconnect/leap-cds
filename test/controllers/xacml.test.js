@@ -35,7 +35,7 @@ it("should return 200 and a permit card with an OPTIN consent", async () => {
   setupMockOrganization(
     `/${_.get(
       CONSENT_OPTIN,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
   );
@@ -60,7 +60,7 @@ it("should return 200 and a deny response with an OPTIN consent and provision wi
   setupMockOrganization(
     `/${_.get(
       CONSENT_OPTIN,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
   );
@@ -91,7 +91,7 @@ it("should return 200 and a deny response with an OPTOUT consent", async () => {
   setupMockOrganization(
     `/${_.get(
       CONSENT_OPTOUT,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
   );
@@ -121,7 +121,7 @@ it("should return 200 and a consent permit response with obligations when a cons
   setupMockOrganization(
     `/${_.get(
       ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
   );

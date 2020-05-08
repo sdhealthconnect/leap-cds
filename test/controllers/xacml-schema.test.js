@@ -253,7 +253,7 @@ it("should return a response compliant with the response schema", async () => {
   setupMockOrganization(
     `/${_.get(
       ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
   );

@@ -5,10 +5,6 @@
     "versionId": "1",
     "lastUpdated": "2019-11-23T18:32:32.000+00:00"
   },
-  "text": {
-    "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Betterhalf, Boris. SSN:\n            444888888</div>"
-  },
   "identifier": [
     {
       "type": {
@@ -21,6 +17,10 @@
       },
       "system": "http://hl7.org/fhir/sid/us-ssn",
       "value": "111111111"
+    },
+    {
+      "system": "http://sdhealthconnect.github.io/leap/samples/ids",
+      "value": "patient-boris"
     }
   ],
   "active": true,

@@ -1,10 +1,6 @@
 {
   "resourceType": "Consent",
   "status": "active",
-  "text": {
-    "status": "additional",
-    "div": "optin but deny access to everything restricted as well as any MedicationStatement resources to Organization/54."
-  },
   "scope": {
     "coding": [
       {
@@ -88,5 +84,11 @@
         ]
       }
     ]
-  }
+  },
+  "identifier": [
+    {
+      "system": "http://sdhealthconnect.github.io/leap/samples/ids",
+      "value": "consent-boris-deny-restricted-content-class"
+    }
+  ]
 }
