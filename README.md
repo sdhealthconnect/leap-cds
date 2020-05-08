@@ -240,3 +240,19 @@ $ yarn test
 ```
 $ yarn start
 ```
+
+# Test
+You can use `load-fixtures.js` (in the `test-scripts` directory) to set up a quick set of resources on your FHIR server to test this service. This script loads a patient resource, two organization resources, and a consent resource of choice, (from the samples provided in [`test/fixtures`](https://github.com/sdhealthconnect/leap-cds/tree/master/test/fixtures)) to a FHIR server, preparing it to be used as the Consent Store for the LEAP-CDS. The usage is as the following:
+
+```
+$ cd test-scripts
+$ node load-fixtures.js FHIR_BASE CONSENT_FILE_NAME
+```
+in which `FHIR_BASE` is the base URL for your FHIR server and `CONSENT_FILE_NAME` is the file name for one of the consent resources in [`test/fixtures/consents`](https://github.com/sdhealthconnect/leap-cds/tree/master/test/fixtures/consents)).
+For example:
+
+```
+$ node load-fixtures.js http://localhost:8080/fhir consent-boris-deny-restricted-label.json
+```
+
+Note that this script sets the `dateTime` attribute of the consent resource to the current date and time, so that the loaded consent is considered the most recent. 
