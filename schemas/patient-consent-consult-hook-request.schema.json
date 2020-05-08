@@ -40,16 +40,7 @@
         },
         "purposeOfUse": {
           "description": "purpose of use",
-          "type": "string",
-          "enum": [
-            "HMARKT",
-            "HOPERAT",
-            "HPAYMT",
-            "HRESCH",
-            "PATRQT",
-            "TREAT",
-            "PUBHLTH"
-          ]
+          "type": "string"
         },
         "scope": {
           "description": "consent scope",
