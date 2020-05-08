@@ -1,8 +1,8 @@
 # LEAP-CDS
-LEAP Consent Decision Service is a service that enables clients to query patient consent policies applicable to a particular workflow or exchange context and determine whether the action in question is authorized by the patient consent.
+LEAP Consent Decision Service (LEAP-CDS) enables clients to query about the patient consents applicable to a particular workflow or exchange context. The client provides information about the context of the workflow and the LEAP-CDS responds whether the activity in question is authorized by the patient consent and whether any obligations must be enforced. Patient consents are assumed to be stored in FHIR servers known as Consent Stores which must be introduced to the LEAP-CDS as part of the service configuration. For more details on the general architecture of LEAP-CDS, see [here](https://sdhealthconnect.github.io/leap/blog/2020/04/29/architecture.html).
 
 # API
-LEAP CDS provides two API endpoints interfacing to this service:
+LEAP-CDS provides two API endpoints interfacing to this service:
 
 - The CDS Hook interface is based on the specifications for [Clinical Decision Support (CDS) Hooks](https://cds-hooks.org/).
 - The XACML interface is based on the [JSON Profile of XACML](https://docs.oasis-open.org/xacml/xacml-json-http/v1.1/os/xacml-json-http-v1.1-os.html#_Toc5116223). 
@@ -24,31 +24,31 @@ A `POST` request to this endpoint must have the header `Content-Type` set to `ap
   "context": {
     "patientId": [
       {
-        "system": "http://hl7.org/fhir/sid/us-medicare",
-        "value": "0000-000-0000"
+        "system": "http://hl7.org/fhir/sid/us-ssn",
+        "value": "111111111"
       }
     ],
     "scope" : "patient-privacy",
     "purposeOfUse": "TREAT",
     "actor": [
       {
-        "system": "sample-system",
-        "value": "sample-id"
+        "system": "urn:ietf:rfc:3986",
+        "value": "2.16.840.1.113883.20.5"
       }
     ]
   }
 }
 ```
-The `hook` attribute must be set to the hook name, which in this case is `patient-consent-consult`. The hook instance must be set to a unique value identifying the request (these are the requirements from the CDS Hooks specifications and currently have no effects in the behaviour of the Consent Decision Service).
+The `hook` attribute must be set to the hook name, in this case `patient-consent-consult`. The hook instance must be set to a unique value identifying the request (these are the requirements from the CDS Hooks specifications and currently have no effects in the behaviour of the LEAP-CDS).
 
 The `context` attribute must be present and record the context of the query using the following attributes:
 
 | Attribute                   | Description                  | 
 | :---                       |     :---                        | 
 | `scope` _(required)_       | The broad context for the query in order to narrow down the applicable consent type. The values are based on FHIR [consent scope](https://www.hl7.org/fhir/valueset-consent-scope.html), namely: `adr` (advanced care directive), `research`, `patient-privacy`, and `treatment`.                  | 
-| `actor` _(required)_                   | An array containing different identifiers of the actor involved in the context of the query (e.g., recipient organization or the clinician engaged in the workflow). Consents could match based on any of these identifiers. This allows identifying the actor even if different FHIR servers know the actor by different identifiers.     |
-| `patientId` _(required)_   | An array containing all the different identifiers for the patient which can be used to find the patient in different FHIR servers. Each identifier is in the form of a [`system`](https://www.hl7.org/fhir/identifier-registry.html) and `value` pair. A patient who has an identifier matching any of the identifiers in this array is considered a matching patient and any consents associated with that patient will be processed for making consent decisions.                     | 
-| `purposeOfUse`             | Purpose of use in the workflow context.                 | 
+| `actor` _(required)_                   | An array containing different identifiers of the actor involved in the context of the query (e.g., recipient organization, the clinician engaged in the workflow, etc.). Consents could match based on any of these identifiers. This allows identifying the actor to various degrees of granularity (e.g., organization, end-user, etc.) and match with consents applicable to any of the actors. It also ensures that the applicable consents are found even if different FHIR servers know the actor by different identifiers.     |
+| `patientId` _(required)_   | An array containing all the different patient identifiers to ensure that the patient is matched even if identified by different identifiers across different FHIR servers. Each identifier is in the form of a [`system`](https://www.hl7.org/fhir/identifier-registry.html) and `value` pair. A patient who has an identifier matching any of the identifiers in this array is considered a matching patient and any consents associated with that patient will be processed for making consent decisions.                     | 
+| `purposeOfUse`             | Purpose of use in the workflow context (from the [FHIR Purpose of Use valueset](https://www.hl7.org/fhir/v3/PurposeOfUse/vs.html)).              | 
 
 The JSON Schema for request is included in the repository [here](https://github.com/sdhealthconnect/leap-cds/blob/master/schemas/patient-consent-consult-hook-request.schema.json).
 
@@ -89,7 +89,7 @@ The response object is similar to the following example:
   ]
 }
 ```
-Based on the CDS Hooks specifications, the response is in the form of an array of `card` objects each of which indicates some feedback from the server. Currently, the Consent Decision Service returns only a single `card`. The mandatory `source` attribute is currently set to carry the name and URL of the service directly defined as environment variables.
+Based on the CDS Hooks specifications, the response is in the form of an array of `card` objects. The LEAP-CDS returns a single `card` in the response array. The mandatory `source` attribute is currently set to carry the name and URL of the LEAP-CDS service (defined by environment variables).
 
 The `summary` is set to one of the following according to the consent decision:
 
@@ -99,7 +99,7 @@ The `summary` is set to one of the following according to the consent decision:
 | `CONSENT_PERMIT`        | Patient consent permits the current request.  The `indicator` attribute is set to `info` in this case.. |
 | `CONSENT_DENY`          | Patient consent denies the current request. The `indicator` attribute is set to `critical` in this case.. |
 
-The `extension` attribute in the `card` object contains a machine-readable object recording the decision with the following attributes: 
+The `extension` attribute in the `card` contains a machine-readable object recording the decision with the following attributes: 
 
 | Attribute                   | Description          | 
 | :---             |     :---             | 
@@ -136,8 +136,8 @@ A `POST` request to this endpoint must have the header `Content-Type` set to `ap
             "AttributeId":"actor",
             "Value":[
               {
-                "system":"test-system",
-                "value":"test-value"
+                "system":"urn:ietf:rfc:3986",
+                "value":"2.16.840.1.113883.20.5"
               }
             ]
           }
@@ -165,8 +165,8 @@ A `POST` request to this endpoint must have the header `Content-Type` set to `ap
             "AttributeId":"patientId",
             "Value":[
               {
-                "system":"http://hl7.org/fhir/sid/us-medicare",
-                "value":"0000-000-0000"
+                "system":"http://hl7.org/fhir/sid/us-ssn",
+                "value":"111111111"
               }
             ]
           }
@@ -212,11 +212,11 @@ The response from the XACML interface is similar to the following example:
 }
 ```
 
-The response objects follows the [JSON Profile of XACML](https://docs.oasis-open.org/xacml/xacml-json-http/v1.1/os/xacml-json-http-v1.1-os.html#_Toc5116223) and includes a `Response` object with the following attributes: 
+The response follows the [JSON Profile of XACML](https://docs.oasis-open.org/xacml/xacml-json-http/v1.1/os/xacml-json-http-v1.1-os.html#_Toc5116223) and includes a `Response` object with the following attributes: 
 
 | Attribute                   | Description          | 
 | :---             |     :---             | 
-| `Decision`       | `Permit`, `Deny`, or `NotApplicable` (for the case where no applicable consent is found).        |
+| `Decision`       | `Permit`, `Deny`, or `NotApplicable` (for the case where no applicable consent is found, i.e. `NO_CONSENT`).        |
 |`Obligations`| An array of [`Obligation` objects](https://docs.oasis-open.org/xacml/xacml-json-http/v1.1/os/xacml-json-http-v1.1-os.html#_Toc5116231)  conveying additional requirements to be followed by the client.|
 
 Based on the XACML specifications, each `Obligation` objects has an `Id` which identifies the obligation and an `AttributeAssignment` array which specifies a number of parameters for the obligation, in the form of `AttributeId` and `Value` pairs. Currently, only the `REDACT` obligation from the [obligation policy valueset](https://www.hl7.org/fhir/v3/ObligationPolicy/vs.html) is supported and is used on `Permit` decisions with the same parameters as discussed in the CDS Hooks interface above.
