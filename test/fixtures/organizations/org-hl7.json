@@ -29,5 +29,11 @@
       "postalCode": "48104",
       "country": "USA"
     }
+  ],
+  "identifier": [
+    {
+      "system": "http://sdhealthconnect.github.io/leap/samples/ids",
+      "value": "org-hl7"
+    }
   ]
 }

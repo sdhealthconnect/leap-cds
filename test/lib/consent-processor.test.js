@@ -65,7 +65,7 @@ it("active optin consent", async () => {
   setupMockOrganization(
     `/${_.get(
       BASE_CONSENT,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
   );
@@ -91,7 +91,7 @@ it("active but expired or not yet valid optin consent", async () => {
   setupMockOrganization(
     `/${_.get(
       BASE_CONSENT,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
   );
@@ -130,7 +130,7 @@ it("active optin consent with blacklisted recipient actor", async () => {
   setupMockOrganization(
     `/${_.get(
       BASE_CONSENT,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
   );
@@ -165,7 +165,7 @@ it("active optin consent with blacklisted recipient actor based on one of the mu
   setupMockOrganization(
     `/${_.get(
       BASE_CONSENT,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
   );
@@ -200,8 +200,8 @@ it("active optin consent with blacklisted purpose of use", async () => {
   expect.assertions(1);
 
   const CONSENT_WITH_POU_PROVISION = _.cloneDeep(BASE_CONSENT);
-  _.unset(CONSENT_WITH_POU_PROVISION, "provision.provision.actor");
-  _.set(CONSENT_WITH_POU_PROVISION, "provision.provision.purpose", [
+  _.unset(CONSENT_WITH_POU_PROVISION, "provision.provision[0].actor");
+  _.set(CONSENT_WITH_POU_PROVISION, "provision.provision[0].purpose", [
     {
       system: PURPOSE_OF_USE_SYSTEM,
       code: "HMARKT"
@@ -237,7 +237,7 @@ it("active optin consent with security label provision", async () => {
   setupMockOrganization(
     `/${_.get(
       ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
   );
@@ -486,7 +486,7 @@ it("no active optin consent", async () => {
   setupMockOrganization(
     `/${_.get(
       BASE_CONSENT,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
   );
@@ -512,7 +512,7 @@ it("active optin consent with different scope", async () => {
   setupMockOrganization(
     `/${_.get(
       BASE_CONSENT,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
   );
@@ -538,7 +538,7 @@ it("more recent consent takes precedence", async () => {
   setupMockOrganization(
     `/${_.get(
       BASE_CONSENT,
-      "provision.provision.actor[0].reference.reference"
+      "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION,
     2

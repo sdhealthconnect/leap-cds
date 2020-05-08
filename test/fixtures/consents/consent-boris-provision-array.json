@@ -1,9 +1,5 @@
 {
   "resourceType": "Consent",
-  "text": {
-    "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">The default policy is one of implied consent for the provision of care. \n\t  <p>\n\t Withhold or withdraw consent for disclosure to a specific provider organization  \n\t</p><p>\n    Patient &quot;Boris Betterhalf &quot; ex-spouse is a Physician employed by Good Health Clinic.  He would like to withhold consent to disclose any instance of his health information \n   to Good Health Clinic.\n   </p>\n   </div>"
-  },
   "status": "active",
   "scope": {
     "coding": [
@@ -123,5 +119,11 @@
         ]
       }
     ]
-  }
+  },
+  "identifier": [
+    {
+      "system": "http://sdhealthconnect.github.io/leap/samples/ids",
+      "value": "consent-boris-provision-array"
+    }
+  ]
 }
