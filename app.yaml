@@ -5,6 +5,6 @@ basic_scaling:
   idle_timeout: 30m
 handlers:
   - url: /.*
-    secure: always
-    redirect_http_response_code: 301
+#    secure: always
+#    redirect_http_response_code: 301
     script: auto
