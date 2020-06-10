@@ -29,6 +29,12 @@ A `POST` request to this endpoint must have the header `Content-Type` set to `ap
       }
     ],
     "scope" : "patient-privacy",
+    "class": [
+      {
+        "system":"http://hl7.org/fhir/resource-types",
+        "value":"MedicationStatement"
+      }
+    ],
     "purposeOfUse": "TREAT",
     "actor": [
       {
@@ -49,6 +55,7 @@ The `context` attribute must be present and record the context of the query usin
 | `actor` _(required)_                   | An array containing different identifiers of the actor involved in the context of the query (e.g., recipient organization, the clinician engaged in the workflow, etc.). Consents could match based on any of these identifiers. This allows identifying the actor to various degrees of granularity (e.g., organization, end-user, etc.) and match with consents applicable to any of the actors. It also ensures that the applicable consents are found even if different FHIR servers know the actor by different identifiers.     |
 | `patientId` _(required)_   | An array containing all the different patient identifiers to ensure that the patient is matched even if identified by different identifiers across different FHIR servers. Each identifier is in the form of a [`system`](https://www.hl7.org/fhir/identifier-registry.html) and `value` pair. A patient who has an identifier matching any of the identifiers in this array is considered a matching patient and any consents associated with that patient will be processed for making consent decisions.                     | 
 | `purposeOfUse`             | Purpose of use in the workflow context (from the [FHIR Purpose of Use valueset](https://www.hl7.org/fhir/v3/PurposeOfUse/vs.html)).              | 
+| `class`             | An array of content classes in the workflow context. These are codes from the [Content Class Valueset](https://www.hl7.org/fhir/valueset-consent-content-class.html).              | 
 
 The JSON Schema for request is included in the repository [here](https://github.com/sdhealthconnect/leap-cds/blob/master/schemas/patient-consent-consult-hook-request.schema.json).
 
@@ -167,6 +174,15 @@ A `POST` request to this endpoint must have the header `Content-Type` set to `ap
               {
                 "system":"http://hl7.org/fhir/sid/us-ssn",
                 "value":"111111111"
+              }
+            ]
+          },
+          {
+            "AttributeId":"class",
+            "Value":[
+              {
+                "system":"http://hl7.org/fhir/resource-types",
+                "value":"MedicationStatement"
               }
             ]
           }
