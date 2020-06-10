@@ -19,27 +19,27 @@ A `POST` request to this endpoint must have the header `Content-Type` set to `ap
 
 ```json
 {
-  "hook": "patient-consent-consult",
-  "hookInstance": "hook-instance-123",
-  "context": {
-    "patientId": [
+  "hook":"patient-consent-consult",
+  "hookInstance":"hook-instance-123",
+  "context":{
+    "patientId":[
       {
-        "system": "http://hl7.org/fhir/sid/us-ssn",
-        "value": "111111111"
+        "system":"http://hl7.org/fhir/sid/us-ssn",
+        "value":"111111111"
       }
     ],
-    "scope" : "patient-privacy",
-    "class": [
+    "scope":"patient-privacy",
+    "class":[
       {
         "system":"http://hl7.org/fhir/resource-types",
         "value":"MedicationStatement"
       }
     ],
-    "purposeOfUse": "TREAT",
-    "actor": [
+    "purposeOfUse":"TREAT",
+    "actor":[
       {
-        "system": "urn:ietf:rfc:3986",
-        "value": "2.16.840.1.113883.20.5"
+        "system":"urn:ietf:rfc:3986",
+        "value":"2.16.840.1.113883.20.5"
       }
     ]
   }
