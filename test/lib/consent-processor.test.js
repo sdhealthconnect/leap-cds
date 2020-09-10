@@ -16,6 +16,7 @@ const BASE_CONSENT = require("../fixtures/consents/consent-boris-optin.json");
 const ACTIVE_PRIVACY_CONSENT = BASE_CONSENT;
 const INACTIVE_PRIVACY_CONSENT = require("../fixtures/consents/consent-boris-inactive.json");
 const EXPIRED_PRIVACY_CONSENT = require("../fixtures/consents/consent-boris-expired.json");
+const CONSENT_DENY_PRACTITIONER = require("../fixtures/consents/consent-boris-deny-practitioner.json");
 
 const NOT_YET_VALID_PRIVACY_CONSENT = _.set(
   _.cloneDeep(BASE_CONSENT),
@@ -188,6 +189,40 @@ it("active optin consent with blacklisted recipient actor based on one of the mu
         ORGANIZATION.identifier[0],
         { system: "some-other-system", value: "some-other-value" }
       ]
+    }
+  );
+  expect(decision).toMatchObject({
+    decision: "CONSENT_DENY",
+    obligations: []
+  });
+});
+
+it("active optin consent with blacklisted recipient actor of type practitioner", async () => {
+  expect.assertions(1);
+  const PRACTITIONER = require("../fixtures/practitioner/practitioner-dr-bob.json");
+  setupMockOrganization(
+    `/${_.get(
+      CONSENT_DENY_PRACTITIONER,
+      "provision.provision[0].actor[0].reference.reference"
+    )}`,
+    PRACTITIONER
+  );
+
+  const decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: CONSENT_DENY_PRACTITIONER
+      }
+    ],
+    {
+      patientId: {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
+      },
+      scope: "patient-privacy",
+      purposeOfUse: "TREAT",
+      actor: [PRACTITIONER.identifier[0]]
     }
   );
   expect(decision).toMatchObject({
