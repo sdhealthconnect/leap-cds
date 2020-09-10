@@ -48,6 +48,14 @@ function setupMockOrganization(url, organizationResource, howManyRequests) {
     .reply(200, organizationResource);
 }
 
+function setupMockPractitioner(url, practitionerResource, howManyRequests) {
+  const numberOfTimes = howManyRequests || 1;
+  MOCK_FHIR_SERVERS[0]
+    .get(url)
+    .times(numberOfTimes)
+    .reply(200, practitionerResource);
+}
+
 function setupMockConsent(scope, consent, index, patientId) {
   const fhirServerIndex = index || 0;
   const fhirPatientId = patientId || "Patient/52";
@@ -81,6 +89,7 @@ module.exports = {
   setupMockPatient,
   setupMockConsent,
   setupMockOrganization,
+  setupMockPractitioner,
   MOCK_FHIR_SERVERS,
   CONSENT_FHIR_SERVERS
 };
