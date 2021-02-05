@@ -17,6 +17,7 @@ const ACTIVE_PRIVACY_CONSENT = BASE_CONSENT;
 const INACTIVE_PRIVACY_CONSENT = require("../fixtures/consents/consent-boris-inactive.json");
 const EXPIRED_PRIVACY_CONSENT = require("../fixtures/consents/consent-boris-expired.json");
 const CONSENT_DENY_PRACTITIONER = require("../fixtures/consents/consent-boris-deny-practitioner.json");
+const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-content-class");
 
 const NOT_YET_VALID_PRIVACY_CONSENT = _.set(
   _.cloneDeep(BASE_CONSENT),
@@ -376,7 +377,6 @@ it("active optin consent with array of security label provisions", async () => {
 
 it("active optin consent with security label and content class provisions", async () => {
   expect.assertions(2);
-  const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-content-class");
 
   setupMockOrganization(
     `/${_.get(
@@ -433,11 +433,11 @@ it("active optin consent with security label and content class provisions", asyn
 
 it("active optin consent with content class provisions and sec label with request including a class", async () => {
   expect.assertions(2);
-  const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-content-class");
+  const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION_AND_SEC_LABEL = require("../fixtures/consents/consent-boris-deny-restricted-content-class-and-sec-label");
 
   setupMockOrganization(
     `/${_.get(
-      ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION,
+      ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION_AND_SEC_LABEL,
       "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION,
@@ -448,7 +448,7 @@ it("active optin consent with content class provisions and sec label with reques
     [
       {
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
-        resource: ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION
+        resource: ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION_AND_SEC_LABEL
       }
     ],
     {
@@ -462,7 +462,7 @@ it("active optin consent with content class provisions and sec label with reques
       class: [
         {
           system: "http://hl7.org/fhir/resource-types",
-          code: "MedicationStatement"
+          code: "Immunization"
         }
       ]
     }
@@ -663,37 +663,6 @@ it("active optin consent with different scope", async () => {
   );
   expect(decision).toMatchObject({
     decision: "NO_CONSENT",
-    obligations: []
-  });
-});
-
-it("more recent consent takes precedence", async () => {
-  expect.assertions(1);
-
-  setupMockOrganization(
-    `/${_.get(
-      BASE_CONSENT,
-      "provision.provision[0].actor[0].reference.reference"
-    )}`,
-    ORGANIZATION,
-    2
-  );
-
-  const decision = await processDecision(
-    [
-      {
-        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
-        resource: ACTIVE_PRIVACY_CONSENT
-      },
-      {
-        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/2`,
-        resource: OLDER_ACTIVE_PRIVACY_OPTOUT_CONSENT
-      }
-    ],
-    QUERY.context
-  );
-  expect(decision).toMatchObject({
-    decision: "CONSENT_PERMIT",
     obligations: []
   });
 });
