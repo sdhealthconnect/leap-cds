@@ -1,0 +1,44 @@
+{
+  "resourceType": "AuditEvent",
+  "type": {
+    "system": "http://hl7.org/fhir/ValueSet/audit-event-type",
+    "code": "110112",
+    "display": "Query"
+  },
+  "action": "E",
+  "outcome": "0",
+  "outcomeDesc": "[CONSENT_DECISION]",
+  "agent": [
+    {
+      "who": {
+        "identifier": {
+          "id": "client id",
+          "system": "client id system"
+        }
+      }
+    }
+  ],
+  "source": {
+    "observer": {
+      "display": "LEAP Consent Decision Service"
+    },
+    "type": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/security-source-type",
+        "code": "4",
+        "display": "Application Server"
+      }
+    ]
+  },
+  "entity": [
+    {
+      "what": {
+        "reference": "patient ref",
+        "identifier": {
+          "id": "patient identifier",
+          "system": "patient identifier system"
+        }
+      }
+    }
+  ]
+}
