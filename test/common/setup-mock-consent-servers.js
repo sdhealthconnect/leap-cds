@@ -63,7 +63,11 @@ function setupMockConsent(scope, consent, index, patientId) {
   const CONSENT_RESULTS_BUNDLE = consent
     ? _.set(
         _.set(
-          _.set(_.clone(EMPTY_BUNDLE), "entry[0].resource", consent),
+          _.set(
+            _.clone(EMPTY_BUNDLE),
+            "entry[0].resource",
+            _.set(consent, "id", "1")
+          ),
           "entry[0].fullUrl",
           `${CONSENT_FHIR_SERVERS[0]}/Consent/1`
         ),
