@@ -48,6 +48,14 @@ function setupMockOrganization(url, organizationResource, howManyRequests) {
     .reply(200, organizationResource);
 }
 
+function setupMockAuditEndpoint(howManyRequests) {
+  const numberOfTimes = howManyRequests || 1;
+  MOCK_FHIR_SERVERS[0]
+    .post("/AuditEvent")
+    .times(numberOfTimes)
+    .reply(200);
+}
+
 function setupMockPractitioner(url, practitionerResource, howManyRequests) {
   const numberOfTimes = howManyRequests || 1;
   MOCK_FHIR_SERVERS[0]
@@ -94,6 +102,7 @@ module.exports = {
   setupMockConsent,
   setupMockOrganization,
   setupMockPractitioner,
+  setupMockAuditEndpoint,
   MOCK_FHIR_SERVERS,
   CONSENT_FHIR_SERVERS
 };

@@ -8,7 +8,8 @@ const { app } = require("../../app");
 const {
   setupMockPatient,
   setupMockConsent,
-  setupMockOrganization
+  setupMockOrganization,
+  setupMockAuditEndpoint
 } = require("../common/setup-mock-consent-servers");
 
 const CONSENT_OPTIN = require("../fixtures/consents/consent-boris-optin.json");
@@ -68,6 +69,7 @@ const ORGANIZATION = require("../fixtures/organizations/org-good-health.json");
 it("should return 200 and an array including a consent permit card with an OPTIN consent", async () => {
   expect.assertions(2);
 
+  setupMockAuditEndpoint();
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent("patient-privacy", CONSENT_OPTIN);
   setupMockOrganization(
@@ -99,6 +101,7 @@ it("should return 200 and an array including a consent permit card with an OPTIN
 it("should return 200 and an array including a consent deny card with an OPTIN consent and provision with a matching prohibited recipient", async () => {
   expect.assertions(2);
 
+  setupMockAuditEndpoint();
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent("patient-privacy", CONSENT_OPTIN);
   setupMockOrganization(
@@ -136,6 +139,7 @@ it("should return 200 and an array including a consent deny card with an OPTIN c
 it("should return 200 and an array including a consent deny card with an OPTOUT consent", async () => {
   expect.assertions(2);
 
+  setupMockAuditEndpoint();
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent("patient-privacy", CONSENT_OPTOUT);
   setupMockOrganization(
@@ -166,6 +170,8 @@ it("should return 200 and an array including a consent deny card with an OPTOUT 
 
 it("should return 200 and an array including a consent permit card with obligations when a consent with security label provisions applies", async () => {
   expect.assertions(3);
+
+  setupMockAuditEndpoint();
 
   const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-label.json");
 
