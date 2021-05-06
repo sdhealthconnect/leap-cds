@@ -1,5 +1,6 @@
 {
   "resourceType": "AuditEvent",
+  "recorded": "recorded moment",
   "type": {
     "system": "http://hl7.org/fhir/ValueSet/audit-event-type",
     "code": "110112",
