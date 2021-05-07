@@ -6,7 +6,8 @@ const { app } = require("../../app");
 const {
   setupMockPatient,
   setupMockConsent,
-  setupMockOrganization
+  setupMockOrganization,
+  setupMockAuditEndpoint
 } = require("../common/setup-mock-consent-servers");
 
 const Ajv = require("ajv");
@@ -245,6 +246,7 @@ it("should return a response compliant with the response schema", async () => {
 
   expect.assertions(1);
 
+  setupMockAuditEndpoint();
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent(
     "patient-privacy",

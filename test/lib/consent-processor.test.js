@@ -3,6 +3,7 @@ const nock = require("nock");
 
 const {
   setupMockOrganization,
+  setupMockAuditEndpoint,
   CONSENT_FHIR_SERVERS
 } = require("../common/setup-mock-consent-servers");
 
@@ -63,7 +64,7 @@ afterEach(() => {
 
 it("active optin consent", async () => {
   expect.assertions(1);
-
+  setupMockAuditEndpoint();
   setupMockOrganization(
     `/${_.get(
       BASE_CONSENT,
@@ -129,6 +130,7 @@ it("active but expired or not yet valid optin consent", async () => {
 it("active optin consent with blacklisted recipient actor", async () => {
   expect.assertions(1);
 
+  setupMockAuditEndpoint();
   setupMockOrganization(
     `/${_.get(
       BASE_CONSENT,
@@ -164,6 +166,7 @@ it("active optin consent with blacklisted recipient actor", async () => {
 it("active optin consent with blacklisted recipient actor based on one of the multiple identifiers", async () => {
   expect.assertions(1);
 
+  setupMockAuditEndpoint();
   setupMockOrganization(
     `/${_.get(
       BASE_CONSENT,
@@ -200,6 +203,8 @@ it("active optin consent with blacklisted recipient actor based on one of the mu
 
 it("active optin consent with blacklisted recipient actor of type practitioner", async () => {
   expect.assertions(1);
+
+  setupMockAuditEndpoint();
   const PRACTITIONER = require("../fixtures/practitioner/practitioner-dr-bob.json");
   setupMockOrganization(
     `/${_.get(
@@ -234,6 +239,8 @@ it("active optin consent with blacklisted recipient actor of type practitioner",
 
 it("active optin consent with blacklisted purpose of use", async () => {
   expect.assertions(1);
+
+  setupMockAuditEndpoint();
 
   const CONSENT_WITH_POU_PROVISION = _.cloneDeep(BASE_CONSENT);
   _.unset(CONSENT_WITH_POU_PROVISION, "provision.provision[0].actor");
@@ -270,6 +277,7 @@ it("active optin consent with blacklisted purpose of use", async () => {
 it("active optin consent with security label provision", async () => {
   expect.assertions(1);
 
+  setupMockAuditEndpoint();
   setupMockOrganization(
     `/${_.get(
       ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION,
@@ -320,6 +328,8 @@ it("active optin consent with security label provision", async () => {
 
 it("active optin consent with array of security label provisions", async () => {
   expect.assertions(2);
+
+  setupMockAuditEndpoint();
 
   setupMockOrganization(
     `/${_.get(
@@ -378,6 +388,8 @@ it("active optin consent with array of security label provisions", async () => {
 it("active optin consent with security label and content class provisions", async () => {
   expect.assertions(2);
 
+  setupMockAuditEndpoint();
+
   setupMockOrganization(
     `/${_.get(
       ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION,
@@ -434,6 +446,8 @@ it("active optin consent with security label and content class provisions", asyn
 it("active optin consent with content class provisions and sec label with request including a class", async () => {
   expect.assertions(2);
   const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION_AND_SEC_LABEL = require("../fixtures/consents/consent-boris-deny-restricted-content-class-and-sec-label");
+
+  setupMockAuditEndpoint();
 
   setupMockOrganization(
     `/${_.get(
@@ -494,6 +508,8 @@ it("active optin consent with content class provisions with request including a 
   expect.assertions(2);
   const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-content-class-only.json");
 
+  setupMockAuditEndpoint();
+
   setupMockOrganization(
     `/${_.get(
       ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION,
@@ -535,6 +551,7 @@ it("active optin consent with clinical code provisions", async () => {
   expect.assertions(2);
   const ACTIVE_PRIVACY_CONSENT_WITH_CLINICAL_CODE_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-clinical-code");
 
+  setupMockAuditEndpoint();
   setupMockOrganization(
     `/${_.get(
       ACTIVE_PRIVACY_CONSENT_WITH_CLINICAL_CODE_PROVISION,
@@ -586,6 +603,7 @@ it("active optin consent with clinical code provisions", async () => {
 it("active optin consent with array of provisions", async () => {
   expect.assertions(1);
 
+  setupMockAuditEndpoint();
   setupMockOrganization(
     `/${_.get(
       ACTIVE_PRIVACY_CONSENT_WITH_PROVISION_ARRAY,

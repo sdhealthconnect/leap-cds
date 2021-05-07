@@ -6,7 +6,8 @@ const { app } = require("../../app");
 const {
   setupMockPatient,
   setupMockConsent,
-  setupMockOrganization
+  setupMockOrganization,
+  setupMockAuditEndpoint
 } = require("../common/setup-mock-consent-servers");
 
 const CONSENT_OPTIN = require("../fixtures/consents/consent-boris-optin.json");
@@ -30,6 +31,7 @@ const ORGANIZATION = require("../fixtures/organizations/org-good-health.json");
 it("should return 200 and a permit card with an OPTIN consent", async () => {
   expect.assertions(2);
 
+  setupMockAuditEndpoint();
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent("patient-privacy", CONSENT_OPTIN);
   setupMockOrganization(
@@ -55,6 +57,7 @@ it("should return 200 and a permit card with an OPTIN consent", async () => {
 it("should return 200 and a deny response with an OPTIN consent and provision with a matching prohibited recipient", async () => {
   expect.assertions(2);
 
+  setupMockAuditEndpoint();
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent("patient-privacy", CONSENT_OPTIN);
   setupMockOrganization(
@@ -85,7 +88,7 @@ it("should return 200 and a deny response with an OPTIN consent and provision wi
 
 it("should return 200 and a deny response with an OPTOUT consent", async () => {
   expect.assertions(2);
-
+  setupMockAuditEndpoint();
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent("patient-privacy", CONSENT_OPTOUT);
   setupMockOrganization(
@@ -113,6 +116,7 @@ it("should return 200 and a consent permit response with obligations when a cons
 
   const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-label.json");
 
+  setupMockAuditEndpoint();
   setupMockPatient(MOCK_PATIENT_ID);
   setupMockConsent(
     "patient-privacy",
