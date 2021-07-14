@@ -11,7 +11,7 @@
   ],
   "main": "index.js",
   "repository": "git@github.com:mojitoholic/leap-cds.git",
-  "license": "GPL",
+  "license": "GPL-3.0-or-later",
   "scripts": {
     "start-mon": "npx nodemon server.js",
     "start": "node server.js",
