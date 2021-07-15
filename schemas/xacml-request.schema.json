@@ -62,8 +62,7 @@
                   "type": "object",
                   "properties": {
                     "AttributeId": {
-                      "type": "string",
-                      "pattern": "scope"
+                      "type": "string"
                     },
                     "Value": {
                       "type": "string"
