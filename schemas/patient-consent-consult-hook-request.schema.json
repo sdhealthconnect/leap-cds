@@ -62,7 +62,7 @@
           }
         }
       },
-      "required": ["patientId", "scope"]
+      "required": ["patientId"]
     }
   },
   "required": ["hook", "hookInstance", "context"]

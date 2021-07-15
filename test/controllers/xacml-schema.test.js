@@ -136,7 +136,7 @@ it("should return 400 on missing required attribtues", async () => {
     });
   expect(res.status).toEqual(400);
   expect(res.body).toMatchObject({ error: "bad_request" });
-  expect(res.body.errorMessage).toMatch("Action");
+  expect(res.body.errorMessage).toMatch("Resource");
 
   res = await request(app)
     .post(ENDPOINT)
