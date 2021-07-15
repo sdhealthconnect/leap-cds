@@ -10,11 +10,9 @@ async function post(req, res, next) {
     validateXacmlRequest(req);
 
     const context = xacmlRequestToContext(req.body);
+    const scope = context.scope || "";
 
-    const consentsBundle = await fetchConsents(
-      context.patientId,
-      context.scope
-    );
+    const consentsBundle = await fetchConsents(context.patientId, scope);
     const decisionEntry = await processDecision(consentsBundle, context);
 
     logger.debug(
