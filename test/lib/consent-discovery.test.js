@@ -6,6 +6,7 @@ const CONSENT = require("../fixtures/consents/consent-boris-optin.json");
 const {
   setupMockPatient,
   setupMockConsent,
+  setupMockConsentNoScope,
   MOCK_FHIR_SERVERS
 } = require("../common/setup-mock-consent-servers");
 
@@ -34,7 +35,7 @@ it("should return an array of consents from all servers without consent scope", 
   expect.assertions(1);
 
   setupMockPatient({ system: "ssn", value: "111111111" });
-  setupMockConsent("", CONSENT);
+  setupMockConsentNoScope(CONSENT);
 
   const consents = await fetchConsents([{ system: "ssn", value: "111111111" }]);
   expect(consents).toHaveLength(1);
