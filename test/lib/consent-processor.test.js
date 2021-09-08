@@ -15,6 +15,7 @@ const ORGANIZATION = require("../fixtures/organizations/org-good-health.json");
 
 const BASE_CONSENT = require("../fixtures/consents/consent-boris-optin.json");
 const ACTIVE_PRIVACY_CONSENT = BASE_CONSENT;
+const ACTIVE_PRIVACY_CONSENT_WITH_SCOPE_IN_CATEGORY = require("../fixtures/consents/consent-boris-optin-with-scope-in-category.json");
 const INACTIVE_PRIVACY_CONSENT = require("../fixtures/consents/consent-boris-inactive.json");
 const EXPIRED_PRIVACY_CONSENT = require("../fixtures/consents/consent-boris-expired.json");
 const CONSENT_DENY_PRACTITIONER = require("../fixtures/consents/consent-boris-deny-practitioner.json");
@@ -68,6 +69,61 @@ it("active optin consent", async () => {
   setupMockOrganization(
     `/${_.get(
       BASE_CONSENT,
+      "provision.provision[0].actor[0].reference.reference"
+    )}`,
+    ORGANIZATION
+  );
+
+  const decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: ACTIVE_PRIVACY_CONSENT
+      }
+    ],
+    QUERY.context
+  );
+  expect(decision).toMatchObject({
+    decision: "CONSENT_PERMIT",
+    obligations: []
+  });
+});
+
+it("active optin consent with no scope in query", async () => {
+  expect.assertions(1);
+  setupMockAuditEndpoint();
+  setupMockOrganization(
+    `/${_.get(
+      BASE_CONSENT,
+      "provision.provision[0].actor[0].reference.reference"
+    )}`,
+    ORGANIZATION
+  );
+
+  const queryContext = _.clone(QUERY.context);
+  queryContext.scope = null;
+
+  const decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: ACTIVE_PRIVACY_CONSENT
+      }
+    ],
+    queryContext
+  );
+  expect(decision).toMatchObject({
+    decision: "CONSENT_PERMIT",
+    obligations: []
+  });
+});
+
+it("active optin consent with scope stored in category[0]", async () => {
+  expect.assertions(1);
+  setupMockAuditEndpoint();
+  setupMockOrganization(
+    `/${_.get(
+      ACTIVE_PRIVACY_CONSENT_WITH_SCOPE_IN_CATEGORY,
       "provision.provision[0].actor[0].reference.reference"
     )}`,
     ORGANIZATION
