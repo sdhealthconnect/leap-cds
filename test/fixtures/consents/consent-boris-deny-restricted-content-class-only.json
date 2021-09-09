@@ -49,7 +49,8 @@
         "class": [
           {
             "system": "http://hl7.org/fhir/resource-types",
-            "code": "MedicationStatement"
+            "code": "MedicationStatement",
+            "display": "MedicationStatement"
           }
         ],
         "actor": [
