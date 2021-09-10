@@ -95,7 +95,8 @@ The response object is similar to the following example:
               ]
             }
           }
-        ]
+        ],
+        "basedOn": "http://fhir.server.example/fhir/Consent/10023"
       }
     }
   ]
@@ -117,6 +118,7 @@ The `extension` attribute in the `card` contains a machine-readable object recor
 | :---             |     :---             | 
 | `decision`       | Same as the `summary` attribute discussed above.        |
 | `obligations`| An array of obligations (as discussed below) conveying additional requirements to be followed by the client.|
+|`basedOn` | The full URI of the consent resource based on which the decision has been made. Note that this is the URI from the Consent Decision Service's perspective and it may not be accessible to the client. |
 
 Each obligation object has an `id` attribute which identifies the obligation and a `parameters` attribute which specifies the parameters for the obligation. Currently, only the `REDACT` obligation from the [obligation policy valueset](https://www.hl7.org/fhir/v3/ObligationPolicy/vs.html) is supported and is used on `CONSENT_PERMIT` decisions with either of the following parameters:
 
@@ -131,9 +133,6 @@ The XACML interface is based on a limited implementation of the [XACML JSON Prof
 ```
 /xacml
 ```
-
-
-
 
 ### Request
 A `POST` request to this endpoint must have the header `Content-Type` set to `application/json` and have a body similar to the following example:

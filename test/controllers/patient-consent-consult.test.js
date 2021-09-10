@@ -91,7 +91,8 @@ it("should return 200 and an array including a consent permit card with an OPTIN
         summary: "CONSENT_PERMIT",
         extension: {
           decision: "CONSENT_PERMIT",
-          obligations: []
+          obligations: [],
+          basedOn: "https://fhir-cdms1/base/Consent/1"
         }
       })
     ])
@@ -129,7 +130,8 @@ it("should return 200 and an array including a consent deny card with an OPTIN c
         summary: "CONSENT_DENY",
         extension: {
           decision: "CONSENT_DENY",
-          obligations: []
+          obligations: [],
+          basedOn: "https://fhir-cdms1/base/Consent/1"
         }
       })
     ])
@@ -161,7 +163,8 @@ it("should return 200 and an array including a consent deny card with an OPTOUT 
         summary: "CONSENT_DENY",
         extension: {
           decision: "CONSENT_DENY",
-          obligations: []
+          obligations: [],
+          basedOn: "https://fhir-cdms1/base/Consent/1"
         }
       })
     ])
@@ -222,7 +225,8 @@ it("should return 200 and an array including a consent permit card with obligati
                 ]
               }
             }
-          ]
+          ],
+          basedOn: "https://fhir-cdms1/base/Consent/1"
         }
       })
     ])
