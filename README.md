@@ -40,7 +40,7 @@ A `POST` request to this endpoint must have the header `Content-Type` set to `ap
         "value":"MedicationStatement"
       }
     ],
-    "purposeOfUse":"TREAT",
+    "purposeOfUse":["TREAT"],
     "actor":[
       {
         "system":"urn:ietf:rfc:3986",
@@ -169,7 +169,7 @@ A `POST` request to this endpoint must have the header `Content-Type` set to `ap
           },
           {
             "AttributeId":"purposeOfUse",
-            "Value":"TREAT"
+            "Value":["TREAT"]
           }
         ]
       }
