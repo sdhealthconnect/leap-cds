@@ -6,7 +6,7 @@ const CONSENT = require("../fixtures/consents/consent-boris-optin.json");
 const {
   setupMockPatient,
   setupMockConsent,
-  setupMockConsentNoScope,
+  setupMockConsentNoCategory,
   MOCK_FHIR_SERVERS
 } = require("../common/setup-mock-consent-servers");
 
@@ -18,7 +18,7 @@ it("make sure there is at least one FHIR Consent Server", async () => {
   expect(MOCK_FHIR_SERVERS.length).toBeGreaterThan(0);
 });
 
-it("should return an array of consents from all servers with consent scope", async () => {
+it("should return an array of consents from all servers with consent category", async () => {
   expect.assertions(1);
 
   setupMockPatient({ system: "ssn", value: "111111111" });
@@ -31,7 +31,7 @@ it("should return an array of consents from all servers with consent scope", asy
   expect(consents).toHaveLength(1);
 });
 
-it("should return an array of consents from all servers without consent scope", async () => {
+it("should return an array of consents from all servers without consent category", async () => {
   expect.assertions(1);
 
   setupMockPatient({ system: "ssn", value: "111111111" });
