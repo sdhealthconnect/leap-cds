@@ -20,7 +20,12 @@
         "Attribute": [
           {
             "AttributeId": "category",
-            "Value": "patient-privacy"
+            "Value": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/consentscope",
+                "code": "patient-privacy"
+              }
+            ]
           },
           {
             "AttributeId": "purposeOfUse",
