@@ -28,7 +28,12 @@ A `POST` request to this endpoint must have the header `Content-Type` set to `ap
         "value":"111111111"
       }
     ],
-    "scope":"patient-privacy",
+    "category": [ 
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/consentscope",
+        "code": "patient-privacy"
+      }
+    ],
     "class":[
       {
         "system":"http://hl7.org/fhir/resource-types",
@@ -51,7 +56,7 @@ The `context` attribute must be present and record the context of the query usin
 
 | Attribute                   | Description                  | 
 | :---                       |     :---                        | 
-| `scope`        | The broad context for the query in order to narrow down the applicable consent type. The values are based on FHIR [consent scope](https://www.hl7.org/fhir/valueset-consent-scope.html), namely: `adr` (advanced care directive), `research`, `patient-privacy`, and `treatment`. Since the corresponding attribute in the Consent resource is going to be removed from the next version of FHIR, this parameter is now optional.                  | 
+| `category`        | An array of codes specifying the broad context of the query (e.g., the workflow context) in order to narrow down the applicable consent types. If more than one category codes are provided, all of them should be present in the consents that are deemed applicable, thereby enabling the client to narrow down the consent type by providing more fine-grained and specific codes. This parameter is optional; eliminating it will cause the Consent Decision Service to look at every valid consent associated with the given patient                   | 
 | `actor` _(required)_                   | An array containing different identifiers of the actor involved in the context of the query (e.g., recipient organization, the clinician engaged in the workflow, etc.). Consents could match based on any of these identifiers. This allows identifying the actor to various degrees of granularity (e.g., organization, end-user, etc.) and match with consents applicable to any of the actors. It also ensures that the applicable consents are found even if different FHIR servers know the actor by different identifiers.     |
 | `patientId` _(required)_   | An array containing all the different patient identifiers to ensure that the patient is matched even if identified by different identifiers across different FHIR servers. Each identifier is in the form of a [`system`](https://www.hl7.org/fhir/identifier-registry.html) and `value` pair. A patient who has an identifier matching any of the identifiers in this array is considered a matching patient and any consents associated with that patient will be processed for making consent decisions.                     | 
 | `purposeOfUse`             | Purpose of use in the workflow context (from the [FHIR Purpose of Use valueset](https://www.hl7.org/fhir/v3/PurposeOfUse/vs.html)).              | 
@@ -155,8 +160,13 @@ A `POST` request to this endpoint must have the header `Content-Type` set to `ap
       {
         "Attribute":[
           {
-            "AttributeId":"scope",
-            "Value":"patient-privacy"
+            "AttributeId":"category",
+            "Value":[ 
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/consentscope",
+                "code": "patient-privacy"
+              }
+            ]
           },
           {
             "AttributeId":"purposeOfUse",
@@ -192,7 +202,7 @@ A `POST` request to this endpoint must have the header `Content-Type` set to `ap
   }
 }
 ```
-The attributes `patientId` and `actor` are mandatory while `scope` and `purposeOfUse` are optional. These attributes have the same meanings as in the CDS Hooks interface request `context` discussed above.
+The attributes `patientId` and `actor` are mandatory while `category` and `purposeOfUse` are optional. These attributes have the same meanings as in the CDS Hooks interface request `context` discussed above.
 
 The XCAML request follows the [XACML JSON Profile](https://docs.oasis-open.org/xacml/xacml-json-http/v1.1/os/xacml-json-http-v1.1-os.html#_Toc5116205); a JSON schema for the limited subset of this profile applicable for this request is included in the repository [here](https://github.com/sdhealthconnect/leap-cds/tree/master/schemas/xacml-request.schema.json).
 
