@@ -162,7 +162,7 @@ it("should return 400 on missing required attribtues", async () => {
           {
             Attribute: [
               {
-                AttributeId: "scope",
+                AttributeId: "category",
                 Value: "adr"
               },
               {
@@ -203,7 +203,7 @@ it("should return 400 on missing required attribtues", async () => {
           {
             Attribute: [
               {
-                AttributeId: "scope",
+                AttributeId: "category",
                 Value: "adr"
               },
               {

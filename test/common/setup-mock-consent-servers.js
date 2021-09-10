@@ -64,7 +64,7 @@ function setupMockPractitioner(url, practitionerResource, howManyRequests) {
     .reply(200, practitionerResource);
 }
 
-function setupMockConsent(scope, consent, index, patientId) {
+function setupMockConsent(category, consent, index, patientId) {
   const fhirServerIndex = index || 0;
   const fhirPatientId = patientId || "Patient/52";
 
@@ -85,19 +85,19 @@ function setupMockConsent(scope, consent, index, patientId) {
     : EMPTY_BUNDLE;
 
   MOCK_FHIR_SERVERS[fhirServerIndex]
-    .get(`/Consent?patient=${fhirPatientId}&scope=${scope}`)
+    .get(`/Consent?patient=${fhirPatientId}`)
     .reply(200, CONSENT_RESULTS_BUNDLE);
 
   for (var i = 0; i < MOCK_FHIR_SERVERS.length; i++) {
     if (i == index) continue;
 
     MOCK_FHIR_SERVERS[i]
-      .get(`/Consent?patient=${fhirPatientId}&scope=${scope}`)
+      .get(`/Consent?patient=${fhirPatientId}`)
       .reply(200, EMPTY_BUNDLE);
   }
 }
 
-function setupMockConsentNoScope(consent, index, patientId) {
+function setupMockConsentNoCategory(consent, index, patientId) {
   const fhirServerIndex = index || 0;
   const fhirPatientId = patientId || "Patient/52";
 
@@ -133,7 +133,7 @@ function setupMockConsentNoScope(consent, index, patientId) {
 module.exports = {
   setupMockPatient,
   setupMockConsent,
-  setupMockConsentNoScope,
+  setupMockConsentNoCategory,
   setupMockOrganization,
   setupMockPractitioner,
   setupMockAuditEndpoint,

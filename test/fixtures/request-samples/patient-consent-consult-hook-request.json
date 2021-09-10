@@ -8,7 +8,12 @@
         "value": "0000-000-0000"
       }
     ],
-    "scope": "patient-privacy",
+    "category": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/consentscope",
+        "code": "patient-privacy"
+      }
+    ],
     "actor": [
       {
         "system": "test-system",

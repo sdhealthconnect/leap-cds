@@ -15,6 +15,18 @@
         }
       },
       "required": ["value"]
+    },
+    "system-code": {
+      "type": "object",
+      "properties": {
+        "system": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        }
+      },
+      "required": ["system", "code"]
     }
   },
   "type": "object",
@@ -42,10 +54,12 @@
           "description": "purpose of use",
           "type": "string"
         },
-        "scope": {
-          "description": "consent scope",
-          "type": "string",
-          "enum": ["adr", "research", "patient-privacy", "treatment"]
+        "category": {
+          "description": "categories of applicable consents to the workflow context",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/system-code"
+          }
         },
         "patientId": {
           "description": "identity of the patient whose consent is being considered",
@@ -58,7 +72,7 @@
           "description": "content classes being requested",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/system-value"
+            "$ref": "#/definitions/system-code"
           }
         }
       },
