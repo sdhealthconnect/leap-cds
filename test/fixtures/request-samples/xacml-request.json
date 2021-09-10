@@ -19,7 +19,7 @@
       {
         "Attribute": [
           {
-            "AttributeId": "scope",
+            "AttributeId": "category",
             "Value": "patient-privacy"
           },
           {
