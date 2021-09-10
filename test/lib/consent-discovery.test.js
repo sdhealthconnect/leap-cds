@@ -35,7 +35,7 @@ it("should return an array of consents from all servers without consent category
   expect.assertions(1);
 
   setupMockPatient({ system: "ssn", value: "111111111" });
-  setupMockConsentNoScope(CONSENT);
+  setupMockConsentNoCategory(CONSENT);
 
   const consents = await fetchConsents([{ system: "ssn", value: "111111111" }]);
   expect(consents).toHaveLength(1);

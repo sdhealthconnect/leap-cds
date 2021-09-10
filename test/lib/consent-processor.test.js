@@ -48,7 +48,12 @@ const QUERY = {
         value: "0000-000-0000"
       }
     ],
-    scope: "patient-privacy",
+    category: [
+      {
+        system: "http://terminology.hl7.org/CodeSystem/consentscope",
+        code: "patient-privacy"
+      }
+    ],
     purposeOfUse: "TREAT",
     actor: [
       {
@@ -207,7 +212,12 @@ it("active optin consent with blacklisted recipient actor", async () => {
         system: "http://hl7.org/fhir/sid/us-medicare",
         value: "0000-000-0000"
       },
-      scope: "patient-privacy",
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
       purposeOfUse: "TREAT",
       actor: [ORGANIZATION.identifier[0]]
     }
@@ -243,7 +253,12 @@ it("active optin consent with blacklisted recipient actor based on one of the mu
         system: "http://hl7.org/fhir/sid/us-medicare",
         value: "0000-000-0000"
       },
-      scope: "patient-privacy",
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
       purposeOfUse: "TREAT",
       actor: [
         ORGANIZATION.identifier[0],
@@ -282,7 +297,12 @@ it("active optin consent with blacklisted recipient actor of type practitioner",
         system: "http://hl7.org/fhir/sid/us-medicare",
         value: "0000-000-0000"
       },
-      scope: "patient-privacy",
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
       purposeOfUse: "TREAT",
       actor: [PRACTITIONER.identifier[0]]
     }
@@ -319,7 +339,12 @@ it("active optin consent with blacklisted purpose of use", async () => {
         system: "http://hl7.org/fhir/sid/us-medicare",
         value: "0000-000-0000"
       },
-      scope: "patient-privacy",
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
       purposeOfUse: "HMARKT",
       actor: ORGANIZATION.identifier[0]
     }
@@ -354,7 +379,12 @@ it("active optin consent with security label provision", async () => {
         system: "http://hl7.org/fhir/sid/us-medicare",
         value: "0000-000-0000"
       },
-      scope: "patient-privacy",
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
       purposeOfUse: "TREAT",
       actor: [ORGANIZATION.identifier[0]]
     }
@@ -408,7 +438,12 @@ it("active optin consent with array of security label provisions", async () => {
         system: "http://hl7.org/fhir/sid/us-medicare",
         value: "0000-000-0000"
       },
-      scope: "patient-privacy",
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
       purposeOfUse: "TREAT",
       actor: [ORGANIZATION.identifier[0]]
     }
@@ -467,7 +502,12 @@ it("active optin consent with security label and content class provisions", asyn
         system: "http://hl7.org/fhir/sid/us-medicare",
         value: "0000-000-0000"
       },
-      scope: "patient-privacy",
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
       purposeOfUse: "TREAT",
       actor: [ORGANIZATION.identifier[0]]
     }
@@ -526,7 +566,12 @@ it("active optin consent with content class provisions and sec label with reques
         system: "http://hl7.org/fhir/sid/us-medicare",
         value: "0000-000-0000"
       },
-      scope: "patient-privacy",
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
       purposeOfUse: "TREAT",
       actor: [ORGANIZATION.identifier[0]],
       class: [
@@ -587,7 +632,12 @@ it("active optin consent with content class provisions with request including a 
         system: "http://hl7.org/fhir/sid/us-medicare",
         value: "0000-000-0000"
       },
-      scope: "patient-privacy",
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
       purposeOfUse: "TREAT",
       actor: [ORGANIZATION.identifier[0]],
       class: [
@@ -629,7 +679,12 @@ it("active optin consent with clinical code provisions", async () => {
         system: "http://hl7.org/fhir/sid/us-medicare",
         value: "0000-000-0000"
       },
-      scope: "patient-privacy",
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
       purposeOfUse: "TREAT",
       actor: [ORGANIZATION.identifier[0]]
     }
@@ -681,7 +736,12 @@ it("active optin consent with array of provisions", async () => {
         system: "http://hl7.org/fhir/sid/us-medicare",
         value: "0000-000-0000"
       },
-      scope: "patient-privacy",
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
       purposeOfUse: "HMARKT",
       actor: [ORGANIZATION.identifier[0]]
     }
