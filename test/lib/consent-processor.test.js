@@ -31,6 +31,7 @@ const ACTIVE_RESEARCH_CONSENT = require("../fixtures/consents/consent-boris-rese
 const ACTIVE_PRIVACY_OPTOUT_CONSENT = require("../fixtures/consents/consent-boris-optout.json");
 const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-label.json");
 const ACTIVE_PRIVACY_CONSENT_WITH_PROVISION_ARRAY = require("../fixtures/consents/consent-boris-provision-array.json");
+const ACTIVE_PRIVACY_CONSENT_WITH_POU_IN_ROOT_ROVISION = require("../fixtures/consents/consent-boris-optin-with-pou-in-root-provision.json");
 
 const OLDER_ACTIVE_PRIVACY_OPTOUT_CONSENT = _.set(
   _.cloneDeep(ACTIVE_PRIVACY_OPTOUT_CONSENT),
@@ -747,6 +748,96 @@ it("active optin consent with array of provisions", async () => {
     }
   );
   expect(decision).toMatchObject({ decision: "CONSENT_DENY" });
+});
+
+it("active optin consent with purpose in root provision not matching the request purpose of use", async () => {
+  expect.assertions(1);
+
+  setupMockAuditEndpoint();
+
+  const decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: ACTIVE_PRIVACY_CONSENT_WITH_POU_IN_ROOT_ROVISION
+      }
+    ],
+    {
+      patientId: {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
+      },
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
+      purposeOfUse: "HMARKT",
+      actor: [ORGANIZATION.identifier[0]]
+    }
+  );
+  expect(decision).toMatchObject({ decision: "NO_CONSENT" });
+});
+
+it("active optin consent with purpose in root provision matching the request purpose of use", async () => {
+  expect.assertions(1);
+
+  setupMockAuditEndpoint();
+
+  const decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: ACTIVE_PRIVACY_CONSENT_WITH_POU_IN_ROOT_ROVISION
+      }
+    ],
+    {
+      patientId: {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
+      },
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
+      purposeOfUse: "ETREAT",
+      actor: [ORGANIZATION.identifier[0]]
+    }
+  );
+  expect(decision).toMatchObject({ decision: "CONSENT_PERMIT" });
+});
+
+it("active optin consent with array of provisions matching some of the request purposes of use", async () => {
+  expect.assertions(1);
+
+  setupMockAuditEndpoint();
+
+  const decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: ACTIVE_PRIVACY_CONSENT_WITH_POU_IN_ROOT_ROVISION
+      }
+    ],
+    {
+      patientId: {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
+      },
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
+      purposeOfUse: ["ETREAT", "HMARKT"],
+      actor: [ORGANIZATION.identifier[0]]
+    }
+  );
+  expect(decision).toMatchObject({ decision: "CONSENT_PERMIT" });
 });
 
 it("no active optin consent", async () => {
