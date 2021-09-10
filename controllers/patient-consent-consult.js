@@ -9,9 +9,9 @@ async function post(req, res, next) {
     validateHookRequest(req);
 
     const patientIds = req.body.context.patientId;
-    const scope = req.body.context.scope || "";
+    const category = req.body.context.category || "";
 
-    const consentsBundle = await fetchConsents(patientIds, scope);
+    const consentsBundle = await fetchConsents(patientIds, category);
     const decisionEntry = await processDecision(
       consentsBundle,
       req.body.context

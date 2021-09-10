@@ -10,9 +10,9 @@ async function post(req, res, next) {
     validateXacmlRequest(req);
 
     const context = xacmlRequestToContext(req.body);
-    const scope = context.scope || "";
+    const category = context.category || "";
 
-    const consentsBundle = await fetchConsents(context.patientId, scope);
+    const consentsBundle = await fetchConsents(context.patientId, category);
     const decisionEntry = await processDecision(consentsBundle, context);
 
     logger.debug(
@@ -40,9 +40,9 @@ function xacmlRequestToContext(xacmlRequest) {
     "patientId"
   );
 
-  const scope = attributeValueFromArray(
+  const category = attributeValueFromArray(
     _.get(xacmlRequest, "Request.Action[0].Attribute"),
-    "scope"
+    "category"
   );
 
   const purposeOfUse = attributeValueFromArray(
@@ -57,7 +57,7 @@ function xacmlRequestToContext(xacmlRequest) {
 
   return {
     patientId,
-    scope,
+    category,
     actor,
     purposeOfUse
   };
