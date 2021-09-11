@@ -52,10 +52,17 @@
         },
         "purposeOfUse": {
           "description": "purpose of use",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }, 
+            {
+                "type": "string"
+            }
+          ]
         },
         "category": {
           "description": "categories of applicable consents to the workflow context",
