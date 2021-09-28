@@ -246,9 +246,19 @@ The response follows the [JSON Profile of XACML](https://docs.oasis-open.org/xac
 
 Based on the XACML specifications, each `Obligation` objects has an `Id` which identifies the obligation and an `AttributeAssignment` array which specifies a number of parameters for the obligation, in the form of `AttributeId` and `Value` pairs. Currently, only the `REDACT` obligation from the [obligation policy valueset](https://www.hl7.org/fhir/v3/ObligationPolicy/vs.html) is supported and is used on `Permit` decisions with the same parameters as discussed in the CDS Hooks interface above.
 
+# Test Server
+An instance of this service is deployed at: 
+
+`https://sdhc-leap.appspot.com`
+
+ linked to the FHIR Consent Store at:
+
+ `https://sdhc-hapi-fhir-leap-wafxyq4bza-uc.a.run.app/fhir`
+
+
 # Setup 
 
-## Local Set Up for Development
+## Local Set Up
 In order to set up this project for development, you need to have `node.js` and `yarn` installed on your system. 
 
 1. Copy `.env.example` to `.evn` and adjust values according to your local setup.
@@ -266,7 +276,7 @@ $ yarn test
 $ yarn start
 ```
 
-# Test
+## Test
 You can use `load-fixtures.js` (in the `test-scripts` directory) to set up a quick set of resources on your FHIR server to test this service. This script loads a patient resource, two organization resources, and a consent resource of choice, (from the samples provided in [`test/fixtures`](https://github.com/sdhealthconnect/leap-cds/tree/master/test/fixtures)) to a FHIR server, preparing it to be used as the Consent Store for the LEAP-CDS. The usage is as the following:
 
 ```
