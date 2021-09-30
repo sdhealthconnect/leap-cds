@@ -1,0 +1,11 @@
+[
+    {
+        "id": "patient-consent-consult",
+        "title": "Patient Consent Consult",
+        "description": "LEAP Consent Decision Service (LEAP-CDS) enables clients to query about the patient consents applicable to a particular workflow or exchange context.",
+        "hook": "patient-consent-consult",
+        "prefetch": {
+            "patient": "Patient/{{context.patientId}}"
+        }
+    }
+]

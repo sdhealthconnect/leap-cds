@@ -4,6 +4,7 @@ const morgan = require("morgan");
 
 const { ping } = require("./controllers/ping");
 const { error } = require("./controllers/error");
+const { discovery } = require("./controllers/discovery")
 const Hook = require("./controllers/patient-consent-consult");
 const Xacml = require("./controllers/xacml");
 
@@ -18,6 +19,8 @@ app.use(bodyParser.json({ type: "application/json" }));
 
 //routes
 app.get("/ping", ping);
+
+app.get("/cds-services", discovery)
 
 app.post("/cds-services/patient-consent-consult", Hook.post);
 app.post("/xacml", Xacml.post);
