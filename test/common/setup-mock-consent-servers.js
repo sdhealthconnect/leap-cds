@@ -3,7 +3,7 @@ const nock = require("nock");
 
 const CONSENT_FHIR_SERVERS = (process.env.CONSENT_FHIR_SERVERS || "")
   .split(",")
-  .map(res => res.trim());
+  .map((res) => res.trim());
 
 const EMPTY_BUNDLE = require("../fixtures/empty-bundle.json");
 const PATIENT = require("../fixtures/patients/patient-boris.json");
@@ -14,7 +14,7 @@ const PATIENT_RESULTS_BUNDLE = _.set(
   1
 );
 
-const MOCK_FHIR_SERVERS = CONSENT_FHIR_SERVERS.map(fhirBase =>
+const MOCK_FHIR_SERVERS = CONSENT_FHIR_SERVERS.map((fhirBase) =>
   nock(fhirBase)
     .defaultReplyHeaders({ "Content-Type": "application/json; charset=utf-8" })
     .replyContentLength()
@@ -27,7 +27,7 @@ function setupMockPatient(patientId, index) {
 
   MOCK_FHIR_SERVERS[fhirServerIndex]
     .get("/Patient")
-    .query({ identifier: `${system}|${value}`, _summary: "true" })
+    .query({ identifier: `${system}|${value}` })
     .reply(200, PATIENT_RESULTS_BUNDLE);
 
   for (var i = 0; i < MOCK_FHIR_SERVERS.length; i++) {
@@ -35,7 +35,7 @@ function setupMockPatient(patientId, index) {
 
     MOCK_FHIR_SERVERS[i]
       .get("/Patient")
-      .query({ identifier: `${system}|${value}`, _summary: "true" })
+      .query({ identifier: `${system}|${value}` })
       .reply(200, EMPTY_BUNDLE);
   }
 }
@@ -50,10 +50,7 @@ function setupMockOrganization(url, organizationResource, howManyRequests) {
 
 function setupMockAuditEndpoint(howManyRequests) {
   const numberOfTimes = howManyRequests || 1;
-  MOCK_FHIR_SERVERS[0]
-    .post("/AuditEvent")
-    .times(numberOfTimes)
-    .reply(200);
+  MOCK_FHIR_SERVERS[0].post("/AuditEvent").times(numberOfTimes).reply(200);
 }
 
 function setupMockPractitioner(url, practitionerResource, howManyRequests) {
