@@ -37,7 +37,7 @@ A `POST` request to this endpoint must have the header `Content-Type` set to `ap
     "class":[
       {
         "system":"http://hl7.org/fhir/resource-types",
-        "value":"MedicationStatement"
+        "code":"MedicationStatement"
       }
     ],
     "purposeOfUse":["TREAT"],
