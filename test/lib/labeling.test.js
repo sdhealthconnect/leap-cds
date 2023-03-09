@@ -12,6 +12,16 @@ it("correctly labels an unlabled resource based on sensitivity rules", async () 
   expect(labeledObservation.meta?.security).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
+        extension: [
+          {
+            url: "http://hl7.org/fhir/uv/security-label-ds4p/StructureDefinition/extension-sec-label-basis",
+            valueCoding: {
+              system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+              code: "42CFRPart2",
+              display: "42CFR Part2"
+            }
+          }
+        ],
         system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
         code: "ETH",
         display: "substance abuse information sensitivity"
@@ -69,7 +79,7 @@ it("correctly adds labels to a resource with existing labels based on sensitivit
   );
 });
 
-it.only("correctly labels a bundle of resource based on sensitivity rules", async () => {
+it("correctly labels a bundle of resource based on sensitivity rules", async () => {
   const bundleOfObservations = _.cloneDeep(BUNDLE);
   bundleOfObservations.entry = [
     { fullUrl: "1", resource: OBSERVATION },
