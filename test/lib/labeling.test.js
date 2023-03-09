@@ -39,7 +39,7 @@ it("correctly labels an unlabled resource", async () => {
             }
           }
         ],
-        system: "http://terminology.hl7.org/ValueSet/v3-Confidentiality",
+        system: "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
         code: "R",
         display: "restricted"
       })
@@ -72,7 +72,7 @@ it("does not add redundant labels to a resource with existing labels", async () 
         code: "ETH"
       }),
       expect.objectContaining({
-        system: "http://terminology.hl7.org/ValueSet/v3-Confidentiality",
+        system: "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
         code: "R"
       })
     ])
@@ -119,7 +119,7 @@ it("correctly labels a bundle of resource", async () => {
         code: "ETH"
       }),
       expect.objectContaining({
-        system: "http://terminology.hl7.org/ValueSet/v3-Confidentiality",
+        system: "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
         code: "R"
       })
     ])
@@ -131,7 +131,7 @@ it("correctly labels a bundle of resource", async () => {
         code: "ETH"
       }),
       expect.objectContaining({
-        system: "http://terminology.hl7.org/ValueSet/v3-Confidentiality",
+        system: "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
         code: "R"
       })
     ])
