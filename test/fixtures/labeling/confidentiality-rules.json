@@ -1,0 +1,18 @@
+[
+  {
+    "id": "sample-rule-1",
+    "basis": {
+      "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+      "code": "42CFRPart2",
+      "display": "42 CFR Part2"
+    },
+    "labels": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+        "code": "R",
+        "display": "restricted"
+      }
+    ],
+    "codes": ["$ACT-CODE#ETH", "$ACT-CODE#HIV"]
+  }
+]
