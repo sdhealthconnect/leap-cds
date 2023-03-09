@@ -4,7 +4,7 @@
     "basis": {
       "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
       "code": "42CFRPart2",
-      "display": "42CFR Part2"
+      "display": "42 CFR Part2"
     },
     "labels": [
       {
