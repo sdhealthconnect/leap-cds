@@ -7,7 +7,7 @@ const {
 const OBSERVATION = require("../fixtures/observations/observations-ketamine.json");
 const BUNDLE = require("../fixtures/empty-bundle.json");
 
-it("correctly labels an unlabled resource based on sensitivity rules", async () => {
+it("correctly labels an unlabled resource", async () => {
   const labeledObservation = processResource(OBSERVATION);
   expect(labeledObservation.meta?.security).toEqual(
     expect.arrayContaining([
@@ -18,19 +18,34 @@ it("correctly labels an unlabled resource based on sensitivity rules", async () 
             valueCoding: {
               system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
               code: "42CFRPart2",
-              display: "42CFR Part2"
+              display: "42 CFR Part2"
             }
           }
         ],
         system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
         code: "ETH",
         display: "substance abuse information sensitivity"
+      }),
+      expect.objectContaining({
+        extension: [
+          {
+            url: "http://hl7.org/fhir/uv/security-label-ds4p/StructureDefinition/extension-sec-label-basis",
+            valueCoding: {
+              system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+              code: "42CFRPart2",
+              display: "42 CFR Part2"
+            }
+          }
+        ],
+        system: "http://terminology.hl7.org/ValueSet/v3-Confidentiality",
+        code: "R",
+        display: "restricted"
       })
     ])
   );
 });
 
-it("does not add redundant labels to a resource with existing labels based on sensitivity rules", async () => {
+it("does not add redundant labels to a resource with existing labels", async () => {
   const alreadyLabeledObservation = _.cloneDeep(OBSERVATION);
   alreadyLabeledObservation.meta = {
     security: [
@@ -42,18 +57,22 @@ it("does not add redundant labels to a resource with existing labels based on se
   };
 
   const labeledObservation = processResource(alreadyLabeledObservation);
-  expect(labeledObservation.meta?.security).toHaveLength(1);
+  expect(labeledObservation.meta?.security).toHaveLength(2);
   expect(labeledObservation.meta?.security).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
         system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
         code: "ETH"
+      }),
+      expect.objectContaining({
+        system: "http://terminology.hl7.org/ValueSet/v3-Confidentiality",
+        code: "R"
       })
     ])
   );
 });
 
-it("correctly adds labels to a resource with existing labels based on sensitivity rules", async () => {
+it("correctly adds labels to a resource with existing labels", async () => {
   const alreadyLabeledObservation = _.cloneDeep(OBSERVATION);
   alreadyLabeledObservation.meta = {
     security: [
@@ -79,7 +98,7 @@ it("correctly adds labels to a resource with existing labels based on sensitivit
   );
 });
 
-it("correctly labels a bundle of resource based on sensitivity rules", async () => {
+it("correctly labels a bundle of resource", async () => {
   const bundleOfObservations = _.cloneDeep(BUNDLE);
   bundleOfObservations.entry = [
     { fullUrl: "1", resource: OBSERVATION },
@@ -91,6 +110,10 @@ it("correctly labels a bundle of resource based on sensitivity rules", async () 
       expect.objectContaining({
         system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
         code: "ETH"
+      }),
+      expect.objectContaining({
+        system: "http://terminology.hl7.org/ValueSet/v3-Confidentiality",
+        code: "R"
       })
     ])
   );
@@ -99,6 +122,10 @@ it("correctly labels a bundle of resource based on sensitivity rules", async () 
       expect.objectContaining({
         system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
         code: "ETH"
+      }),
+      expect.objectContaining({
+        system: "http://terminology.hl7.org/ValueSet/v3-Confidentiality",
+        code: "R"
       })
     ])
   );
