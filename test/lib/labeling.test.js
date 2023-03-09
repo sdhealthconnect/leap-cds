@@ -5,6 +5,8 @@ const {
 } = require("../../lib/labeling/labeler");
 
 const OBSERVATION = require("../fixtures/observations/observations-ketamine.json");
+const NON_SENSITIVE_OBSERVATION = require("../fixtures/observations/observation-bacteria.json");
+
 const BUNDLE = require("../fixtures/empty-bundle.json");
 
 it("correctly labels an unlabled resource", async () => {
@@ -43,6 +45,11 @@ it("correctly labels an unlabled resource", async () => {
       })
     ])
   );
+});
+
+it("correctly refrains from labeling a non-sensitiveresource", async () => {
+  const labeledObservation = processResource(NON_SENSITIVE_OBSERVATION);
+  expect(labeledObservation.meta?.security).toEqual([]);
 });
 
 it("does not add redundant labels to a resource with existing labels", async () => {
