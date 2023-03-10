@@ -57,6 +57,57 @@ it("should return 400 on wrong hook name", async () => {
   expect(res.body.errorMessage).toMatch("patient-consent-consult");
 });
 
+it("should return 400 on bad patientId", async () => {
+  expect.assertions(3);
+
+  const res = await request(app)
+    .post(HOOK_ENDPOINT)
+    .set("Accept", "application/json")
+    .send({
+      hook: "patient-consent-consult",
+      hookInstance: "12342",
+      context: {
+        patientId: [
+          {
+            system: "1",
+            code: "2"
+          }
+        ]
+      }
+    });
+  expect(res.status).toEqual(400);
+  expect(res.body).toMatchObject({ error: "bad_request" });
+  expect(res.body.errorMessage).toMatch("value");
+});
+
+it("should return 400 on bad content", async () => {
+  expect.assertions(3);
+
+  const res = await request(app)
+    .post(HOOK_ENDPOINT)
+    .set("Accept", "application/json")
+    .send({
+      hook: "patient-consent-consult",
+      hookInstance: "12342",
+      context: {
+        patientId: [
+          {
+            system: "1",
+            value: "2"
+          }
+        ],
+        content: {
+          resourceType: "Bundle",
+          entry: [{}]
+        }
+      }
+    });
+  expect(res.status).toEqual(400);
+  expect(res.body).toMatchObject({ error: "bad_request" });
+  console.log(res.body);
+  expect(res.body.errorMessage).toMatch("resourceType");
+});
+
 const REQUEST = require("../fixtures/request-samples/patient-consent-consult-hook-request.json");
 
 const MOCK_PATIENT_ID = {
