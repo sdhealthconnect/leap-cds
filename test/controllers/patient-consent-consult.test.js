@@ -104,7 +104,7 @@ it("should return 400 on bad content", async () => {
     });
   expect(res.status).toEqual(400);
   expect(res.body).toMatchObject({ error: "bad_request" });
-  expect(res.body.errorMessage).toMatch("resourceType");
+  expect(res.body.errorMessage).toMatch("resource");
 });
 
 const REQUEST = require("../fixtures/request-samples/patient-consent-consult-hook-request.json");
