@@ -2,6 +2,7 @@ const { validateHookRequest } = require("../lib/validators");
 const { asCard } = require("../lib/consent-decision-card");
 const { processDecision } = require("../lib/consent-processor");
 const { fetchConsents } = require("../lib/consent-discovery");
+const { maybeApplyDecision } = require("../lib/decision-processor");
 const logger = require("../lib/logger");
 
 async function post(req, res, next) {
@@ -10,6 +11,7 @@ async function post(req, res, next) {
 
     const patientIds = req.body.context.patientId;
     const category = req.body.context.category || [];
+    const content = req.body.context.content;
 
     const consentsBundle = await fetchConsents(patientIds, category);
     const decisionEntry = await processDecision(
@@ -17,14 +19,16 @@ async function post(req, res, next) {
       req.body.context
     );
 
+    const revisedEntry = maybeApplyDecision(decisionEntry, content);
+
     logger.debug(
       `Request: ${req.body.hookInstance}, Consents: ${consentsBundle.map(
-        consent => consent.fullUrl
-      )}, Decision: ${JSON.stringify(decisionEntry)}`
+        (consent) => consent.fullUrl
+      )}, Decision: ${JSON.stringify(revisedEntry)}`
     );
 
     res.send({
-      cards: [asCard(decisionEntry)]
+      cards: [asCard(revisedEntry)]
     });
   } catch (e) {
     next(e);

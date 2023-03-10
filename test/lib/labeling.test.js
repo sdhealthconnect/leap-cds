@@ -1,7 +1,7 @@
 const _ = require("lodash");
 const {
-  processResource,
-  processBundle
+  labelResource,
+  labelBundle
 } = require("../../lib/labeling/labeler");
 
 const OBSERVATION = require("../fixtures/observations/observations-ketamine.json");
@@ -10,7 +10,7 @@ const NON_SENSITIVE_OBSERVATION = require("../fixtures/observations/observation-
 const BUNDLE = require("../fixtures/empty-bundle.json");
 
 it("correctly labels an unlabled resource", async () => {
-  const labeledObservation = processResource(OBSERVATION);
+  const labeledObservation = labelResource(OBSERVATION);
   expect(labeledObservation.meta?.security).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
@@ -48,7 +48,7 @@ it("correctly labels an unlabled resource", async () => {
 });
 
 it("correctly refrains from labeling a non-sensitiveresource", async () => {
-  const labeledObservation = processResource(NON_SENSITIVE_OBSERVATION);
+  const labeledObservation = labelResource(NON_SENSITIVE_OBSERVATION);
   expect(labeledObservation.meta?.security).toEqual([]);
 });
 
@@ -63,7 +63,7 @@ it("does not add redundant labels to a resource with existing labels", async () 
     ]
   };
 
-  const labeledObservation = processResource(alreadyLabeledObservation);
+  const labeledObservation = labelResource(alreadyLabeledObservation);
   expect(labeledObservation.meta?.security).toHaveLength(2);
   expect(labeledObservation.meta?.security).toEqual(
     expect.arrayContaining([
@@ -90,7 +90,7 @@ it("correctly adds labels to a resource with existing labels", async () => {
     ]
   };
 
-  const labeledObservation = processResource(alreadyLabeledObservation);
+  const labeledObservation = labelResource(alreadyLabeledObservation);
   expect(labeledObservation.meta?.security).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
@@ -111,7 +111,7 @@ it("correctly labels a bundle of resource", async () => {
     { fullUrl: "1", resource: OBSERVATION },
     { fullUrl: "2", resource: OBSERVATION }
   ];
-  const labeledBundle = processBundle(bundleOfObservations);
+  const labeledBundle = labelBundle(bundleOfObservations);
   expect(labeledBundle.entry[0].resource.meta?.security).toEqual(
     expect.arrayContaining([
       expect.objectContaining({

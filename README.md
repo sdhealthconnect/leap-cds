@@ -127,6 +127,13 @@ Each obligation object has an `id` attribute which identifies the obligation and
 | `codes`       | Any resources associated with these codes (e.g., tagged with these security labels) must be redacted. In other words, access is permitted except to any resource associated with the codes identified by this attribute.|
 |`exceptAnyOfCodes`  | All resources other than the ones associated with these codes (e.g., marked with one or more of these security labels) must be redacted. In other words, access is only permitted to the resources associated with the codes identified by this attribute, and not authorized otherwise. The array is interpreted disjunctively, meaning that access to a resource associated with _any_ (and not _all_) of the codes in this array is authorized.|
 
+### Special FHIR Content Mode
+For very thin clients dealing with FHIR data, there is a special facility to directly provide the data in question to the LEAP-CDS, alongside the request, and have the LEAP-CDS apply the consent decision on the data. This can make it easier for the client to ensure compliance with the consent without implementing the parts of the enforcement logic that entails labeling and modifying the data.
+
+The client can submit a FHIR bundle (containing a collection of FHIR resources) in the request as an optional attribute `content` in the request `context`. The LEAP-CDS invokes its internal privacy labeling service to segment this data and also enforces any applicable obligation (e.g. redacting some resources based on the consent rules). The modified data is included in the LEAP-CDS response in the `content` attribute.
+
+The labeling rules are provided in the form of strings-encoded JSONs in two environment variables `SENSITIVITY_TAGGING_RULES` and `CONFIDENTIALITY_TAGGING_RULES`. Samples for the rule data structures are provided [here](https://github.com/sdhealthconnect/leap-cds/blob/master/test/fixtures/labeling/sensitivity-rules.json) and [here](https://github.com/sdhealthconnect/leap-cds/blob/master/test/fixtures/labeling/confidentiality-rules.json) (note that the aliases for code system identifiers are defined [here](https://github.com/sdhealthconnect/leap-cds/blob/master/lib/codes.js)).
+
 ## XACML Interface
 The XACML interface is based on a limited implementation of the [XACML JSON Profile](https://docs.oasis-open.org/xacml/xacml-json-http/v1.1/os/xacml-json-http-v1.1-os.html) and resides at the following endpoint:
 

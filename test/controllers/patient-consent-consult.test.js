@@ -57,6 +57,56 @@ it("should return 400 on wrong hook name", async () => {
   expect(res.body.errorMessage).toMatch("patient-consent-consult");
 });
 
+it("should return 400 on bad patientId", async () => {
+  expect.assertions(3);
+
+  const res = await request(app)
+    .post(HOOK_ENDPOINT)
+    .set("Accept", "application/json")
+    .send({
+      hook: "patient-consent-consult",
+      hookInstance: "12342",
+      context: {
+        patientId: [
+          {
+            system: "1",
+            code: "2"
+          }
+        ]
+      }
+    });
+  expect(res.status).toEqual(400);
+  expect(res.body).toMatchObject({ error: "bad_request" });
+  expect(res.body.errorMessage).toMatch("value");
+});
+
+it("should return 400 on bad content", async () => {
+  expect.assertions(3);
+
+  const res = await request(app)
+    .post(HOOK_ENDPOINT)
+    .set("Accept", "application/json")
+    .send({
+      hook: "patient-consent-consult",
+      hookInstance: "12342",
+      context: {
+        patientId: [
+          {
+            system: "1",
+            value: "2"
+          }
+        ],
+        content: {
+          resourceType: "Bundle",
+          entry: [{}]
+        }
+      }
+    });
+  expect(res.status).toEqual(400);
+  expect(res.body).toMatchObject({ error: "bad_request" });
+  expect(res.body.errorMessage).toMatch("resource");
+});
+
 const REQUEST = require("../fixtures/request-samples/patient-consent-consult-hook-request.json");
 
 const MOCK_PATIENT_ID = {
@@ -191,23 +241,31 @@ it("should return 200 and an array including a consent permit card with obligati
     ORGANIZATION
   );
 
-  const REQUEST_WITH_PROHIBITED_ACTOR = _.set(
-    _.cloneDeep(REQUEST),
-    "context.actor",
-    [ORGANIZATION.identifier[0]]
-  );
+  const THE_REQUEST = _.cloneDeep(REQUEST);
+  THE_REQUEST.context.actor = [ORGANIZATION.identifier[0]];
+
+  const RESTRICTED_OBSERVATION = require("../fixtures/observations/observations-ketamine.json");
+  const NON_RESTRICTED_OBSERVATION = require("../fixtures/observations/observation-bacteria.json");
+  const BUNDLE = require("../fixtures/empty-bundle.json");
+  const bundleOfObservations = _.cloneDeep(BUNDLE);
+  bundleOfObservations.entry = [
+    { fullUrl: "1", resource: RESTRICTED_OBSERVATION },
+    { fullUrl: "2", resource: NON_RESTRICTED_OBSERVATION }
+  ];
+  bundleOfObservations.total = 2;
+  THE_REQUEST.context.content = bundleOfObservations;
 
   const res = await request(app)
     .post(HOOK_ENDPOINT)
     .set("Accept", "application/json")
-    .send(REQUEST_WITH_PROHIBITED_ACTOR);
+    .send(THE_REQUEST);
 
   expect(res.status).toEqual(200);
   expect(res.body).toMatchObject({
     cards: expect.arrayContaining([
       expect.objectContaining({
         summary: "CONSENT_PERMIT",
-        extension: {
+        extension: expect.objectContaining({
           decision: "CONSENT_PERMIT",
           obligations: [
             {
@@ -226,8 +284,11 @@ it("should return 200 and an array including a consent permit card with obligati
               }
             }
           ],
-          basedOn: "https://fhir-cdms1/base/Consent/1"
-        }
+          basedOn: "https://fhir-cdms1/base/Consent/1",
+          content: expect.objectContaining({
+            total: 1
+          })
+        })
       })
     ])
   });
