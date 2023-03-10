@@ -89,20 +89,25 @@
           }
         },
         "content": {
-          "description": "content classes being requested",
+          "description": "content being requested",
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "entry": {
               "type": "array",
               "items": {
                 "type": "object",
                 "properties": {
-                  "resourceType": {
-                    "type": "string"
+                  "resource": {
+                    "type": "object",
+                    "properties": {
+                      "resourceType": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["resourceType"]
                   }
                 },
-                "required": ["resourceType"]
+                "required": ["resource"]
               }
             },
             "resourceType": {
