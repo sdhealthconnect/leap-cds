@@ -31,8 +31,6 @@ it("correctly redacts a bundle of resources", async () => {
   bundleOfObservations.total = 2;
 
   const labeledBundle = processBundle(bundleOfObservations);
-  console.log(JSON.stringify(labeledBundle, null, 2));
-
   const modifiedBundle = maybeRedactBundle(OBLIGATIONS, labeledBundle);
 
   expect(modifiedBundle.total).toBe(1);
