@@ -20,8 +20,8 @@
         "codes": ["$SNOMED#724713006", "$ICD10#F191"]
       },
       {
-        "groupId": "opiod",
-        "description": "opiod substance use",
+        "groupId": "opioid",
+        "description": "opioid substance use",
         "codes": ["$SNOMED#145121000119106", "$ICD10#F111"]
       }
     ]
