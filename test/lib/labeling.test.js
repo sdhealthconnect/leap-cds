@@ -25,8 +25,8 @@ it("correctly labels an unlabled resource", async () => {
           }
         ],
         system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-        code: "ETH",
-        display: "substance abuse information sensitivity"
+        code: "SUD",
+        display: "substance use disorder information sensitivity"
       }),
       expect.objectContaining({
         extension: [
@@ -57,7 +57,7 @@ it("does not add redundant labels to a resource with existing labels", async () 
   alreadyLabeledObservation.meta = {
     security: [
       {
-        code: "ETH",
+        code: "SUD",
         system: "http://terminology.hl7.org/CodeSystem/v3-ActCode"
       }
     ]
@@ -69,7 +69,7 @@ it("does not add redundant labels to a resource with existing labels", async () 
     expect.arrayContaining([
       expect.objectContaining({
         system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-        code: "ETH"
+        code: "SUD"
       }),
       expect.objectContaining({
         system: "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
@@ -95,7 +95,7 @@ it("correctly adds labels to a resource with existing labels", async () => {
     expect.arrayContaining([
       expect.objectContaining({
         system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-        code: "ETH"
+        code: "SUD"
       }),
       expect.objectContaining({
         system: "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
@@ -116,7 +116,7 @@ it("correctly labels a bundle of resource", async () => {
     expect.arrayContaining([
       expect.objectContaining({
         system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-        code: "ETH"
+        code: "SUD"
       }),
       expect.objectContaining({
         system: "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
@@ -128,7 +128,7 @@ it("correctly labels a bundle of resource", async () => {
     expect.arrayContaining([
       expect.objectContaining({
         system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-        code: "ETH"
+        code: "SUD"
       }),
       expect.objectContaining({
         system: "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
