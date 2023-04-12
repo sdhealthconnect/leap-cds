@@ -13,6 +13,6 @@
         "display": "restricted"
       }
     ],
-    "codes": ["$ACT-CODE#ETH", "$ACT-CODE#HIV"]
+    "codes": ["$ACT-CODE#SUD","$ACT-CODE#ETH", "$ACT-CODE#HIV"]
   }
 ]
