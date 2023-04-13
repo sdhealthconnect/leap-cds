@@ -111,6 +111,8 @@ it("correctly labels a bundle of resource", async () => {
     { fullUrl: "1", resource: OBSERVATION },
     { fullUrl: "2", resource: OBSERVATION }
   ];
+  bundleOfObservations.total = 2;
+
   const labeledBundle = labelBundle(bundleOfObservations);
   expect(labeledBundle.entry[0].resource.meta?.security).toEqual(
     expect.arrayContaining([
