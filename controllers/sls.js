@@ -1,10 +1,10 @@
 const { validateSlsRequest } = require("../lib/validators");
-const { labelBundle } = require("../lib/labeling/labeler");
+const { label } = require("../lib/labeling/labeler");
 
 async function post(req, res, next) {
   try {
     validateSlsRequest(req);
-    res.send(labelBundle(req.body));
+    res.send(label(req.body));
   } catch (e) {
     next(e);
   }
