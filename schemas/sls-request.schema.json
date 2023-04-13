@@ -3,30 +3,43 @@
   "$id": "https://github.com/sdhealthconnect/leap-cds/schemas/sls-request.schema.json",
   "title": "SLS Request",
   "description": "SLS Request",
-  "type": "object",
-  "properties": {
-    "entry": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "resource": {
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "entry": {
+          "type": "array",
+          "items": {
             "type": "object",
             "properties": {
-              "resourceType": {
-                "type": "string"
+              "resource": {
+                "type": "object",
+                "properties": {
+                  "resourceType": {
+                    "type": "string"
+                  }
+                },
+                "required": ["resourceType"]
               }
             },
-            "required": ["resourceType"]
+            "required": ["resource"]
           }
         },
-        "required": ["resource"]
-      }
+        "resourceType": {
+          "type": "string",
+          "pattern": "Bundle"
+        }
+      },
+      "required": ["entry", "resourceType"]
     },
-    "resourceType": {
-      "type": "string",
-      "pattern": "Bundle"
+    {
+      "type": "object",
+      "properties": {
+        "resourceType": {
+          "type": "string"
+        }
+      },
+      "required": ["resourceType"]
     }
-  },
-  "required": ["entry", "resourceType"]
+  ]
 }

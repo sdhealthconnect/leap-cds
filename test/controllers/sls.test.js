@@ -34,3 +34,25 @@ it("should return 200 and a labeled bundle", async () => {
     ])
   );
 });
+
+it("should return 200 and a labeled resource", async () => {
+  const res = await request(app)
+    .post("/sls")
+    .set("Accept", "application/json")
+    .send(OBSERVATION);
+
+  expect(res.status).toEqual(200);
+
+  expect(res.body?.meta?.security).toMatchObject(
+    expect.arrayContaining([
+      expect.objectContaining({
+        system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+        code: "SUD"
+      }),
+      expect.objectContaining({
+        system: "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+        code: "R"
+      })
+    ])
+  );
+});
