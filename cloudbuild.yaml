@@ -8,6 +8,8 @@ steps:
       - "ORG_NAME=${_ORG_NAME}"
       - "ORG_URL=${_ORG_URL}"
       - "CONSENT_FHIR_SERVERS=${_CONSENT_FHIR_SERVERS}"
+      - "SENSITIVITY_TAGGING_RULES=${_SENSITIVITY_TAGGING_RULES}"
+      - "CONFIDENTIALITY_TAGGING_RULES=${_CONFIDENTIALITY_TAGGING_RULES}"
   - name: "gcr.io/cloud-builders/gcloud"
     args: ["app", "deploy"]
 timeout: "1600s"
