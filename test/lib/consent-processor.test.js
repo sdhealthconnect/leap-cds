@@ -30,6 +30,7 @@ const NOT_YET_VALID_PRIVACY_CONSENT = _.set(
 const ACTIVE_RESEARCH_CONSENT = require("../fixtures/consents/consent-boris-research.json");
 const ACTIVE_PRIVACY_OPTOUT_CONSENT = require("../fixtures/consents/consent-boris-optout.json");
 const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-label.json");
+const ACTIVE_PRIVACY_CONSENT_WITH_MULTIPLE_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-multiple-deny-labels.json");
 const ACTIVE_PRIVACY_CONSENT_WITH_PROVISION_ARRAY = require("../fixtures/consents/consent-boris-provision-array.json");
 const ACTIVE_PRIVACY_CONSENT_WITH_POU_IN_ROOT_ROVISION = require("../fixtures/consents/consent-boris-optin-with-pou-in-root-provision.json");
 
@@ -413,6 +414,61 @@ it("active optin consent with security label provision", async () => {
   });
 });
 
+it("active optin consent with multiple security label provision", async () => {
+  expect.assertions(1);
+
+  setupMockAuditEndpoint();
+
+  const decision = await processDecision(
+    [
+      {
+        fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
+        resource: ACTIVE_PRIVACY_CONSENT_WITH_MULTIPLE_SEC_LABEL_PROVISION
+      }
+    ],
+    {
+      patientId: {
+        system: "http://hl7.org/fhir/sid/us-medicare",
+        value: "0000-000-0000"
+      },
+      category: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/consentscope",
+          code: "patient-privacy"
+        }
+      ],
+      purposeOfUse: "TREAT",
+      actor: [ORGANIZATION.identifier[0]]
+    }
+  );
+
+  expect(decision).toMatchObject({
+    decision: "CONSENT_PERMIT",
+    obligations: [
+      {
+        id: {
+          system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          code: "REDACT"
+        },
+        parameters: {
+          codes: [
+            {
+              system:
+                "http://terminology.hl7.org/ValueSet/v3-InformationSensitivityPolicy",
+              code: "ETHUD"
+            },
+            {
+              system:
+                "http://terminology.hl7.org/ValueSet/v3-InformationSensitivityPolicy",
+              code: "HIV"
+            }
+          ]
+        }
+      }
+    ]
+  });
+});
+
 it("active optin consent with array of security label provisions", async () => {
   expect.assertions(2);
 
@@ -559,7 +615,8 @@ it("active optin consent with content class provisions and sec label with reques
     [
       {
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
-        resource: ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION_AND_SEC_LABEL
+        resource:
+          ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION_AND_SEC_LABEL
       }
     ],
     {
