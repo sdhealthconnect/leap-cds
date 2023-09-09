@@ -72,6 +72,12 @@ it("should return 400 on bad patientId", async () => {
             system: "1",
             code: "2"
           }
+        ],
+        actor: [
+          {
+            system: "urn:ietf:rfc:3986",
+            value: "2.16.840.1.113883.20.5"
+          }
         ]
       }
     });
@@ -94,6 +100,12 @@ it("should return 400 on bad content", async () => {
           {
             system: "1",
             value: "2"
+          }
+        ],
+        actor: [
+          {
+            system: "urn:ietf:rfc:3986",
+            value: "2.16.840.1.113883.20.5"
           }
         ],
         content: {
