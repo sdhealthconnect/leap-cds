@@ -118,7 +118,7 @@
           "required": ["entry", "resourceType"]
         }
       },
-      "required": ["patientId"]
+      "required": ["patientId", "actor"]
     }
   },
   "required": ["hook", "hookInstance", "context"]
