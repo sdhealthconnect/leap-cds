@@ -1,4 +1,3 @@
-const _ = require("lodash");
 const { validateXacmlRequest } = require("../lib/validators");
 const { asXacmlResponse } = require("../lib/consent-decision-xacml");
 const { processDecision } = require("../lib/consent-processor");
@@ -17,7 +16,7 @@ async function post(req, res, next) {
 
     logger.debug(
       `Request: , Consents: ${consentsBundle.map(
-        consent => consent.fullUrl
+        (consent) => consent.fullUrl
       )}, Decision: ${JSON.stringify(decisionEntry)}`
     );
 
@@ -29,29 +28,29 @@ async function post(req, res, next) {
 
 function attributeValueFromArray(attributeArray, attributeId) {
   const theAttribute = attributeArray.filter(
-    attribute => attribute.AttributeId === attributeId
+    (attribute) => attribute.AttributeId === attributeId
   );
-  return _.get(theAttribute, "[0].Value");
+  return theAttribute?.[0]?.Value;
 }
 
 function xacmlRequestToContext(xacmlRequest) {
   const patientId = attributeValueFromArray(
-    _.get(xacmlRequest, "Request.Resource[0].Attribute"),
+    xacmlRequest?.Request?.Resource?.[0]?.Attribute,
     "patientId"
   );
 
   const category = attributeValueFromArray(
-    _.get(xacmlRequest, "Request.Action[0].Attribute"),
+    xacmlRequest?.Request?.Action?.[0]?.Attribute,
     "category"
   );
 
   const purposeOfUse = attributeValueFromArray(
-    _.get(xacmlRequest, "Request.Action[0].Attribute"),
+    xacmlRequest?.Request?.Action?.[0]?.Attribute,
     "purposeOfUse"
   );
 
   const actor = attributeValueFromArray(
-    _.get(xacmlRequest, "Request.AccessSubject[0].Attribute"),
+    xacmlRequest?.Request?.AccessSubject?.[0]?.Attribute,
     "actor"
   );
 
