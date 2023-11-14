@@ -3218,10 +3218,10 @@ __metadata:
     jsonwebtoken: ^9.0.2
     lodash: ^4.17.21
     morgan: ^1.10.0
-    nock: ^13.3.6
+    nock: ^13.3.8
     nodemon: ^3.0.1
     precise-commits: ^1.0.2
-    prettier: ^3.0.3
+    prettier: ^3.1.0
     superagent: ^8.1.2
     supertest: ^6.3.3
     winston: ^3.11.0
@@ -3670,14 +3670,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nock@npm:^13.3.6":
-  version: 13.3.6
-  resolution: "nock@npm:13.3.6"
+"nock@npm:^13.3.8":
+  version: 13.3.8
+  resolution: "nock@npm:13.3.8"
   dependencies:
     debug: ^4.1.0
     json-stringify-safe: ^5.0.1
     propagate: ^2.0.0
-  checksum: 795f334a17ed294b829968c177190571720492cc5113e2aa5b9d382c6508d81c8f79f6afae32009abce94213b0b7c1a474d582acf87e2c169d620314ac0ae60c
+  checksum: 98f7d9d1c6b4fad560d7f1033705f9a0318e288060c10e36973d1798d6c824fee1f23a9ecbb1118bf70068f58bb04eaa50c5d046f5cf0ceaf4a2dc76fe7a82b2
   languageName: node
   linkType: hard
 
@@ -4073,12 +4073,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "prettier@npm:3.0.3"
+"prettier@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "prettier@npm:3.1.0"
   bin:
     prettier: bin/prettier.cjs
-  checksum: e10b9af02b281f6c617362ebd2571b1d7fc9fb8a3bd17e371754428cda992e5e8d8b7a046e8f7d3e2da1dcd21aa001e2e3c797402ebb6111b5cd19609dd228e0
+  checksum: 44b556bd56f74d7410974fbb2418bb4e53a894d3e7b42f6f87779f69f27a6c272fa7fc27cec0118cd11730ef3246478052e002cbd87e9a253f9cd04a56aa7d9b
   languageName: node
   linkType: hard
 
