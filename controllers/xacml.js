@@ -28,7 +28,7 @@ async function post(req, res, next) {
 
 function attributeValueFromArray(attributeArray, attributeId) {
   const theAttribute = attributeArray.filter(
-    (attribute) => attribute.AttributeId === attributeId
+    ({AttributeId}) => AttributeId === attributeId
   );
   return theAttribute?.[0]?.Value;
 }
