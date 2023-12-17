@@ -16,7 +16,7 @@ async function post(req, res, next) {
 
     logger.debug(
       `Request: , Consents: ${consentsBundle.map(
-        (consent) => consent.fullUrl
+        ({ fullUrl }) => fullUrl
       )}, Decision: ${JSON.stringify(decisionEntry)}`
     );
 
@@ -28,7 +28,7 @@ async function post(req, res, next) {
 
 function attributeValueFromArray(attributeArray, attributeId) {
   const theAttribute = attributeArray.filter(
-    ({AttributeId}) => AttributeId === attributeId
+    ({ AttributeId }) => AttributeId === attributeId
   );
   return theAttribute?.[0]?.Value;
 }

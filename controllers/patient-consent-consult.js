@@ -23,7 +23,7 @@ async function post(req, res, next) {
 
     logger.debug(
       `Request: ${req.body.hookInstance}, Consents: ${consentsBundle.map(
-        (consent) => consent.fullUrl
+        ({ fullUrl }) => fullUrl
       )}, Decision: ${JSON.stringify(revisedEntry)}`
     );
 
