@@ -1,15 +1,12 @@
 const _ = require("lodash");
-const {
-  labelResource,
-  labelBundle
-} = require("../../lib/labeling/labeler");
+const { labelResource, labelBundle } = require("../../lib/labeling/labeler");
 
 const OBSERVATION = require("../fixtures/observations/observations-ketamine.json");
 const NON_SENSITIVE_OBSERVATION = require("../fixtures/observations/observation-bacteria.json");
 
 const BUNDLE = require("../fixtures/empty-bundle.json");
 
-it("correctly labels an unlabled resource", async () => {
+it("correctly labels an unlabeled resource", async () => {
   const labeledObservation = labelResource(OBSERVATION);
   expect(labeledObservation.meta?.security).toEqual(
     expect.arrayContaining([
@@ -22,6 +19,10 @@ it("correctly labels an unlabled resource", async () => {
               code: "42CFRPart2",
               display: "42 CFR Part2"
             }
+          },
+          {
+            url: "http://hl7.org/fhir/uv/security-label-ds4p/StructureDefinition/extension-sec-label-basis",
+            valueCoding: { code: "ketamine", system: "sample-rule-1" }
           }
         ],
         system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
