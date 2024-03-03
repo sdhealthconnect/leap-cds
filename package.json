@@ -44,9 +44,9 @@
     "superagent": "^8.1.2",
     "winston": "^3.11.0"
   },
-  "packageManager": "yarn@4.1.0",
+  "packageManager": "yarn@3.6.4",
   "engines": {
-    "yarn": "^4.1",
+    "yarn": "^3.6.4",
     "node": "18"
   }
 }
