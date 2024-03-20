@@ -3118,10 +3118,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonpath-plus@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "jsonpath-plus@npm:8.0.0"
-  checksum: fe5e7224eae382aa3a96f8a9c36bed3234c5323e224f87184617cd278933fff0e63cf14478d0ee748a0838de4cfc8db3f179caf65680df60132dcf58af17097d
+"jsonpath-plus@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "jsonpath-plus@npm:8.1.0"
+  bin:
+    jsonpath: bin/jsonpath-cli.js
+    jsonpath-plus: bin/jsonpath-cli.js
+  checksum: 03363938d9b6ea908af592dd5e8c9b2d50dbaba553eb758b4bae9cb042febbd42a591a1c4e0fe312c6c7fc4d0376395168eee3a93b5cb397295c7d85a49ca9fa
   languageName: node
   linkType: hard
 
@@ -3187,7 +3190,7 @@ __metadata:
     express: ^4.18.3
     husky: ^9.0.11
     jest: ^29.7.0
-    jsonpath-plus: ^8.0.0
+    jsonpath-plus: ^8.1.0
     jsonwebtoken: ^9.0.2
     lodash: ^4.17.21
     morgan: ^1.10.0
