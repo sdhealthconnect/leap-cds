@@ -1,4 +1,4 @@
-const { validateHookRequest } = require("../lib/validators");
+const { validateConsentDecisionHookRequest } = require("../lib/validators");
 const { asCard } = require("../lib/consent-decision-card");
 const { processDecision } = require("../lib/consent-processor");
 const { fetchConsents } = require("../lib/consent-discovery");
@@ -7,7 +7,7 @@ const logger = require("../lib/logger");
 
 async function post(req, res, next) {
   try {
-    validateHookRequest(req);
+    validateConsentDecisionHookRequest(req);
 
     const patientIds = req.body.context.patientId;
     const category = req.body.context.category || [];
