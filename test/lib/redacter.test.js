@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const { labelBundle } = require("../../lib/labeling/labeler");
+const { label } = require("../../lib/labeling/labeler");
 const { maybeRedactBundle } = require("../../lib/redacter");
 
 const RESTRICTED_OBSERVATION = require("../fixtures/observations/observations-ketamine.json");
@@ -30,7 +30,7 @@ it("correctly redacts a bundle of resources", async () => {
   ];
   bundleOfObservations.total = 2;
 
-  const labeledBundle = labelBundle(bundleOfObservations);
+  const labeledBundle = label(bundleOfObservations);
   const modifiedBundle = maybeRedactBundle(OBLIGATIONS, labeledBundle);
 
   expect(modifiedBundle.total).toBe(1);
