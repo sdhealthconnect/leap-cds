@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/sdhealthconnect/leap-cds/schemas/bundle-security-label-request.schema.json",
+  "title": "SLS Hook Request",
+  "description": "SLS Hook Request",
+  "type": "object",
+  "properties": {
+    "hook": {
+      "type": "string",
+      "pattern": "bundle-security-label"
+    },
+    "hookInstance": {
+      "description": "UUID for this hook call",
+      "type": "string"
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "bundle": {
+          "type": "object",
+          "properties": {
+            "entry": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "resource": {
+                    "type": "object",
+                    "properties": {
+                      "resourceType": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["resourceType"]
+                  }
+                },
+                "required": ["resource"]
+              }
+            },
+            "resourceType": {
+              "type": "string",
+              "pattern": "Bundle"
+            }
+          },
+          "required": ["entry", "resourceType"]
+        }
+      }
+    }
+  },
+  "required": ["hook", "hookInstance", "context"]
+}
