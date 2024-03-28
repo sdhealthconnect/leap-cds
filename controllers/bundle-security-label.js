@@ -2,7 +2,7 @@ const { validateSlsHookRequest } = require("../lib/validators");
 const { labelBundleDiff } = require("../lib/labeling/labeler");
 const {
   resourcesToHookResponse
-} = require("../lib/labeling/sls-decision-card");
+} = require("../lib/labeling/sls-decision-hooks-response");
 
 async function post(req, res, next) {
   try {
