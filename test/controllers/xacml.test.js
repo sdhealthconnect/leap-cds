@@ -10,8 +10,8 @@ const {
   setupMockAuditEndpoint
 } = require("../common/setup-mock-consent-servers");
 
-const CONSENT_OPTIN = require("../fixtures/consents/consent-boris-optin.json");
-const CONSENT_OPTOUT = require("../fixtures/consents/consent-boris-optout.json");
+const CONSENT_OPTIN = require("../fixtures/consents/r4/consent-boris-optin.json");
+const CONSENT_OPTOUT = require("../fixtures/consents/r4/consent-boris-optout.json");
 
 const ENDPOINT = "/xacml";
 
@@ -114,7 +114,7 @@ it("should return 200 and a deny response with an OPTOUT consent", async () => {
 it("should return 200 and a consent permit response with obligations when a consent with security label provisions applies", async () => {
   expect.assertions(2);
 
-  const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-label.json");
+  const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/r4/consent-boris-deny-restricted-label.json");
 
   setupMockAuditEndpoint();
   setupMockPatient(MOCK_PATIENT_ID);

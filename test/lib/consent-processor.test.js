@@ -13,13 +13,13 @@ const { processDecision } = require("../../lib/consent-processor");
 
 const ORGANIZATION = require("../fixtures/organizations/org-good-health.json");
 
-const BASE_CONSENT = require("../fixtures/consents/consent-boris-optin.json");
+const BASE_CONSENT = require("../fixtures/consents/r4/consent-boris-optin.json");
 const ACTIVE_PRIVACY_CONSENT = BASE_CONSENT;
-const ACTIVE_PRIVACY_CONSENT_WITH_SCOPE_IN_CATEGORY = require("../fixtures/consents/consent-boris-optin-with-scope-in-category.json");
-const INACTIVE_PRIVACY_CONSENT = require("../fixtures/consents/consent-boris-inactive.json");
-const EXPIRED_PRIVACY_CONSENT = require("../fixtures/consents/consent-boris-expired.json");
-const CONSENT_DENY_PRACTITIONER = require("../fixtures/consents/consent-boris-deny-practitioner.json");
-const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-content-class");
+const ACTIVE_PRIVACY_CONSENT_WITH_SCOPE_IN_CATEGORY = require("../fixtures/consents/r4/consent-boris-optin-with-scope-in-category.json");
+const INACTIVE_PRIVACY_CONSENT = require("../fixtures/consents/r4/consent-boris-inactive.json");
+const EXPIRED_PRIVACY_CONSENT = require("../fixtures/consents/r4/consent-boris-expired.json");
+const CONSENT_DENY_PRACTITIONER = require("../fixtures/consents/r4/consent-boris-deny-practitioner.json");
+const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION = require("../fixtures/consents/r4/consent-boris-deny-restricted-content-class");
 
 const NOT_YET_VALID_PRIVACY_CONSENT = _.set(
   _.cloneDeep(BASE_CONSENT),
@@ -27,12 +27,12 @@ const NOT_YET_VALID_PRIVACY_CONSENT = _.set(
   new Date(Date.now() + 1000 * 60 * 60 * 48).toISOString()
 );
 
-const ACTIVE_RESEARCH_CONSENT = require("../fixtures/consents/consent-boris-research.json");
-const ACTIVE_PRIVACY_OPTOUT_CONSENT = require("../fixtures/consents/consent-boris-optout.json");
-const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-label.json");
-const ACTIVE_PRIVACY_CONSENT_WITH_MULTIPLE_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-multiple-deny-labels.json");
-const ACTIVE_PRIVACY_CONSENT_WITH_PROVISION_ARRAY = require("../fixtures/consents/consent-boris-provision-array.json");
-const ACTIVE_PRIVACY_CONSENT_WITH_POU_IN_ROOT_ROVISION = require("../fixtures/consents/consent-boris-optin-with-pou-in-root-provision.json");
+const ACTIVE_RESEARCH_CONSENT = require("../fixtures/consents/r4/consent-boris-research.json");
+const ACTIVE_PRIVACY_OPTOUT_CONSENT = require("../fixtures/consents/r4/consent-boris-optout.json");
+const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/r4/consent-boris-deny-restricted-label.json");
+const ACTIVE_PRIVACY_CONSENT_WITH_MULTIPLE_SEC_LABEL_PROVISION = require("../fixtures/consents/r4/consent-boris-multiple-deny-labels.json");
+const ACTIVE_PRIVACY_CONSENT_WITH_PROVISION_ARRAY = require("../fixtures/consents/r4/consent-boris-provision-array.json");
+const ACTIVE_PRIVACY_CONSENT_WITH_POU_IN_ROOT_ROVISION = require("../fixtures/consents/r4/consent-boris-optin-with-pou-in-root-provision.json");
 
 const OLDER_ACTIVE_PRIVACY_OPTOUT_CONSENT = _.set(
   _.cloneDeep(ACTIVE_PRIVACY_OPTOUT_CONSENT),
@@ -598,7 +598,7 @@ it("active optin consent with security label and content class provisions", asyn
 
 it("active optin consent with content class provisions and sec label with request including a class", async () => {
   expect.assertions(2);
-  const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION_AND_SEC_LABEL = require("../fixtures/consents/consent-boris-deny-restricted-content-class-and-sec-label");
+  const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION_AND_SEC_LABEL = require("../fixtures/consents/r4/consent-boris-deny-restricted-content-class-and-sec-label");
 
   setupMockAuditEndpoint();
 
@@ -665,7 +665,7 @@ it("active optin consent with content class provisions and sec label with reques
 
 it("active optin consent with content class provisions with request including a class", async () => {
   expect.assertions(2);
-  const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-content-class-only.json");
+  const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION = require("../fixtures/consents/r4/consent-boris-deny-restricted-content-class-only.json");
 
   setupMockAuditEndpoint();
 
@@ -713,7 +713,7 @@ it("active optin consent with content class provisions with request including a 
 
 it("active optin consent with clinical code provisions", async () => {
   expect.assertions(2);
-  const ACTIVE_PRIVACY_CONSENT_WITH_CLINICAL_CODE_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-clinical-code");
+  const ACTIVE_PRIVACY_CONSENT_WITH_CLINICAL_CODE_PROVISION = require("../fixtures/consents/r4/consent-boris-deny-restricted-clinical-code");
 
   setupMockAuditEndpoint();
   setupMockOrganization(

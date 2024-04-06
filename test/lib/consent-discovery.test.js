@@ -1,7 +1,7 @@
 const nock = require("nock");
 const { fetchConsents } = require("../../lib/consent-discovery");
 
-const CONSENT = require("../fixtures/consents/consent-boris-optin.json");
+const CONSENT = require("../fixtures/consents/r4/consent-boris-optin.json");
 
 const {
   setupMockPatient,

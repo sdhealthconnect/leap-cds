@@ -290,7 +290,7 @@ You can use `load-fixtures.js` (in the `test-scripts` directory) to set up a qui
 $ cd test-scripts
 $ node load-fixtures.js FHIR_BASE CONSENT_FILE_NAME
 ```
-in which `FHIR_BASE` is the base URL for your FHIR server and `CONSENT_FILE_NAME` is the file name for one of the consent resources in [`test/fixtures/consents`](https://github.com/sdhealthconnect/leap-cds/tree/master/test/fixtures/consents)).
+in which `FHIR_BASE` is the base URL for your FHIR server and `CONSENT_FILE_NAME` is the file name for one of the consent resources in [`test/fixtures/r4/consents`](https://github.com/sdhealthconnect/leap-cds/tree/master/test/fixtures/r4/consents)).
 For example:
 
 ```

@@ -242,7 +242,7 @@ it("should return a response compliant with the response schema", async () => {
     value: "0000-000-0000"
   };
   const ORGANIZATION = require("../fixtures/organizations/org-good-health.json");
-  const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/consent-boris-deny-restricted-label.json");
+  const ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION = require("../fixtures/consents/r4/consent-boris-deny-restricted-label.json");
 
   expect.assertions(1);
 
