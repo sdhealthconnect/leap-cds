@@ -9,7 +9,7 @@ const LEAP_IDENTIFIER_SYSTEM =
 
 function printUsageAndExit() {
   console.error(
-    "Usage: node load-fixtures FHIR_BASE CONSENT_FILE (file name of the consent file in 'fixtures/consents'"
+    "Usage: node load-fixtures FHIR_BASE CONSENT_FILE (file name of the consent file in 'fixtures/consents/r4'"
   );
   console.error(
     "See documentation at https://github.com/sdhealthconnect/leap-cds"
@@ -23,7 +23,7 @@ function getLeapIdentifer(resource) {
   )[0].value;
 }
 
-const CONSENT_FILE = `../test/fixtures/consents/${_.get(process.argv, "[3]")}`;
+const CONSENT_FILE = `../test/fixtures/consents/r4/${_.get(process.argv, "[3]")}`;
 
 if (!FHIR_BASE || !CONSENT_FILE || !fs.existsSync(CONSENT_FILE)) {
   printUsageAndExit();
