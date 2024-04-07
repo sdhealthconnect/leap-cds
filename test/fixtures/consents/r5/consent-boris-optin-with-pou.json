@@ -1,0 +1,66 @@
+{
+  "resourceType": "Consent",
+  "status": "active",
+  "category": [
+    {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/consentscope",
+          "code": "patient-privacy",
+          "display": "Privacy Consent"
+        }
+      ]
+    },
+    {
+      "coding": [
+        {
+          "system": "http://loinc.org",
+          "code": "59284-6"
+        }
+      ]
+    }
+  ],
+  "subject": {
+    "reference": "Patient/52",
+    "display": "Betterhalf, Boris"
+  },
+  "date": "2019-11-01",
+  "manager": [
+    {
+      "reference": "Organization/53"
+    }
+  ],
+  "regulatoryBasis": {
+    "coding": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+        "code": "hipaa-self-pay"
+      }
+    ]
+  },
+  "period": {
+    "start": "2019-11-01",
+    "end": "2029-01-01"
+  },
+  "decision": "deny",
+  "provision": [{
+    "purpose": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code": "TREAT",
+        "display": "treatment"
+      },
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code": "ETREAT",
+        "display": "Emergency Treatment"
+      }
+    ]
+  }],
+  "identifier": [
+    {
+      "system": "http://sdhealthconnect.github.io/leap/samples/ids",
+      "value": "consent-boris-optin-with-pou"
+    }
+  ]
+}

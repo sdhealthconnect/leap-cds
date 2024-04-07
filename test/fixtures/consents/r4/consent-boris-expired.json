@@ -1,6 +1,6 @@
 {
   "resourceType": "Consent",
-  "status": "inactive",
+  "status": "active",
   "category": [
     {
       "coding": [
