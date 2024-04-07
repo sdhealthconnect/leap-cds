@@ -151,8 +151,8 @@ it("active optin consent with scope stored in category[0]", async () => {
   });
 });
 
-it("active but expired or not yet valid optin consent", async () => {
-  expect.assertions(2);
+it("active but expired optin consent", async () => {
+  expect.assertions(1);
 
   setupMockOrganization(
     `/${_.get(
@@ -174,6 +174,18 @@ it("active but expired or not yet valid optin consent", async () => {
   expect(decision).toMatchObject({
     decision: "NO_CONSENT"
   });
+});
+
+it("active but not yet valid optin consent", async () => {
+  expect.assertions(1);
+
+  setupMockOrganization(
+    `/${_.get(
+      BASE_CONSENT,
+      "provision.provision[0].actor[0].reference.reference"
+    )}`,
+    ORGANIZATION
+  );
 
   decision = await processDecision(
     [
