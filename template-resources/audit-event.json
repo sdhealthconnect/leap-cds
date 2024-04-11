@@ -2,19 +2,32 @@
   "resourceType": "AuditEvent",
   "recorded": "recorded moment",
   "type": {
-    "system": "http://hl7.org/fhir/ValueSet/audit-event-type",
-    "code": "110112",
-    "display": "Query"
+    "coding": [
+      {
+        "system": "http://dicom.nema.org/resources/ontology/DCM",
+        "code": "110113",
+        "display": "Security Alert"
+      }
+    ]
   },
+  "subtype": [
+    {
+      "coding": [
+        {
+          "system": "https://profiles.ihe.net/ITI/BALP/CodeSystem/AuthZsubType",
+          "code": "AuthZ-Consent"
+        }
+      ]
+    }
+  ],
   "action": "E",
   "outcome": {
-    "code" : {
-      "system" : "http://hl7.org/fhir/issue-severity",
-      "code" : " information",
-      "display" : "Information"
+    "code": {
+      "system": "http://terminology.hl7.org/CodeSystem/audit-event-outcome",
+      "code": "0",
+      "display": "Success"
     }
   },
-  "outcomeDesc": "[CONSENT_DECISION]",
   "agent": [
     {
       "who": {
@@ -42,9 +55,13 @@
     },
     "type": [
       {
-        "system": "http://terminology.hl7.org/CodeSystem/security-source-type",
-        "code": "4",
-        "display": "Application Server"
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/security-source-type",
+            "code": "4",
+            "display": "Application Server"
+          }
+        ]
       }
     ]
   },
