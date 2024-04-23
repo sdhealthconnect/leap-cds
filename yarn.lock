@@ -2067,6 +2067,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"formidable@npm:^3.5.1":
+  version: 3.5.1
+  resolution: "formidable@npm:3.5.1"
+  dependencies:
+    dezalgo: ^1.0.4
+    hexoid: ^1.0.0
+    once: ^1.4.0
+  checksum: 46b21496f9f985161cf7636163147b6728f9997c7e1d59433680d92619758bf6862330e6d105b5816bafcd1ab32f27ef183455991f93ef836ea731c68db62af9
+  languageName: node
+  linkType: hard
+
 "forwarded@npm:0.2.0":
   version: 0.2.0
   resolution: "forwarded@npm:0.2.0"
@@ -3198,7 +3209,7 @@ __metadata:
     nodemon: ^3.1.0
     precise-commits: ^1.0.2
     prettier: ^3.2.5
-    superagent: ^8.1.2
+    superagent: ^9.0.1
     supertest: ^6.3.4
     winston: ^3.13.0
   languageName: unknown
@@ -4671,6 +4682,24 @@ __metadata:
     qs: "npm:^6.11.0"
     semver: "npm:^7.3.8"
   checksum: f3601c5ccae34d5ba684a03703394b5d25931f4ae2e1e31a1de809f88a9400e997ece037f9accf148a21c408f950dc829db1e4e23576a7f9fe0efa79fd5c9d2f
+  languageName: node
+  linkType: hard
+
+"superagent@npm:^9.0.1":
+  version: 9.0.1
+  resolution: "superagent@npm:9.0.1"
+  dependencies:
+    component-emitter: ^1.3.0
+    cookiejar: ^2.1.4
+    debug: ^4.3.4
+    fast-safe-stringify: ^2.1.1
+    form-data: ^4.0.0
+    formidable: ^3.5.1
+    methods: ^1.1.2
+    mime: 2.6.0
+    qs: ^6.11.0
+    semver: ^7.3.8
+  checksum: c332ef5609349fe76a26de26bb13bf62399ae26d18f533ce829c88cbe9c30763a0ef1b50a4e7f7eba7a5c00a46fba8337491169103521bed1d5b7036496bdb9f
   languageName: node
   linkType: hard
 
