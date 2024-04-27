@@ -81,6 +81,7 @@ it("active optin consent", async () => {
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT
       }
@@ -107,6 +108,7 @@ it("active optin consent with no scope in query", async () => {
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT
       }
@@ -133,6 +135,7 @@ it("active optin consent with scope stored in category[0]", async () => {
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT
       }
@@ -156,6 +159,7 @@ it("active but expired or not yet valid optin consent", async () => {
   let decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: EXPIRED_PRIVACY_CONSENT
       }
@@ -174,10 +178,11 @@ it("active but not yet valid optin consent", async () => {
     `/${_.get(BASE_CONSENT, "provision[0].actor[0].reference.reference")}`,
     ORGANIZATION
   );
-  
+
   decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: NOT_YET_VALID_PRIVACY_CONSENT
       }
@@ -202,6 +207,7 @@ it("active optin consent with blacklisted recipient actor", async () => {
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT
       }
@@ -240,6 +246,7 @@ it("active optin consent with blacklisted recipient actor based on one of the mu
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT
       }
@@ -284,6 +291,7 @@ it("active optin consent with blacklisted recipient actor of type practitioner",
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: CONSENT_DENY_PRACTITIONER
       }
@@ -326,6 +334,7 @@ it("active optin consent with blacklisted purpose of use", async () => {
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: CONSENT_WITH_POU_PROVISION
       }
@@ -366,6 +375,7 @@ it("active optin consent with security label provision", async () => {
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT_WITH_SEC_LABEL_PROVISION
       }
@@ -416,6 +426,7 @@ it("active optin consent with multiple security label provision", async () => {
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT_WITH_MULTIPLE_SEC_LABEL_PROVISION
       }
@@ -480,6 +491,7 @@ it("active optin consent with array of security label provisions", async () => {
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT_WITH_PROVISION_ARRAY
       }
@@ -544,6 +556,7 @@ it("active optin consent with security label and content class provisions", asyn
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION
       }
@@ -608,6 +621,7 @@ it("active optin consent with content class provisions and sec label with reques
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource:
           ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION_AND_SEC_LABEL
@@ -675,6 +689,7 @@ it("active optin consent with content class provisions with request including a 
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION
       }
@@ -722,6 +737,7 @@ it("active optin consent with clinical code provisions", async () => {
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT_WITH_CLINICAL_CODE_PROVISION
       }
@@ -763,7 +779,7 @@ it("active optin consent with clinical code provisions", async () => {
   );
 });
 
-it.only("active optin consent with array of provisions", async () => {
+it("active optin consent with array of provisions", async () => {
   expect.assertions(1);
 
   setupMockAuditEndpoint();
@@ -779,6 +795,7 @@ it.only("active optin consent with array of provisions", async () => {
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT_WITH_PROVISION_ARRAY
       }
@@ -801,7 +818,6 @@ it.only("active optin consent with array of provisions", async () => {
   expect(decision).toMatchObject({ decision: "CONSENT_DENY" });
 });
 
-
 it("active optin consent with array of provisions matching some of the request purposes of use", async () => {
   expect.assertions(1);
 
@@ -810,6 +826,7 @@ it("active optin consent with array of provisions matching some of the request p
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_PRIVACY_CONSENT_WITH_POU
       }
@@ -843,6 +860,7 @@ it("no active optin consent", async () => {
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: INACTIVE_PRIVACY_CONSENT
       }
@@ -866,6 +884,7 @@ it("active optin consent with different scope", async () => {
   const decision = await processDecision(
     [
       {
+        fhirBase: CONSENT_FHIR_SERVERS[0],
         fullUrl: `${CONSENT_FHIR_SERVERS[0]}/Consent/1`,
         resource: ACTIVE_RESEARCH_CONSENT
       }
