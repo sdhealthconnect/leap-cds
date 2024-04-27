@@ -19,7 +19,7 @@ const ACTIVE_PRIVACY_CONSENT_WITH_SCOPE_IN_CATEGORY = require("../fixtures/conse
 const INACTIVE_PRIVACY_CONSENT = require("../fixtures/consents/r5/consent-boris-inactive.json");
 const EXPIRED_PRIVACY_CONSENT = require("../fixtures/consents/r5/consent-boris-expired.json");
 const CONSENT_DENY_PRACTITIONER = require("../fixtures/consents/r5/consent-boris-deny-practitioner.json");
-const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION = require("../fixtures/consents/r5/consent-boris-deny-restricted-content-class");
+const ACTIVE_PRIVACY_CONSENT_WITH_CONTENT_CLASS_PROVISION = require("../fixtures/consents/r5/consent-boris-deny-restricted-content-class.json");
 
 const NOT_YET_VALID_PRIVACY_CONSENT = _.set(
   _.cloneDeep(BASE_CONSENT),
@@ -763,7 +763,7 @@ it("active optin consent with clinical code provisions", async () => {
   );
 });
 
-it("active optin consent with array of provisions", async () => {
+it.only("active optin consent with array of provisions", async () => {
   expect.assertions(1);
 
   setupMockAuditEndpoint();
